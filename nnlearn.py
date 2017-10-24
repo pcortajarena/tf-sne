@@ -113,6 +113,24 @@ def pairwise_distances_error(y_true, y_pred):
     return pw_y_true, pw_y_pred, (pw_y_true - pw_y_pred) / pw_y_true * 100
 
 
+def devidedisin(x):
+    med = int(x.shape[0]/2)
+    return np.isin(x[0:med], x[med:])
+
+
+def knn_percentage_preserved(y_true, y_pred, n=100):
+    pw_y_true = pairwise_distances(y_true)
+    pw_y_pred = pairwise_distances(y_pred)
+
+    temp_y_true = np.argpartition(pw_y_true, n, axis=0)[:n]
+    temp_y_pred = np.argpartition(pw_y_pred, n, axis=0)[:n]
+
+    conc =  np.concatenate((temp_y_pred, temp_y_true), axis=0)
+    return np.apply_along_axis(devidedisin, 1, conc).mean(axis=0)
+
+
+
+
 if __name__ == '__main__':
 
     # dataset
@@ -121,13 +139,13 @@ if __name__ == '__main__':
 
     # #scaler + transformation
     # #choose one transformation
-    n_comp = 2
+    n_comp = 5
     pca = PCA(n_components=n_comp)
     md = MDS(n_components=n_comp, random_state=0, n_jobs=-1, verbose=10)
-    tsne = TSNE(n_components=n_comp, verbose=10)
+    tsne = TSNE(n_components=n_comp, verbose=10, method='exact')
     pipeline = make_pipeline(PCA(n_components=5), tsne)
 
-    X_scaled, X_ = sctrans(X, pipeline)
+    X_scaled, X_ = sctrans(X, tsne)
 
     #neural net
     nn = lambda: reg(
@@ -137,15 +155,18 @@ if __name__ == '__main__':
     model = KerasRegressor(nn, epochs=200, batch_size=10)    
 
     #fold dataset
-    kf = KFold(n_splits=3, shuffle=True)
+    kf = KFold(n_splits=5, shuffle=True)
     error_kfold, cv_preds = cv_function(model, kf, X_scaled, X_, mean_error)
     print(error_kfold)
 
     #plot
-    plot_similarity(X_, cv_preds)
+    # plot_similarity(X_, cv_preds)
 
     #corcoef
-    print(calculate_corrcoef(X_, cv_preds))
+    # print(calculate_corrcoef(X_, cv_preds))
+
+    #knn_percetage_preserved
+    knn_percentage_preserved(X_, cv_preds, n=1000)
 
     #distances
     # print(pairwise_distances_error(X_, cv_preds))
