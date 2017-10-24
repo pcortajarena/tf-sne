@@ -3,13 +3,14 @@ from keras.layers import Dense, Activation, Dropout
 from keras import optimizers
 from keras.wrappers.scikit_learn import KerasRegressor
 from sklearn.datasets import load_boston
+from scipy.io.arff import loadarff
 from sklearn.model_selection import KFold
 import keras.backend as K
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, Imputer
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics.pairwise import pairwise_distances
@@ -19,9 +20,10 @@ from sklearn.manifold import MDS
 import pandas as pd
 import numba
 
+
 #load data
-def load_dataset(csv_path):
-    return pd.read_csv(csv_path, delimiter=';')
+def load_dataset(path):
+    return pd.read_csv(path, sep='\t')
 
 
 #distance loss
@@ -42,16 +44,6 @@ def mean_loss(y, y_):
 def mean_error(y_true, y_pred):
     return np.mean((y_true - y_pred) ** 2)
 
-
-#standard scaler and transformation
-def sctrans(X, trans):
-
-    sc = StandardScaler()
-    X_scaled = sc.fit_transform(X)
-
-    X_ = trans.fit_transform(X_scaled)
-
-    return X_scaled, X_
 
 
 #neural net model
@@ -134,29 +126,39 @@ def knn_percentage_preserved(y_true, y_pred, n=100):
 if __name__ == '__main__':
 
     # dataset
-    dataset = load_dataset('datasets/winequality-white.csv')
-    X, y = dataset.drop('quality', axis=1).values , dataset['quality'].values
+    dataset = load_dataset('datasets/bankruptcy.data')
+    X, y = dataset.drop('class', axis=1).values , dataset['class'].values
 
     # #scaler + transformation
-    # #choose one transformation
-    n_comp = 5
+    # #choose one transformation and create and unsupervised pipeline
+    n_comp = 10
     pca = PCA(n_components=n_comp)
     md = MDS(n_components=n_comp, random_state=0, n_jobs=-1, verbose=10)
     tsne = TSNE(n_components=n_comp, verbose=10, method='exact')
-    pipeline = make_pipeline(PCA(n_components=5), tsne)
 
-    X_scaled, X_ = sctrans(X, tsne)
+    unsupervised_pipeline = make_pipeline(
+        Imputer(),
+        StandardScaler(),
+        tsne
+    )
+    X_ = unsupervised_pipeline.fit_transform(X)
 
-    #neural net
+    #neural net; 
     nn = lambda: reg(
         X_scaled.shape[1], loss_func=mean_loss, 
         layers=[1000], dropout=[0], 
         output_shape=n_comp, lr=0.3, act_function='sigmoid')
     model = KerasRegressor(nn, epochs=200, batch_size=10)    
+    
+    supervised_pipeline = make_pipeline(
+        Imputer(),
+        StandardScaler(),
+        model
+    )
 
     #fold dataset
     kf = KFold(n_splits=5, shuffle=True)
-    error_kfold, cv_preds = cv_function(model, kf, X_scaled, X_, mean_error)
+    error_kfold, cv_preds = cv_function(supervised_pipeline, kf, X, X_, mean_error)
     print(error_kfold)
 
     #plot
@@ -166,7 +168,7 @@ if __name__ == '__main__':
     # print(calculate_corrcoef(X_, cv_preds))
 
     #knn_percetage_preserved
-    knn_percentage_preserved(X_, cv_preds, n=1000)
+    print(knn_percentage_preserved(X_, cv_preds, n=1000))
 
     #distances
     # print(pairwise_distances_error(X_, cv_preds))
