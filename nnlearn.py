@@ -186,8 +186,13 @@ if __name__ == '__main__':
     # print(calculate_corrcoef(X_, cv_preds))
 
     #knn_percetage_preserved
-    knn_perc = knn_percentage_preserved(X_, cv_preds, n=1000)
+    knn_perc = knn_percentage_preserved(X_, cv_preds, n=100)
+    print('KNN between X_ and cv_preds')
     print(knn_perc, knn_perc.mean(), np.median(knn_perc))
+
+    knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n=100)
+    print('KNN between X_trans and cv_preds')
+    print(knn_perc_Xtrans, knn_perc_Xtrans.mean(), np.median(knn_perc_Xtrans))
     
     #distances
     # print(pairwise_distances_error(X_, cv_preds))
