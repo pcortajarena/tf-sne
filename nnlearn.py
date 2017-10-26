@@ -22,8 +22,21 @@ import numba
 
 
 #load data
-def load_dataset(path):
-    return pd.read_csv(path, sep='\t')
+def load_wines(path):
+    dataset = pd.read_csv(path, sep=';')
+    X, y = dataset.drop('quality', axis=1).values , dataset['quality'].values
+    return X, y
+    
+def load_page(path):
+    dataset = pd.read_csv(path)
+    X, y = dataset.iloc[:,:-1].values, dataset.iloc[:,-1].values
+    return X, y
+
+def load_bankruptcy(path):
+    dataset = pd.read_csv(path, delimiter='\t')
+    X, y = dataset.drop('class', axis=1).values , dataset['class'].values
+    return X, y
+
 
 
 #distance loss
@@ -94,9 +107,8 @@ def plot_similarity(y_true, y_pred):
 
 
 def calculate_corrcoef(y_true, y_pred):
-    x = (np.corrcoef(y_true[:,0], y_pred[:,0]))
-    y = print(np.corrcoef(y_true[:,1], y_pred[:,1]))    
-    return x, y
+    corrcoefs = [np.corrcoef(y_true[:, i], y_pred[:, i])[0, 1] for i in range(y_true.shape[1])]
+    return corrcoefs
 
 
 def pairwise_distances_error(y_true, y_pred):
@@ -118,7 +130,7 @@ def knn_percentage_preserved(y_true, y_pred, n=100):
     temp_y_pred = np.argpartition(pw_y_pred, n, axis=0)[:n]
 
     conc =  np.concatenate((temp_y_pred, temp_y_true), axis=0)
-    return np.apply_along_axis(devidedisin, 1, conc).mean(axis=0)
+    return np.apply_along_axis(devidedisin, 0, conc).mean(axis=0)
 
 
 
@@ -126,39 +138,45 @@ def knn_percentage_preserved(y_true, y_pred, n=100):
 if __name__ == '__main__':
 
     # dataset
-    dataset = load_dataset('datasets/bankruptcy.data')
-    X, y = dataset.drop('class', axis=1).values , dataset['class'].values
+    # X, y = load_wines('datasets/winequality-white.csv')
+    X, y = load_bankruptcy('datasets/bankruptcy.data')
+    # X, y = load_page('datasets/datablocks.csv')
+
 
     # #scaler + transformation
     # #choose one transformation and create and unsupervised pipeline
     n_comp = 10
     pca = PCA(n_components=n_comp)
-    md = MDS(n_components=n_comp, random_state=0, n_jobs=-1, verbose=10)
+    md = MDS(n_components=n_comp, random_state=0, n_jobs=-1, verbose=10, n_init=4)
     tsne = TSNE(n_components=n_comp, verbose=10, method='exact')
 
-    unsupervised_pipeline = make_pipeline(
+    trans_pipeline = make_pipeline(
         Imputer(),
-        StandardScaler(),
-        tsne
+        StandardScaler()
+        )
+
+    unsupervised_pipeline = make_pipeline(
+        md
     )
-    X_ = unsupervised_pipeline.fit_transform(X)
+
+    X_trans = trans_pipeline.fit_transform(X)
+
+    X_ = unsupervised_pipeline.fit_transform(X_trans)
 
     #neural net; 
     nn = lambda: reg(
-        X_scaled.shape[1], loss_func=mean_loss, 
+        X.shape[1], loss_func=dist_loss, 
         layers=[1000], dropout=[0], 
-        output_shape=n_comp, lr=0.3, act_function='sigmoid')
+        output_shape=n_comp, lr=0.1, act_function='sigmoid')
     model = KerasRegressor(nn, epochs=200, batch_size=10)    
     
     supervised_pipeline = make_pipeline(
-        Imputer(),
-        StandardScaler(),
         model
     )
 
     #fold dataset
     kf = KFold(n_splits=5, shuffle=True)
-    error_kfold, cv_preds = cv_function(supervised_pipeline, kf, X, X_, mean_error)
+    error_kfold, cv_preds = cv_function(supervised_pipeline, kf, X_trans, X_, dist_error)
     print(error_kfold)
 
     #plot
@@ -168,8 +186,9 @@ if __name__ == '__main__':
     # print(calculate_corrcoef(X_, cv_preds))
 
     #knn_percetage_preserved
-    print(knn_percentage_preserved(X_, cv_preds, n=1000))
-
+    knn_perc = knn_percentage_preserved(X_, cv_preds, n=1000)
+    print(knn_perc, knn_perc.mean(), np.median(knn_perc))
+    
     #distances
     # print(pairwise_distances_error(X_, cv_preds))
 
