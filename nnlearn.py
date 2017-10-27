@@ -89,7 +89,7 @@ def cv_function(mod, cv, X, y, metric_func):
 
     for fold, (train_index, test_index) in enumerate(cv.split(X, y)):
         print(fold)
-        print(train_index)
+        print(train_index.shape)
         mod.fit(X[train_index], y[train_index])
 
         #metrics
@@ -150,7 +150,7 @@ if __name__ == '__main__':
 
     # #scaler + transformation
     # #choose one transformation and create and unsupervised pipeline
-    n_comp = 10
+    n_comp = 5
     pca = PCA(n_components=n_comp)
     md = MDS(n_components=n_comp, random_state=0, n_jobs=-1, verbose=10, n_init=4)
     tsne = TSNE(n_components=n_comp, verbose=10, method='exact')
@@ -192,11 +192,11 @@ if __name__ == '__main__':
     # print(calculate_corrcoef(X_, cv_preds))
 
     #knn_percetage_preserved
-    knn_perc = knn_percentage_preserved(X_, cv_preds, n=100)
+    knn_perc = knn_percentage_preserved(X_, cv_preds, n_true=100, n_pred=200)
     print('KNN between X_ and cv_preds')
     print(knn_perc, knn_perc.mean(), np.median(knn_perc))
 
-    knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n=100)
+    knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n_true=100, n_pred=200)
     print('KNN between X_trans and cv_preds')
     print(knn_perc_Xtrans, knn_perc_Xtrans.mean(), np.median(knn_perc_Xtrans))
 

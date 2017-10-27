@@ -5,7 +5,7 @@ from keras import optimizers
 from keras.wrappers.scikit_learn import KerasRegressor
 
 
-class NNReplicator(TransformerMixin):
+class NNReplicator(object):
 
     def __init__(self, n_comp, embedder, layers, dropout, lr, act_func, loss_func, epochs, batch_size):
 
@@ -18,7 +18,6 @@ class NNReplicator(TransformerMixin):
         self.loss_func = loss_func
         self.epochs = epochs
         self.batch_size = batch_size
-
 
     def nnConstruct(self, shape):
 
@@ -40,17 +39,19 @@ class NNReplicator(TransformerMixin):
 
         self.krObject = KerasRegressor(model, epochs=self.epochs, batch_size=self.batch_size)
 
-
-    def fit(self, X):
+    def fit(self, X, y=None):
 
         shape = X.shape[1]
-        neural_net = nnConstruct(shape)
+        neural_net = self.nnConstruct(shape)
 
         X_ = self.embedder.fit_transform(X)
 
         self.krObject.fit(X, X_)
+        return self
 
 
     def transform(self, X):
+        return self.krObject.predict(X)
 
-        self.krObject.predict(X)
+    def fit_transform(self, X, y=None):
+        return self.fit(X).transform(X)
