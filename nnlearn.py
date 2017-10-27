@@ -26,17 +26,18 @@ def load_wines(path):
     dataset = pd.read_csv(path, sep=';')
     X, y = dataset.drop('quality', axis=1).values , dataset['quality'].values
     return X, y
-    
+
+
 def load_page(path):
     dataset = pd.read_csv(path)
     X, y = dataset.iloc[:,:-1].values, dataset.iloc[:,-1].values
     return X, y
 
+
 def load_bankruptcy(path):
     dataset = pd.read_csv(path, delimiter='\t')
     X, y = dataset.drop('class', axis=1).values , dataset['class'].values
     return X, y
-
 
 
 #distance loss
@@ -61,7 +62,7 @@ def mean_error(y_true, y_pred):
 
 #neural net model
 def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'):
-    
+
     model = Sequential()
     for i, (layer, drop) in enumerate(zip(layers, dropout)):
 
@@ -81,7 +82,7 @@ def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'
 
 #cv
 def cv_function(mod, cv, X, y, metric_func):
-    
+
     #variables
     metric_kfold = list()
     cv_predictions = np.zeros_like(y)
@@ -117,22 +118,26 @@ def pairwise_distances_error(y_true, y_pred):
     return pw_y_true, pw_y_pred, (pw_y_true - pw_y_pred) / pw_y_true * 100
 
 
-def devidedisin(x):
-    med = int(x.shape[0]/2)
-    return np.isin(x[0:med], x[med:])
+def devidedisin(x, split=None):
+    if not split:
+        split = int(x.shape[0]/2)
+    return np.isin(x[split:], x[0:split])
 
 
-def knn_percentage_preserved(y_true, y_pred, n=100):
+def knn_percentage_preserved(y_true, y_pred, n_true=100, n_pred=None):
+
+    # If no n_pred is defined, use the same n
+    if not n_pred:
+        n_pred = n_true
+
     pw_y_true = pairwise_distances(y_true)
     pw_y_pred = pairwise_distances(y_pred)
 
-    temp_y_true = np.argpartition(pw_y_true, n, axis=0)[:n]
-    temp_y_pred = np.argpartition(pw_y_pred, n, axis=0)[:n]
+    temp_y_true = np.argpartition(pw_y_true, n_true, axis=0)[:n_true]
+    temp_y_pred = np.argpartition(pw_y_pred, n_pred, axis=0)[:n_pred]
 
     conc =  np.concatenate((temp_y_pred, temp_y_true), axis=0)
-    return np.apply_along_axis(devidedisin, 0, conc).mean(axis=0)
-
-
+    return np.apply_along_axis(devidedisin, 0, conc, split=n_pred).mean(axis=0)
 
 
 if __name__ == '__main__':
@@ -163,20 +168,21 @@ if __name__ == '__main__':
 
     X_ = unsupervised_pipeline.fit_transform(X_trans)
 
-    #neural net; 
+    #neural net;
     nn = lambda: reg(
-        X.shape[1], loss_func=dist_loss, 
-        layers=[1000], dropout=[0], 
+        X.shape[1], loss_func=dist_loss,
+        layers=[1000], dropout=[0],
         output_shape=n_comp, lr=0.1, act_function='sigmoid')
-    model = KerasRegressor(nn, epochs=200, batch_size=10)    
-    
+    model = KerasRegressor(nn, epochs=200, batch_size=10)
+
     supervised_pipeline = make_pipeline(
         model
     )
 
     #fold dataset
-    kf = KFold(n_splits=5, shuffle=True)
-    error_kfold, cv_preds = cv_function(supervised_pipeline, kf, X_trans, X_, dist_error)
+    kf = KFold(n_splits=3, shuffle=True)
+    error_kfold, cv_preds = cv_function(
+        supervised_pipeline, kf, X_trans, X_, dist_error)
     print(error_kfold)
 
     #plot
@@ -193,8 +199,6 @@ if __name__ == '__main__':
     knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n=100)
     print('KNN between X_trans and cv_preds')
     print(knn_perc_Xtrans, knn_perc_Xtrans.mean(), np.median(knn_perc_Xtrans))
-    
+
     #distances
     # print(pairwise_distances_error(X_, cv_preds))
-
-
