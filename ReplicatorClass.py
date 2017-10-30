@@ -5,7 +5,7 @@ from keras import optimizers
 from keras.wrappers.scikit_learn import KerasRegressor
 
 
-class NNReplicator(object):
+class NNReplicator(TransformerMixin):
 
     def __init__(self, n_comp, embedder, layers, dropout, lr, act_func, loss_func, epochs, batch_size):
 
@@ -33,11 +33,11 @@ class NNReplicator(object):
             model.add(Dropout(drop))
 
         model.add(Dense(self.n_comp, activation='linear'))
-        ada = optimizers.Adagrar(lr=self.lr)
+        ada = optimizers.Adagrad(lr=self.lr)
 
         model.compile(optimizer=ada, loss=self.loss_func)
 
-        self.krObject = KerasRegressor(model, epochs=self.epochs, batch_size=self.batch_size)
+        self.krObject = KerasRegressor(lambda: model, epochs=self.epochs, batch_size=self.batch_size)
 
     def fit(self, X, y=None):
 
@@ -53,5 +53,5 @@ class NNReplicator(object):
     def transform(self, X):
         return self.krObject.predict(X)
 
-    def fit_transform(self, X, y=None):
-        return self.fit(X).transform(X)
+    # def fit_transform(self, X, y=None):
+    #     return self.fit(X).transform(X)

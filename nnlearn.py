@@ -144,8 +144,9 @@ if __name__ == '__main__':
 
     # dataset
     # X, y = load_wines('datasets/winequality-white.csv')
-    X, y = load_bankruptcy('datasets/bankruptcy.data')
+    # X, y = load_bankruptcy('datasets/bankruptcy.data')
     # X, y = load_page('datasets/datablocks.csv')
+    X, y = load_page('datasets/spambase.data')
 
 
     # #scaler + transformation
@@ -161,6 +162,7 @@ if __name__ == '__main__':
         )
 
     unsupervised_pipeline = make_pipeline(
+        PCA(n_components=20),
         md
     )
 
@@ -192,11 +194,11 @@ if __name__ == '__main__':
     # print(calculate_corrcoef(X_, cv_preds))
 
     #knn_percetage_preserved
-    knn_perc = knn_percentage_preserved(X_, cv_preds, n_true=100, n_pred=200)
+    knn_perc = knn_percentage_preserved(X_, cv_preds, n_true=10, n_pred=100)
     print('KNN between X_ and cv_preds')
     print(knn_perc, knn_perc.mean(), np.median(knn_perc))
 
-    knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n_true=100, n_pred=200)
+    knn_perc_Xtrans = knn_percentage_preserved(X_trans, cv_preds, n_true=10, n_pred=100)
     print('KNN between X_trans and cv_preds')
     print(knn_perc_Xtrans, knn_perc_Xtrans.mean(), np.median(knn_perc_Xtrans))
 
