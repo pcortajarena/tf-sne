@@ -11,21 +11,22 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import roc_auc_score
 from sklearn.datasets import load_breast_cancer
 
-from ReplicatorClass import NNReplicator
-from nnlearn import dist_loss
-from nnlearn import cv_function
-from nnlearn import load_bankruptcy
-from nnlearn import load_wines
-from nnlearn import load_page
+from classes import NNReplicator
+from classes import NNPipeline
+from utils import dist_loss
+from utils import cv_function
+from utils import load_bankruptcy
+from utils import load_wines
+from utils import load_page
 
 
 
 if __name__ == '__main__':
 
     #dataset
-    # X, y = load_bankruptcy('datasets/bankruptcy.data')
-    # X, y = load_wines('datasets/winequality-white.csv')
-    X, y = load_page('datasets/spambase.data')
+    # X, y = load_bankruptcy('../datasets/bankruptcy.data')
+    # X, y = load_wines('../datasets/winequality-white.csv')
+    X, y = load_page('../datasets/spambase.data')
     # dataset = load_breast_cancer()
     # X, y = dataset['data'], dataset['target']
 
