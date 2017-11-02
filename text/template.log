@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  30 OCT 2017 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  2 NOV 2017 17:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -758,7 +758,7 @@ File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
 \c@bookmark@seq@number=\count136
 \Hy@SectionHShift=\skip63
 )
-No file template.aux.
+(./template.aux)
 \openout1 = `template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 65.
@@ -775,6 +775,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
+
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count137
@@ -852,30 +853,39 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 65.
 LaTeX Info: Redefining \pageref on input line 65.
 LaTeX Info: Redefining \nameref on input line 65.
+
+(./template.out) (./template.out)
 \@outlinefile=\write3
 \openout3 = `template.out'.
 
 
+<LOGO_ESCUELA.png, id=32, 708.246pt x 221.3871pt>
+File: LOGO_ESCUELA.png Graphic file (type png)
+ <use LOGO_ESCUELA.png>
+Package pdftex.def Info: LOGO_ESCUELA.png used on input line 83.
+(pdftex.def)             Requested size: 170.71652pt x 53.3637pt.
+
 [1
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[3
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./LOGO_
+ESCUELA.png>] [3
 
 ] [4
 
-]
+] (./template.toc)
 \tf@toc=\write4
 \openout4 = `template.toc'.
 
  [5
 
-]
+] (./template.lot)
 \tf@lot=\write5
 \openout5 = `template.lot'.
 
  [6
 
 ]
+(./template.lof)
 \tf@lof=\write6
 \openout6 = `template.lof'.
 
@@ -883,19 +893,32 @@ LaTeX Info: Redefining \nameref on input line 65.
 
 ]
 Chapter 1.
-[1
 
-] [2
+Underfull \hbox (badness 10000) in paragraph at lines 161--163
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 163.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 163.
+ [1
+
+] [2] [3]
+[4
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 188.
- [3
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 226.
+ [5
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 188.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 226.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 188.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 188.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 226.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 226.
 
 
 Package rerunfilecheck Warning: File `template.out' has changed.
@@ -903,29 +926,34 @@ Package rerunfilecheck Warning: File `template.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `template.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  B00BDA86A923D28B0C26A38E021B23BC;291.
+(rerunfilecheck)             Before: 9147E872ADF6EDCC6C019AAA3964DB01;374
+(rerunfilecheck)             After:  05E056CDAEB3199F75402836C6480ED5;453.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 188.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 226.
  ) 
 Here is how much of TeX's memory you used:
- 11100 strings out of 492995
- 163744 string characters out of 6132703
- 309040 words of memory out of 5000000
- 14490 multiletter control sequences out of 15000+600000
- 7003 words of font info for 30 fonts, out of 8000000 for 9000
+ 11215 strings out of 492995
+ 165304 string characters out of 6132703
+ 313307 words of memory out of 5000000
+ 14553 multiletter control sequences out of 15000+600000
+ 11453 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,11n,43p,391b,359s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on template.pdf (9 pages, 50780 bytes).
+ 42i,11n,43p,577b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on template.pdf (11 pages, 272191 bytes).
 PDF statistics:
- 78 PDF objects out of 1000 (max. 8388607)
- 62 compressed objects within 1 object stream
- 21 named destinations out of 1000 (max. 500000)
- 10241 words of extra memory for PDF output out of 12000 (max. 10000000)
+ 141 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
+ 12862 words of extra memory for PDF output out of 14400 (max. 10000000)
 

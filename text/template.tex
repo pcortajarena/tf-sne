@@ -80,7 +80,7 @@
 %%	(v) the month and year of submission.
 \thispagestyle{empty}
 \begin{flushright}
-%\includegraphics[width=6cm]{icade}
+\includegraphics[width=6cm]{LOGO_ESCUELA}
 \end{flushright}
 \vskip40mm
 \begin{center}
@@ -88,22 +88,24 @@
 \huge\textbf{Development of unsupervised learning transformations through supervised learning methods.}
 \vskip2mm
 % SUBTITLE (optional)
-\LARGE\textit{The Airbnb Case Study}
+\LARGE\textit{}
 \vskip5mm
 % AUTHOR
-\Large\textbf{Author: Marta Barrios Manrique}
+\Large\textbf{Author: Patricia Cortajarena Sauca}
 
-\Large\textbf{Director: Ana Jiménez Zarco}
-\normalsize
+\Large\textbf{Ponente: Carlos Roberto del Blanco Adán}
+
+\Large\textbf{Tutor: Pedro Morales}
+
 \end{center}
 \vfill
 \begin{flushleft}
 \large
 % QUALIFICATION
-Master in Business Administration \\
-ICADE Business School 	\\
+Trabajo Fin de Grado \\
+ETSIT UPM 	\\
 % DATE OF SUBMISSION
-Madrid. July 3, 2017
+Madrid. January, 2018
 \end{flushleft}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -111,6 +113,9 @@ Madrid. July 3, 2017
 % ABSTRACT
 \chapter*{Abstract}
 \setcounter{page}{3}
+
+The aim of this project is  
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
@@ -147,8 +152,41 @@ Madrid. July 3, 2017
 \chapter{Introduction}
 \label{chap:intro}
 
-%\section{The collaborative consumption as a technological phenomenon}
+Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even decreasing the number of features needed to describe that same dataset. Thus, time and memory in huge implementations can be saved. \\
+Taking into account that this turns into a difficult task, we can find that numerous approaches have been proposed.\\
+Although they look forward to achieve more or less the same performance, they differ from one another and we can not reassure which would suite for a specific problem or even if the behaviour of the algorithm is going to reach the results we expected or needed.\\
+The first point to take into account is the existence of parametric and non parametric algorithms, and secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.\\
+So our decision of which to implement depends on the previous study of our data, the performance requirements and the later purpose and usage of the reduced data.
 
+We propose the research and then base our study in the next dimensionality reduction algorithms:\\
+\begin{itemize}
+\item PCA (Principal Component Analysis)
+\item MDS (Multidimensional Scaling)
+\item TSNE (T-Stochastic Neighbour Embedding)
+\end{itemize}
+
+\section{PCA: Principal Component Analysis}
+\label{PCA}
+
+Principal Component Analysis algorithm is based on reducing the number of features by processing the correlations between the features of the datapoints. The aim is to eliminate this correlations by transforming the matrix \textbf{X} $\in$ $\Re^{mxn}$ (with m being the number of data points and n de number of features) into an orthogonal basis. By omiting the correlation between columns of the matrix \textbf{X} we are capable of doing away with redundancies.\\
+The model starts by computing de covariance matrix, which results in a $\Re^{nxn}$ symmetric matrix. We obtain it by using the next expresion:
+\begin{center}
+cov(\textbf{X}) = $\dfrac{1}{m-1}$ $\textbf{X}^{T}$\textbf{X}
+\end{center}
+Because the aim of the PCA is to eliminate the correlations, the covariance matrix of the result \textbf{Y} should be a diagonal matrix with just the variances of the columns.\\
+PCA is famous because of a great advantage: we can find a linear transformation (\textbf{Y = XP}), which makes this a parametric model, easy to reuse and quite computationally simple because of some covariance matrix calculation approaches.\\
+For symmetric matrices (\textbf{X}) we can find eigenvalue decomposition with a diagonal matrix (\textbf{Y}), matching exactly with our linear problem with \textbf{X} and \textbf{Y}.
+\begin{center}
+\textbf{Y = XP}\\
+cov(\textbf{Y}) = $\frac{1}{m-1}$ $\textbf{Y}^{T}$\textbf{Y} = $\frac{1}{m-1}$ $\textbf{(XP)}^{T}$\textbf{XP} = $\textbf{P}^{T}$cov(\textbf{X})\textbf{P}\\
+\textbf{D} = $\textbf{V}^{T}$\textbf{AV}\\
+\textbf{A} = cov(\textbf{X}); \textbf{P} = $\textbf{V}^{T}$; \textbf{D} = cov(\textbf{Y})
+\end{center}
+With the previous expresions we get to the point that computing the eigenvectors of the covariance matrix \textbf{X} we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The eigenvalues matrix obtained (cov(\textbf{Y})) sorted decreasingly would be the orthogonal basis values. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the product between this \textbf{N} eigenvalues and our datapoints, we would obtain our reduced dimensionally points.
+\newpage
+
+\section{MDS: Multidimensional Scaling}
+\label{MDS}
 
 %\begin{figure}
 %\centering
