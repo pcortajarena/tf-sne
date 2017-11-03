@@ -152,7 +152,7 @@ The aim of this project is
 \chapter{Introduction}
 \label{chap:intro}
 
-Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even decreasing the number of features needed to describe that same dataset. Thus, time and memory in huge implementations can be saved. \\
+Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even decreasing the number of features needed to describe that same dataset. Thus, time and memory in huge implementations could be saved. \\
 Taking into account that this turns into a difficult task, we can find that numerous approaches have been proposed.\\
 Although they look forward to achieve more or less the same performance, they differ from one another and we can not reassure which would suite for a specific problem or even if the behaviour of the algorithm is going to reach the results we expected or needed.\\
 The first point to take into account is the existence of parametric and non parametric algorithms, and secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.\\
@@ -166,7 +166,7 @@ We propose the research and then base our study in the next dimensionality reduc
 \end{itemize}
 
 \section{PCA: Principal Component Analysis}
-\label{PCA}
+\label{sec:pca}
 
 Principal Component Analysis algorithm is based on reducing the number of features by processing the correlations between the features of the datapoints. The aim is to eliminate this correlations by transforming the matrix \textbf{X} $\in$ $\Re^{mxn}$ (with m being the number of data points and n de number of features) into an orthogonal basis. By omiting the correlation between columns of the matrix \textbf{X} we are capable of doing away with redundancies.\\
 The model starts by computing de covariance matrix, which results in a $\Re^{nxn}$ symmetric matrix. We obtain it by using the next expresion:
@@ -177,22 +177,70 @@ Because the aim of the PCA is to eliminate the correlations, the covariance matr
 PCA is famous because of a great advantage: we can find a linear transformation (\textbf{Y = XP}), which makes this a parametric model, easy to reuse and quite computationally simple because of some covariance matrix calculation approaches.\\
 For symmetric matrices (\textbf{X}) we can find eigenvalue decomposition with a diagonal matrix (\textbf{Y}), matching exactly with our linear problem with \textbf{X} and \textbf{Y}.
 \begin{center}
-\textbf{Y = XP}\\
-cov(\textbf{Y}) = $\frac{1}{m-1}$ $\textbf{Y}^{T}$\textbf{Y} = $\frac{1}{m-1}$ $\textbf{(XP)}^{T}$\textbf{XP} = $\textbf{P}^{T}$cov(\textbf{X})\textbf{P}\\
-\textbf{D} = $\textbf{V}^{T}$\textbf{AV}\\
-\textbf{A} = cov(\textbf{X}); \textbf{P} = $\textbf{V}^{T}$; \textbf{D} = cov(\textbf{Y})
+\textbf{Y = XP}
+$$ cov(\textbf{Y}) = \frac{1}{m-1} \textbf{Y}^{T} \textbf{Y} = \frac{1}{m-1} \textbf{(XP)}^{T} \textbf{XP} = \textbf{P}^{T} cov(\textbf{X})\textbf{P} $$
+$$\textbf{D} = \textbf{V}^{T} \textbf{AV}$$
+$$ \textbf{A} = cov(\textbf{X}); \textbf{P} = \textbf{V}^{T}; \textbf{D} = cov(\textbf{Y})$$
 \end{center}
-With the previous expresions we get to the point that computing the eigenvectors of the covariance matrix \textbf{X} we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The eigenvalues matrix obtained (cov(\textbf{Y})) sorted decreasingly would be the orthogonal basis values. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the product between this \textbf{N} eigenvalues and our datapoints, we would obtain our reduced dimensionally points.
+
+With the previous expresions we get to the point that computing the eigenvectors of the covariance matrix \textbf{X} we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The eigenvalues matrix obtained (cov(\textbf{Y})) sorted decreasingly would be the orthogonal basis values. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the corresponding eigenvectors, we would obtain our reduced dimensionally points, as a basis transformation of our datapoints from the original dataset, by the new basis coordinates.
 \newpage
 
 \section{MDS: Multidimensional Scaling}
-\label{MDS}
+\label{sec:mds}
+
+Multidimensional Scaling in dimensionality reduction tries to create a map which displays the relative distances between the data points. This focuses on getting a one, two or, at most, three dimensional map, keeping as much distance information as possible.\\
+MDS calculates a metric or non-metric solution depending on the data provided, which has to be a \textit{proximity} matrix. This \textit{proximity} matrix quantifies how close the datapoints are. In the one hand for metric solutions, this \textit{proximity} matrix has to be a true distance matrix, while in the other, both dissimilarities or correlations could be the input to the problem's matrix.
+
+MDS algorithm is based on some ideas explained in the previous section. As we can see, the \textit{proximity} matrix is always  symmetric and somehow describes the relations between the features, so basically we can treat our problem as a variation of the PCA algorithm.\\
+Metric MDS performs the same steps as in PCA, with the modification of being a distance matrix the one computed in this problem.\\
+In non metric MDS, we assume a less strict relation and we compute the observed distances as a function of the real distance plus some meassure error. The usable information in this case would be the rank order of the previous matrix, which could be the input for the model.\\
+The main distinction between PCA and MDS is the fact that, because of the need to compute a pairwise distance or proximity matrix, there is no linear transformation that suits both the distance computations plus the matrix operations, so MDS turns to be non-parametric.
+
+\subsection{Stress metric}
+\label{ssec:str}
+
+As in every data problem, we need a metric which shows how well is the performance given a particular dataset. In Multidimensional Scaling we compute the \textit{stress} measure that compares the predicted distances with the original ones. Note that obviously this depends on the number of dimensions we want to keep, yet if the dimensions lower, the stress will get higher, because we are representing the same distances relations in a lower dimensional space.
+\begin{center}
+\( \textit{stress} = \sqrt{\frac{\sum(d_{ij}-d'_{ij})^{2}}{\sum d_{ij}^{2}} } \)
+\end{center}
+Regarding the previous expresion, if our prediction stands well for the original data, the stress value should lower, relating zero stress to the perfect performance of the MDS  algorithm. 
+
+\section{TSNE: T-Stochastic Neighbour Embedding}
+\label{sec:tsne}
+
+T-Stochastic Neighbour Embedding is our non-linear example of dimensionality reduction. It relies on Stochastic Neighbour Embedding (SNE) which will be explained right below. The main characteristic why this algorithm is used is because it is capable of visualizating both the local and the global structure of the original data. As said, this section will be divided in two: the basis SNE and the T-SNE upgrades.
+
+\subsection{SNE}
+\label{ssec:sne}
+
+SNE approaches the dimensionality reduction by converting the Euclidean distances into conditional probabilities as a way of expressing similarities between points. That means we measure the similarity of two points $x_{i}$, $x_{j}$ as the probability $p_{i|j}$ of considering the second one as a neighbour of the first. The probability in the original and in the low dimensional space is computated as seen:\\
+$$ p_{i|j} = \frac{exp(-||x_{i}-x_{j}||^{2}/2\sigma_{i}^{2})}{\sum _{k\neq i} exp (-||x_{i}-x_{k}||^{2}/2\sigma_{i}^{2})}$$
+
+$$ q_{i|j} = \frac{exp(-||y_{i}-y_{j}||^{2})}{\sum _{k\neq i} exp (-||y_{i}-y_{k}||^{2})} $$\\
+As the point of this metric is to compute similarities as probabilities, we can calculate the mismatch between $p_{i|j}$ and $q_{i|j}$ with all the datapoints and consequently obtain the algorithm's behaviour by analysing how many neighbours have been mantained in the low dimensional map. In terms of conditional probabilities, Kullback-Leibler divergence could suit this need. Summing up all the previous ideas we get to the point of minimizing the cost function described as:\\
+$$ C = \sum\limits_{i} KL(P_{i}||Q_{i}) = \sum\limits_{i} \sum\limits_{j} p_{i|j} log \frac{p_{i|j}}{q_{i|j}}$$
+
+The limitations of this algorithm are the non symmetric general expresion of the Kullback-Leibler divergence, the difficulty to optimize the cost function, the fact that we need to choose diferent values of the variance depending on the point and the "crowding problem". T-SNE tries to solve this limitations as in the next section is described.
+\newpage
+
+\subsection{T-SNE}
+\label{ssec:tsne}
 
 %\begin{figure}
 %\centering
 %\includegraphics[width=16cm]{figures/prices.pdf}
 %\caption{\label{prices}Box-plot of prices for each neighborhood.}
 %\end{figure}
+
+%-----------------------------------------------------
+% Chapter: Framework
+%-----------------------------------------------------
+
+\chapter{Framework}
+\label{chap:frame}
+
+
 
 %-----------------------------------------------------
 % Chapter: Bibliography
