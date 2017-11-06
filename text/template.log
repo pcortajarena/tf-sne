@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  5 NOV 2017 19:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  6 NOV 2017 15:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -859,37 +859,37 @@ LaTeX Info: Redefining \nameref on input line 65.
 \openout3 = `template.out'.
 
 
-<LOGO_ESCUELA.png, id=56, 708.246pt x 221.3871pt>
-File: LOGO_ESCUELA.png Graphic file (type png)
- <use LOGO_ESCUELA.png>
-Package pdftex.def Info: LOGO_ESCUELA.png used on input line 83.
+<figures/LOGO_ESCUELA.png, id=84, 708.246pt x 221.3871pt>
+File: figures/LOGO_ESCUELA.png Graphic file (type png)
+
+<use figures/LOGO_ESCUELA.png>
+Package pdftex.def Info: figures/LOGO_ESCUELA.png used on input line 83.
 (pdftex.def)             Requested size: 170.71652pt x 53.3637pt.
+ [1
 
-[1
-
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./LOGO_
-ESCUELA.png>] [3
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
+es/LOGO_ESCUELA.png>] [3
 
 ] [4
 
-] (./template.toc)
+] (./template.toc
+[5
+
+])
 \tf@toc=\write4
 \openout4 = `template.toc'.
 
- [5
-
-] (./template.lot)
+ [6] (./template.lot)
 \tf@lot=\write5
 \openout5 = `template.lot'.
 
- [6
+ [7
 
-]
-(./template.lof)
+] (./template.lof)
 \tf@lof=\write6
 \openout6 = `template.lof'.
 
- [7
+ [8
 
 ]
 Chapter 1.
@@ -929,31 +929,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 237--240
 
 [5]
 Chapter 2.
-[6
+<figures/neuralnet.pdf, id=179, 352.31625pt x 110.4125pt>
+File: figures/neuralnet.pdf Graphic file (type pdf)
 
-] [7
+<use figures/neuralnet.pdf>
+Package pdftex.def Info: figures/neuralnet.pdf used on input line 267.
+(pdftex.def)             Requested size: 341.43306pt x 107.00226pt.
+ [6
+
+] [7 <./figures/neuralnet.pdf>] [8]
+Chapter 3.
+[9
+
+] [10
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
- [8
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 349.
+ [11
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 349.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 286.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 349.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 349.
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: C547860CB903900A34AE085A7B8E4463;789.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
+(rerunfilecheck)             Checksum: FB42F6AE2987F567919955EFCAD5B725;1264.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 349.
  ) 
 Here is how much of TeX's memory you used:
- 11291 strings out of 492995
- 166066 string characters out of 6132703
- 313579 words of memory out of 5000000
- 14572 multiletter control sequences out of 15000+600000
- 14265 words of font info for 79 fonts, out of 8000000 for 9000
+ 11334 strings out of 492995
+ 166622 string characters out of 6132703
+ 314979 words of memory out of 5000000
+ 14593 multiletter control sequences out of 15000+600000
+ 14469 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,11n,43p,662b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,12n,51p,744b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -969,10 +979,10 @@ exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template.pdf (14 pages, 337525 bytes).
+Output written on template.pdf (18 pages, 364838 bytes).
 PDF statistics:
- 208 PDF objects out of 1000 (max. 8388607)
- 173 compressed objects within 2 object streams
- 33 named destinations out of 1000 (max. 500000)
- 16494 words of extra memory for PDF output out of 17280 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 233 compressed objects within 3 object streams
+ 45 named destinations out of 1000 (max. 500000)
+ 16555 words of extra memory for PDF output out of 17280 (max. 10000000)
 

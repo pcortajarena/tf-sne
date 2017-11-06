@@ -80,7 +80,7 @@
 %%	(v) the month and year of submission.
 \thispagestyle{empty}
 \begin{flushright}
-\includegraphics[width=6cm]{LOGO_ESCUELA}
+\includegraphics[width=6cm]{figures/LOGO_ESCUELA}
 \end{flushright}
 \vskip40mm
 \begin{center}
@@ -95,7 +95,7 @@
 
 \Large\textbf{Ponente: Carlos Roberto del Blanco Adán}
 
-\Large\textbf{Tutor: Pedro Morales}
+\Large\textbf{Tutor: Iñigo Cortajarena Sauca}
 
 \end{center}
 \vfill
@@ -252,6 +252,69 @@ $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} 
 \chapter{Framework}
 \label{chap:frame}
 
+We hereby propose the development of a supervised learning tool which learns the embedding from an unsupervised learning method, which could be used in real machine learning applications.
+
+The main supervised learning algorithm applied is Neural Networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated and non-linear models. The advantage relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
+
+Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. However, the aim is to try and learn the values which represent the dimension reduction in a set of datapoints by using that neural net. That means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net which learns that embedding from \textbf{n} dimensions into two. As soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can use the neural net parameters to obtain the dimensionally reduced value from the new example.
+
+With this implementation we would be able to speed up processes, reduce memory and also computational times.
+
+We base our programmation in nowadays technologies such as Python in Scikit Learn, Keras and Pandas.
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{figures/neuralnet.pdf}
+\caption{\label{nnet}Dimensionality reduction algorithm learned by a Neural Network}
+\end{figure}
+
+\newpage
+
+\section{Class: NNReplicator}
+\label{sec:nnrep}
+
+We have developed a class named NNReplicator which replicates the behaviour of a neural net wrapping an embedder object, as it is represented in figure \ref{nnet}. It is written as if it was a Scikit Learn class so that the objects created could fix into a Scikit Learn pipeline, being one of the main future applications.\\
+The inputs expected in this new class are the next ones:
+\begin{itemize}
+\item n\_comp: number of components for the low-dimensional space
+\item embedder: dimensionality reduction object, such as PCA, MDS or TSNE in our examples
+\item layers: array with the number of neurons for each layer, taking into account that the last layer has the same neurons as the number of components in the low dimensional space; e.g: [100,10]: it has three layers, with 100, 10 and n\_comp neurons each.
+\item dropout: array with the same size as layers, containing the dropouts for each layer.
+\item lr: learning rate for the neural network training.
+\item act\_function: activation function for the neural net.
+\item loss\_func: losses function used to minimize the cost.
+\item epochs: number of epochs for each training
+\item batch\_size: number of examples used to compute the cost function.
+\end{itemize}
+Once the inputs are understood, the next point is to get to know what is being computed and what methods are included in the class. As we want to include it as a Scikit Learn class, some methods are required; those are the method fit and transform, which make the class capable of instantiate tranformers. This is explained in sections \ref{ssec:nnc}, \ref{ssec:fit} and \ref{ssec:trans}.
+
+\subsection{Methods: nnConstruct}
+\label{ssec:nnc}
+
+This method is in charge of constructing the neural network taking into account the inputs provided. It is based on the Keras library, which makes easier the task of programming a neural net. A sequential model is used to stack one layer after the other. We use: add Dense to include a layer, add Activation to specify which activation function to use and add Dropout to include the porcentage of dropout indicated by the corresponding input.\\
+The best way of implementing the neural net is by designing a for-loop which extracts the inputs from the arrays and automatically computes denses and dropouts.\\
+The default optimizer is Adagrad, and takes as input the learning rate from the object's inicialization. The next step should be the compilation of the whole neural net, using the loss function inputed as the cost to minimize and the model should be completely done.\\
+Despite of having built the neural net correctly, we also need to make it compatible with Scikit Learn. That's why the last step consists on a Keras Wrapper, named Keras Regressor, remodeling the model into a sklearn neuralnet model.
+
+\subsection{Methods: fit}
+\label{ssec:fit}
+
+\subsection{Methods: transform}
+\label{ssec:trans}
+
+\section{Cross Validation}
+\label{sec:cv}
+
+\section{Metrics}
+\label{sec:met}
+
+
+%-----------------------------------------------------
+% Chapter: Applications
+%-----------------------------------------------------
+
+\chapter{Applications}
+\label{chap:app}
 
 
 %-----------------------------------------------------
