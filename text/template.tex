@@ -324,19 +324,23 @@ We look forward to construct a supervised learning algorithm, based on neural ne
 
 We have been able to turn a unsupervised learning algorithm into a supervised learning algorithm, by replicating the unsupervised algorithm's behaviour.
 
-%\begin{figure}
-%\centering
-%\includegraphics[width=12cm]{figures/fit.pdf}
-%\caption{\label{figurefit}Fit method from NNReplicator class.}
-%\end{figure}
-
 \subsection{Dimensionality reduced data obtaining.}
 \label{ssec:trans}
 
-
+We have achieved the task of replicating an unsupervised algorithm's behaviour by a supervised algorithm, characterized for being capable of predicting the output by computing operations between the input and some learned parameters.
+Even though the unsupervised algorithms have no parameters, a neural net does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
 
 \section{Cross Validation}
 \label{sec:cv}
+
+Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit the new examples, and moreover estimate how accurate is the model performing.\\
+It consists on dividing the data into folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the number folds, using a fraction of disjoint datapoints to train and the rest of them to test. This means in the end we have to test out of sample with all the datapoints. Lastly, a losses metric is used to see how accurate our predictions are. A schema is shown below to represent what cross validation is doing.
+\begin{figure}[b]
+\centering
+\includegraphics[width=12cm]{figures/cv.pdf}
+\caption{\label{figurefit}Cross validation using K-Folds.}
+\end{figure}
+
 
 \section{Metrics}
 \label{sec:met}
