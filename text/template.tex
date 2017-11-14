@@ -159,18 +159,36 @@ The aim of this project is
 \chapter{Introduction}
 \label{chap:intro}
 
-Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even decreasing the number of features needed to describe that same dataset. Thus, time and memory in huge implementations could be saved. \\
-Taking into account that this turns into a difficult task, we can find that numerous approaches have been proposed.\\
-Although they look forward to achieve more or less the same performance, they differ from one another and we can not reassure which would suite for a specific problem or even if the behaviour of the algorithm is going to reach the results we expected or needed.\\
-The first point to take into account is the existence of parametric and non parametric algorithms, and secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.\\
-So our decision of which to implement depends on the previous study of our data, the performance requirements and the later purpose and usage of the reduced data.
+Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even with a reduced number of features used to describe that same dataset. This means  dimensionality reduction algorithms compute new features based on the original ones. Although the number of new features computed are less than the number of original ones, the reduction's objective is to still represent the same information without significant distortion. Thus, time and memory in huge implementations are saved.
 
-We propose the research and then base our study in the next dimensionality reduction algorithms:\\
+Taking into account that this turns into a difficult task, numerous approaches have been proposed.\\
+Although the different approaches try to achieve more or less the same aim, they differ from one another and we can not reassure which would suite for a specific problem or even if the behaviour of the algorithm throws the results we expected or needed.
+
+The first point to take into account is the existence of parametric and non-parametric algorithms, depending on whether the dimensionality reduction can be expressed in terms of parameters or not, which can be conclusive when deciding what algorithm to use.\\
+Secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.
+
+So the decision of which of them to implement depends on the previous study of our data, the performance requirements and the later purpose and usage of the reduced data.
+
+The non-parametric algorithms have an important disadvantage: as it is said, they don't have parameters which represent the dimensionality reduction; thus, when a new datapoint is provided we need to compute the whole algorithm again to obtain the datapoint's representation in the lower space, instead of computing only the new data.
+
+We hereby propose the study and research of an implementation which replicates the behaviour of a non-parametric dimensionality reduction algorithm. The main objective is to solve the non-parametric's main disadvantage and make the new algorithm capable of being repeatedly used with new datapoint examples, omiting the need to compute the whole dimensionality reduction algorithm every time.\\
+The dimensionality reduction algorithms used to base the research are the ones listed below:
+\renewcommand{\labelitemi}{\textendash}
 \begin{itemize}
 \item PCA (Principal Component Analysis)
 \item MDS (Multidimensional Scaling)
 \item TSNE (T-Stochastic Neighbour Embedding)
 \end{itemize}
+
+To conclude, the document is divided into chapters which resume the main steps of this research. Chapter number \ref{chap:stt} describes the State of the Art. It is followed by chapter \ref{chap:frame}, which details the main development of the implementation. Afterwards, chapters \ref{chap:app} and \ref{chap:met} describe the main implementation's applications and the corresponding metrics computed to analyse the algorithm's behaviour. The last chapter (chapter \ref{chap:conc}) comprehends the conclusion and resumes the main ideas acquired.
+%-----------------------------------------------------
+% Chapter: State of the Art
+%-----------------------------------------------------
+
+\chapter{State of the Art}
+\label{chap:stt}
+
+State of the art
 
 \section{PCA: Principal Component Analysis}
 \label{sec:pca}
@@ -191,7 +209,6 @@ $$ \textbf{A} = cov(\textbf{X}); \textbf{P} = \textbf{V}^{T}; \textbf{D} = cov(\
 \end{center}
 
 With the previous expressions we get to the point that computing the eigenvectors of the covariance matrix \textbf{X} we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The eigenvalues matrix obtained (cov(\textbf{Y})) sorted decreasingly would be the orthogonal basis values. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the corresponding eigenvectors, we would obtain our reduced dimensionally points, as a basis transformation of our datapoints from the original dataset, by the new basis coordinates.
-\newpage
 
 \section{MDS: Multidimensional Scaling}
 \label{sec:mds}
@@ -229,7 +246,6 @@ As the point of this metric is to compute similarities as probabilities, we can 
 $$ C = \sum\limits_{i} KL(P_{i}||Q_{i}) = \sum\limits_{i} \sum\limits_{j} p_{i|j} log \frac{p_{i|j}}{q_{i|j}}$$
 
 The limitations of this algorithm are the non symmetric general expression of the Kullback-Leibler divergence, the difficulty to optimize the cost function, the fact that we need to choose diferent values of the variance depending on the point and the "crowding problem". T-SNE tries to solve this limitations as in the next section is described.
-\newpage
 
 \subsection{T-SNE}
 \label{ssec:tsne}
@@ -245,7 +261,7 @@ $$ q_{ij} = \frac{(1+ ||y_{i}-y_{j}||^2)^{-1}} {\sum\limits_{k\neq l} (1+ ||y_{k
 The reason why this particular distribution was chosen is because it is related to the Gaussian distribution, as the t-Student is an infinite mixture of Gaussians.\\
 To conclude, the gradient of the Kullback-Leibler divergence taking into account this changes in the Q low-dimensional space would stand for the next expression:\\
 $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} - y_{j}) (1+ ||y_{i}-y_{j}||^2)^{-1}$$
-\newpage
+
 %\begin{figure}
 %\centering
 %\includegraphics[width=16cm]{figures/prices.pdf}
@@ -261,25 +277,27 @@ $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} 
 
 We hereby propose the development of a supervised learning tool which learns the embedding from an unsupervised learning method, which could be used in real machine learning applications.
 
-The main supervised learning algorithm applied is Neural Networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated and non-linear models. The advantage relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
+The two main supervised learning algorithms used in today's applications which can bear either with the basic problems or with a little complicated tasks are especially Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we study their main characteristics and differences.\\
+First of all, decision trees are known to be faster once they are trained and their results are very interpretable. On the other hand, neural nets are slower and less interpretable. Decision trees model correctly when the functions are axis-parallel splits of the data. If that is not the case, neural nets can model all kinds of functions from linear to non-linear interactions. Neural net is prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neural nets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That complicates the performance of the algorithm when we need more than one output.
 
-Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. However, the aim is to try and learn the set of values which would represent the dimensionality reduction by using a neural net. That means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net which learns that embedding from \textbf{n} dimensions into two. As soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can use the neural net parameters to obtain the dimensionally reduced value from the new examples.
+Taking into account the characteristics and differences between neural nets and decision trees, the main supervised learning algorithm applied in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated and non-linear models. The advantage in our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
 
-With this implementation we would be able to speed up processes, reduce memory and also computational times.
+Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. This means once the algorithm is computed, if we want to add some new datapoint to the dataset and then obtain the reduced corresponding value, it would be necessary to compute everything again so that that the ouput includes the new datapoint's output too. However, this means a lot of computational work so the aim of our research is to try and learn the set of parameters from a neural net which would represent the dimensionality reduction. That means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net which learns that embedding from \textbf{n} dimensions into two. As soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can use the neural net parameters to obtain the predictions which will be the dimensionally reduced value from the new examples.
 
-\begin{figure}
+With this implementation we would be able to speed up processes, reduce memory and also computational times.\\
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{figures/neuralnet.pdf}
 \caption{\label{figurenet}Dimensionality reduction algorithm learned by a Neural Network}
 \end{figure}
-
-\newpage
 
 \section{Supervised algorithm}
 \label{sec:sup}
 
 We have developed a supervised algorithm, based in neural nets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:
+
 \begin{itemize}
 \item Number of components for the low-dimensional space
 \item Dimensionality reduction object, such as PCA, MDS or TSNE in our examples.
@@ -335,7 +353,7 @@ Even though the unsupervised algorithms have no parameters, a neural net does. W
 
 Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit the new examples, and moreover estimate how accurate is the model performing.\\
 It consists on dividing the data into folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the number folds, using a fraction of disjoint datapoints to train and the rest of them to test. This means in the end we have to test out of sample with all the datapoints. Lastly, a losses metric is used to see how accurate our predictions are. A schema is shown below to represent what cross validation is doing.
-\begin{figure}[b]
+\begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{figures/cv.pdf}
 \caption{\label{figurefit}Cross validation using K-Folds.}
@@ -346,6 +364,7 @@ It consists on dividing the data into folds usually depending on the dataset. Ch
 \label{sec:met}
 
 
+
 %-----------------------------------------------------
 % Chapter: Applications
 %-----------------------------------------------------
@@ -354,7 +373,23 @@ It consists on dividing the data into folds usually depending on the dataset. Ch
 \label{chap:app}
 
 %-----------------------------------------------------
-% Chapter: Applications
+% Chapter: Metrics
+%-----------------------------------------------------
+
+\chapter{Metrics}
+\label{chap:met}
+
+
+%-----------------------------------------------------
+% Chapter: Conclusion
+%-----------------------------------------------------
+
+\chapter{Conclusion}
+\label{chap:conc}
+
+
+%-----------------------------------------------------
+% Chapter: Extra
 %-----------------------------------------------------
 
 \chapter{EXTRA APPENDIX}
