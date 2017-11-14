@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{pca}
+Tobias Holl.
+\newblock Principal component analysis.
+\newblock {\em Proseminar Data Mining}.
+
+\bibitem{gdescent}
+Sebastian Ruder.
+\newblock An overview of gradient descent optimization algorithms.
+\newblock 2016.
+
+\bibitem{isomap}
+Joshua~B. Tenenbaum, Vin de~Silva, and John~C. Langford.
+\newblock A global geometric framework for nonlinear dimensionality reduction.
+\newblock {\em Science vol 290}, 2000.
+
+\bibitem{tsne}
+Laurens van~der Maaten and Geoffrey Hinton.
+\newblock Visualizing data using t-\uppercase{SNE}.
+\newblock {\em Journal of Machine Learning Research}, 2008.
+
+\bibitem{mds}
+Florian Wickelmaier.
+\newblock An introduction to \uppercase{MDS}.
+\newblock 2003.
+
+\end{thebibliography}

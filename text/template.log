@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  14 NOV 2017 12:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  14 NOV 2017 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -798,20 +798,20 @@ File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
 (./template.aux)
 \openout1 = `template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
-LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
+LaTeX Font Info:    ... okay on input line 70.
 
 (/usr/local/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -828,7 +828,7 @@ LaTeX Font Info:    ... okay on input line 72.
 \everyMPtoPDFconversion=\toks32
 )
 \c@lstlisting=\count152
-LaTeX Info: Redefining \microtypecontext on input line 72.
+LaTeX Info: Redefining \microtypecontext on input line 70.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -877,8 +877,8 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box38
-Package backref Info: ** backref set up for natbib ** on input line 72.
-Package hyperref Info: Link coloring ON on input line 72.
+Package backref Info: ** backref set up for natbib ** on input line 70.
+Package hyperref Info: Link coloring ON on input line 70.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -887,9 +887,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count153
 )
-LaTeX Info: Redefining \ref on input line 72.
-LaTeX Info: Redefining \pageref on input line 72.
-LaTeX Info: Redefining \nameref on input line 72.
+LaTeX Info: Redefining \ref on input line 70.
+LaTeX Info: Redefining \pageref on input line 70.
+LaTeX Info: Redefining \nameref on input line 70.
 
 (./template.out) (./template.out)
 \@outlinefile=\write3
@@ -900,7 +900,7 @@ LaTeX Info: Redefining \nameref on input line 72.
 File: figures/LOGO_ESCUELA.png Graphic file (type png)
 
 <use figures/LOGO_ESCUELA.png>
-Package pdftex.def Info: figures/LOGO_ESCUELA.png used on input line 90.
+Package pdftex.def Info: figures/LOGO_ESCUELA.png used on input line 88.
 (pdftex.def)             Requested size: 170.71652pt x 53.3637pt.
  [1
 
@@ -937,22 +937,22 @@ Chapter 2.
 [3
 
 ] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 244--246
+Underfull \hbox (badness 10000) in paragraph at lines 243--245
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 257--260
+Underfull \hbox (badness 10000) in paragraph at lines 256--259
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 260--263
+Underfull \hbox (badness 10000) in paragraph at lines 259--262
 
  []
 
@@ -961,7 +961,7 @@ Chapter 3.
 [8
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 287--288
+Underfull \hbox (badness 10000) in paragraph at lines 286--287
 
  []
 
@@ -969,16 +969,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 287--288
 File: figures/neuralnet.pdf Graphic file (type pdf)
 
 <use figures/neuralnet.pdf>
-Package pdftex.def Info: figures/neuralnet.pdf used on input line 291.
+Package pdftex.def Info: figures/neuralnet.pdf used on input line 290.
 (pdftex.def)             Requested size: 341.43306pt x 107.00226pt.
  [9 <./figures/neuralnet.pdf>] [10]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 329.
+put line 328.
 
 <figures/cv.pdf, id=234, 468.75125pt x 213.79875pt>
 File: figures/cv.pdf Graphic file (type pdf)
  <use figures/cv.pdf>
-Package pdftex.def Info: figures/cv.pdf used on input line 358.
+Package pdftex.def Info: figures/cv.pdf used on input line 357.
 (pdftex.def)             Requested size: 341.43306pt x 155.72597pt.
 
 [11] [12 <./figures/cv.pdf>]
@@ -997,26 +997,34 @@ Chapter 6.
 Chapter 7.
 [16
 
-] [17
+] (./template.bbl (./template.brf)
+\tf@brf=\write7
+\openout7 = `template.brf'.
+
+ [17
+
+]) [18
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 436.
- [18
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 438.
+ [19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 436.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 438.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 436.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 436.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 438.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 438.
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: 9FE44B6A6A373760F22C48313E14C674;1491.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 436.
+(rerunfilecheck)             Checksum: 554C683EBC3E4F9171326E6E9D9AAE2E;1492.
+Package rerunfilecheck Info: File `template.brf' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 438.
  ) 
 Here is how much of TeX's memory you used:
- 11979 strings out of 492995
- 175679 string characters out of 6132703
- 325036 words of memory out of 5000000
- 15186 multiletter control sequences out of 15000+600000
+ 12024 strings out of 492995
+ 176146 string characters out of 6132703
+ 325112 words of memory out of 5000000
+ 15218 multiletter control sequences out of 15000+600000
  16686 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,12n,51p,1129b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1038,10 +1046,10 @@ live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template.pdf (25 pages, 439462 bytes).
+Output written on template.pdf (26 pages, 444321 bytes).
 PDF statistics:
- 350 PDF objects out of 1000 (max. 8388607)
- 298 compressed objects within 3 object streams
- 58 named destinations out of 1000 (max. 500000)
+ 362 PDF objects out of 1000 (max. 8388607)
+ 308 compressed objects within 4 object streams
+ 65 named destinations out of 1000 (max. 500000)
  22224 words of extra memory for PDF output out of 24883 (max. 10000000)
 
