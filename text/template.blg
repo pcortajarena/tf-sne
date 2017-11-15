@@ -3,48 +3,53 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: template.aux
 The style file: plain.bst
 Database file #1: mybib.bib
+Warning--empty journal in rproj
+Warning--empty journal in auto2
+Warning--empty year in auto2
 Warning--empty year in pca
 Warning--empty journal in gdescent
+Warning--empty journal in auto
+Warning--empty journal in rproj2
 Warning--empty journal in mds
-You've used 5 entries,
+You've used 11 entries,
             2118 wiz_defined-function locations,
-            519 strings with 4475 characters,
-and the built_in function-call counts, 1148 in all, are:
-= -- 105
-> -- 52
+            545 strings with 5454 characters,
+and the built_in function-call counts, 3150 in all, are:
+= -- 280
+> -- 204
 < -- 0
-+ -- 24
-- -- 16
-* -- 57
-:= -- 219
-add.period$ -- 15
-call.type$ -- 5
-change.case$ -- 23
++ -- 85
+- -- 70
+* -- 208
+:= -- 587
+add.period$ -- 32
+call.type$ -- 11
+change.case$ -- 68
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 50
-empty$ -- 86
-format.name$ -- 16
-if$ -- 222
+cite$ -- 19
+duplicate$ -- 111
+empty$ -- 199
+format.name$ -- 70
+if$ -- 600
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 5
-newline$ -- 28
-num.names$ -- 10
-pop$ -- 29
+int.to.str$ -- 11
+missing$ -- 11
+newline$ -- 57
+num.names$ -- 22
+pop$ -- 82
 preamble$ -- 1
-purify$ -- 18
+purify$ -- 57
 quote$ -- 0
-skip$ -- 35
+skip$ -- 77
 stack$ -- 0
-substring$ -- 28
-swap$ -- 3
+substring$ -- 90
+swap$ -- 5
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 20
-warning$ -- 3
-while$ -- 10
-width$ -- 6
-write$ -- 49
-(There were 3 warnings)
+type$ -- 44
+warning$ -- 8
+while$ -- 24
+width$ -- 13
+write$ -- 104
+(There were 8 warnings)
