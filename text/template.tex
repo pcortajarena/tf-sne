@@ -237,7 +237,7 @@ As in every data problem, we need a metric which shows how well the performance 
 \begin{center}
 \( \textit{stress} = \sqrt{\frac{\sum(d_{ij}-d'_{ij})^{2}}{\sum d_{ij}^{2}} } \)
 \end{center}
-$d_{ij}$ represents the original distance and $d'_{ij}$ is the predicted distance based on the MDS model. This last value is either a predicted distance or a function which represents the non-metric transformation of the data.\\
+$d_{ij}$ represents the original distance and $d'_{ij}$ is the predicted distance based on the MDS model. This last value is either a predicted true distance or a function which represents the non-metric transformation of the data.\\
 Regarding the previous expression, if our prediction stands well for the original data, the stress value should lower, relating zero stress to the perfect performance of the MDS  algorithm. 
 
 \section{TSNE: T-Stochastic Neighbour Embedding}
@@ -264,6 +264,7 @@ The limitations of this algorithm are the non symmetric general expression of th
 
 \subsection{T-SNE}
 \label{ssec:tsne}
+
 Although SNE is capable of showing good visualizations, T-SNE was proposed as a modified algorithm which tried to make it's behaviour more accurate and easy to compute.\\
 First of all, instead of minimizing the sum of the different KL divergences along all the datapoints, another way of computing the cost is presented: we are trying to minimize a single KL divergence between a joint probability P and the same in the low dimensional space, Q. With this symmetric aproach, we ommit the need to obtain the variance value for each datapoint and the cost function is much easier to compute and optimize, so does the gradient.
 
@@ -278,7 +279,7 @@ Therefore, the joint probabilities are now then computed as follows:
 $$ q_{ij} = \frac{(1+ ||y_{i}-y_{j}||^2)^{-1}} {\sum\limits_{k\neq l} (1+ ||y_{k}-y_{l}||^2)^{-1} }$$
 
 The reason why this particular distribution was chosen is because it is related to the Gaussian distribution, as the t-Student is an infinite mixture of Gaussians.\\
-To conclude, the gradient of the Kullback-Leibler divergence taking into account this changes in the Q low-dimensional space would stand for the next expression:
+To conclude, the gradient of the Kullback-Leibler divergence taking into account this changes in the Q low-dimensional space stands for the next expression:
 
 $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} - y_{j}) (1+ ||y_{i}-y_{j}||^2)^{-1}$$
 
@@ -295,14 +296,16 @@ $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} 
 \chapter{Framework}
 \label{chap:frame}
 
-We hereby propose the development of a supervised learning tool which learns the embedding from an unsupervised learning method, which could be used in real machine learning applications.
+We hereby propose the development of a supervised learning tool which learns the embedding derived by an unsupervised learning method, which could be used in real machine learning applications.
 
-The two main supervised learning algorithms used in today's applications which can bear either with the basic problems or with a little complicated tasks are especially Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we study their main characteristics and differences.\\
-First of all, decision trees are known to be faster once they are trained and their results are very interpretable. On the other hand, neural nets are slower and less interpretable. Decision trees model correctly when the functions are axis-parallel splits of the data. If that is not the case, neural nets can model all kinds of functions from linear to non-linear interactions. Neural net is prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neural nets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That complicates the performance of the algorithm when we need more than one output.
+The two main supervised learning algorithms used in today's applications are especially Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we study their main characteristics and differences.\\
+First of all, decision trees are known to be faster and easier to train, and their results are very interpretable. On the other hand, neural nets are slower and less interpretable. Neural networks are prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neural nets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That increases computational complexity as the number of output dimensions increase.
 
-Taking into account the characteristics and differences between neural nets and decision trees, the main supervised learning algorithm applied in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated and non-linear models. The advantage in our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
+Taking into account the characteristics and differences between neural nets and decision trees, the main supervised learning algorithm tested in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated non-linear models. The advantage of our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
 
-Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. This means once the algorithm is computed, if we want to add some new datapoint to the dataset and then obtain the reduced corresponding value, it would be necessary to compute everything again so that that the ouput includes the new datapoint's output too. However, this means a lot of computational work so the aim of our research is to try and learn the set of parameters from a neural net which would represent the dimensionality reduction. That means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net which learns that embedding from \textbf{n} dimensions into two. As soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can use the neural net parameters to obtain the predictions which will be the dimensionally reduced value from the new examples.
+Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. As it was explained in the introduction (Chapter \ref{chap:intro}), this algorithms can not be expressed in terms of parameters, so this means once the algorithm is computed, if we want to add a new datapoint to the dataset and then obtain its reduced embedded vector, it would be necessary to compute everything again so that that the total ouput includes the new datapoint's output too. Thus, this means a lot of computational work.
+
+Going in depth into the problem, that means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net (supervised algorithm) which learns that embedding from \textbf{n} dimensions into two, replicating any of the previously mentioned dimensionality reduction algorithms (unsupervised non-parametric algorithm).\\ The neural network needs to be trained at least once, so we need to compute the dimensionality reduction algorithm once (step 1, figure \ref{figurenet}) to input the dataset into the neural net and set the output as the reduced values just computed. Having the neural net trained (step 2, figure \ref{figurenet}), as soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can reuse the neural net's parameters to obtain the predictions (step 3, figure \ref{figurenet}) which will be the dimensionally reduced value from the new examples.
 
 With this implementation we would be able to speed up processes, reduce memory and also computational times.\\
 
@@ -311,6 +314,28 @@ With this implementation we would be able to speed up processes, reduce memory a
 \includegraphics[width=12cm]{figures/neuralnet.pdf}
 \caption{\label{figurenet}Dimensionality reduction algorithm learned by a Neural Network}
 \end{figure}
+
+\section{Cross Validation}
+\label{sec:cv}
+
+Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit the new examples, and moreover estimate how accurate the model is performing.\\
+It consists on dividing the data into folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the number folds, using a fraction of disjoint datapoints to train and the rest of them to test. This means in the end we have to test out of sample with all the datapoints. Lastly, a losses metric is used to see how accurate our predictions are. A schema is shown below to represent what cross validation is doing.
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{figures/cv.pdf}
+\caption{\label{figurefit}Cross validation using K-Folds.}
+\end{figure}
+
+\section{Metrics}
+\label{sec:met}
+
+
+%-----------------------------------------------------
+% Chapter: Applications
+%-----------------------------------------------------
+
+\chapter{Applications}
+\label{chap:app}
 
 \section{Supervised algorithm}
 \label{sec:sup}
@@ -367,30 +392,6 @@ We have been able to turn a unsupervised learning algorithm into a supervised le
 
 We have achieved the task of replicating an unsupervised algorithm's behaviour by a supervised algorithm, characterized for being capable of predicting the output by computing operations between the input and some learned parameters.
 Even though the unsupervised algorithms have no parameters, a neural net does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
-
-\section{Cross Validation}
-\label{sec:cv}
-
-Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit the new examples, and moreover estimate how accurate is the model performing.\\
-It consists on dividing the data into folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the number folds, using a fraction of disjoint datapoints to train and the rest of them to test. This means in the end we have to test out of sample with all the datapoints. Lastly, a losses metric is used to see how accurate our predictions are. A schema is shown below to represent what cross validation is doing.
-\begin{figure}[h]
-\centering
-\includegraphics[width=12cm]{figures/cv.pdf}
-\caption{\label{figurefit}Cross validation using K-Folds.}
-\end{figure}
-
-
-\section{Metrics}
-\label{sec:met}
-
-
-
-%-----------------------------------------------------
-% Chapter: Applications
-%-----------------------------------------------------
-
-\chapter{Applications}
-\label{chap:app}
 
 %-----------------------------------------------------
 % Chapter: Metrics
