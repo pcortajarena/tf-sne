@@ -12,9 +12,8 @@ from sklearn.neighbors import NearestNeighbors
 
 class NNReplicator(TransformerMixin):
 
-    def __init__(self, n_comp, embedder, layers, dropout, lr, act_func, loss_func, epochs, batch_size):
+    def __init__(self, embedder, layers, dropout, lr, act_func, loss_func, epochs, batch_size):
 
-        self.n_comp = n_comp
         self.embedder = embedder
         self.layers = layers
         self.dropout = dropout
@@ -37,7 +36,7 @@ class NNReplicator(TransformerMixin):
 
             model.add(Dropout(drop))
 
-        model.add(Dense(self.n_comp, activation='linear'))
+        model.add(Dense(self.embedder.n_components, activation='linear'))
         ada = optimizers.Adagrad(lr=self.lr)
 
         model.compile(optimizer=ada, loss=self.loss_func)
