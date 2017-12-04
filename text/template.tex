@@ -318,16 +318,16 @@ With this implementation we would be able to speed up processes, reduce memory a
 \section{Cross Validation}
 \label{sec:cv}
 
-Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit the new examples, and moreover estimate how accurate the model is performing.\\
-It consists on dividing the data into folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the number folds, using a fraction of disjoint datapoints to train and the rest of them to test. This means in the end we have to test out of sample with all the datapoints. Lastly, a losses metric is used to see how accurate our predictions are. A schema is shown below to represent what cross validation is doing.
+Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit new examples, and moreover estimate how accurate the model is performing.\\
+The easiest way to know whether a model is underfitting or overfitting is dividing the dataset into train datapoints and test datapoints, choosing for example 80\% to train the model and 20\% to test the behaviour with datapoints which have not been used to adjust the model. Although this is a good first approach, we might be fitting our model to the test points without noticing. This means we might be choosing the model's parameters to fit the test set, and still don't capture the general behaviour of the problem.\\
+A more accurate approach would be cross validation. It consists on dividing the data into a number of folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the same number of times as folds, choosing in each iteration one of the folds to test and the rest of them to train. As we have trained and tested the model with disjoint values, we are not fitting our model to certain values. We use a losses metric to cuantify this result and to conclude we calculate a mean of all of them to obtain a unique value to represent the total behaviour. A schema is shown below to represent what cross validation is doing.\\
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{figures/cv.pdf}
 \caption{\label{figurefit}Cross validation using K-Folds.}
 \end{figure}
 
-\section{Metrics}
-\label{sec:met}
 
 
 %-----------------------------------------------------
@@ -340,6 +340,7 @@ It consists on dividing the data into folds usually depending on the dataset. Ch
 \section{Supervised algorithm}
 \label{sec:sup}
 
+\newpage
 We have developed a supervised algorithm, based in neural nets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:
 
