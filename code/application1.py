@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from scipy import sparse
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
@@ -16,6 +17,9 @@ import keras.backend as K
 #distance loss
 def dist_loss(y, y_):
     return K.mean(K.sqrt(K.sum(K.square(y - y_), axis=1)))
+
+def dist_error(y_true, y_pred):
+    return np.mean(np.sqrt(np.sum((y_true - y_pred) ** 2, axis=1)))
 
 #neural net model
 def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'):
@@ -36,17 +40,17 @@ def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'
     model.compile(optimizer=ada, loss=loss_func)
     return model
 
-def app(embedder, unsuper_pipe, super_pipe, X, y):
+def app(unsuper_pipe, super_pipe, X, y):
 
-    X_tsne = unsuper_pipe.fit_transform(X)
+    X_unsupervised = unsuper_pipe.fit_transform(X)
 
-    X_train, X_test, X_tsne_train, X_tsne_test, y_train, y_test = train_test_split(X, X_tsne, y)
+    X_train, X_test, X_unsuper_train, X_unsuper_test, y_train, y_test = train_test_split(X, X_unsupervised, y)
 
-    super_pipe.fit(X_train, X_tsne_train)
+    super_pipe.fit(X_train, X_unsuper_train)
 
     predictions = super_pipe.predict(X_test)
 
-    return predictions, X_tsne_test, y_test
+    return predictions, X_unsuper_test, y_test
 
 
 if __name__ == '__main__':
@@ -75,6 +79,7 @@ if __name__ == '__main__':
         model
     )
 
-    total_predictions, X_tsne_test, y_test = app(tsne, unsupervised_pipeline, supervised_pipeline, X)
+    total_predictions, X_tsne_test, y_test = app(unsupervised_pipeline, supervised_pipeline, X, y)
 
+    error = dist_error(X_tsne_test.iloc[:,:2].values, total_predictions.iloc[:,:2].values)
 
