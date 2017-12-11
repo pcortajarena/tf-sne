@@ -1,5 +1,9 @@
 import pandas as pd
 import numpy as np
+
+from seaborn import heatmap
+import matplotlib.pyplot as plt
+
 from scipy import sparse
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
@@ -38,7 +42,7 @@ def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'
     ada = optimizers.Adagrad(lr=lr)
 
     model.compile(optimizer=ada, loss=loss_func)
-    return model
+    return moel
 
 def app(unsuper_pipe, super_pipe, X, y):
 
@@ -81,5 +85,14 @@ if __name__ == '__main__':
 
     total_predictions, X_tsne_test, y_test = app(unsupervised_pipeline, supervised_pipeline, X, y)
 
+    #example of number representation
+    fig, ax = plt.subplots(1,1, figsize=(9,8))
+    heatmap(X[550].reshape(8,8), cmap='gray', annot=True, ax=ax, cbar=False)
+    plt.axis('off')
+    plt.savefig('../text/figures/exampledigit.pdf', bbox_inches='tight')
+
     error = dist_error(X_tsne_test.iloc[:,:2].values, total_predictions.iloc[:,:2].values)
+
+
+
 

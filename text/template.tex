@@ -337,8 +337,19 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \chapter{Applications}
 \label{chap:app}
 
-\section{Supervised algorithm}
+\section{Application 1:}
 \label{sec:sup}
+
+The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neural net is capable of replicating the previous algorithm.
+
+The dataset \textit{"load-digits"} is the data used to develop this example and is extracted from the Scikit-Learn datasets \citep{scikit-learn}. It consists on 1797 instances of handwritten digits between 0 to 9 from diferent writers with 64 features each. This features display the values of grayscale intensity for each pixel in the image. This means our images are 8x8 pixel images which are represented by 64 total features containing intensities from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a dataset, each image is represented in a row with it's corresponding 64 values and including a last column with the label of the number represented in the image.
+\begin{figure}[h]
+\centering
+\includegraphics[width=11cm]{figures/exampledigit.pdf}
+\caption{\label{figuredigit}Example dataset point representing a handwriten digit.}
+\end{figure}
+
+The next point to take into account is the 
 
 \newpage
 We have developed a supervised algorithm, based in neural nets, which reproduces the ideas showed in the framework's introduction.
