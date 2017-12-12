@@ -42,7 +42,7 @@ def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'
     ada = optimizers.Adagrad(lr=lr)
 
     model.compile(optimizer=ada, loss=loss_func)
-    return moel
+    return model
 
 def app(unsuper_pipe, super_pipe, X, y):
 
