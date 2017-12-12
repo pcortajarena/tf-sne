@@ -8,16 +8,20 @@
 \BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 Stress metric}{section.2.2}% 8
 \BOOKMARK [1][-]{section.2.3}{2.3 TSNE: T-Stochastic Neighbour Embedding}{chapter.2}% 9
 \BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 SNE}{section.2.3}% 10
-\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 T-SNE}{section.2.3}% 11
+\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 t-SNE}{section.2.3}% 11
 \BOOKMARK [0][-]{chapter.3}{3 Framework}{}% 12
 \BOOKMARK [1][-]{section.3.1}{3.1 Cross Validation}{chapter.3}% 13
 \BOOKMARK [0][-]{chapter.4}{4 Applications}{}% 14
-\BOOKMARK [1][-]{section.4.1}{4.1 Application 1:}{chapter.4}% 15
-\BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Neuralnet construction.}{section.4.1}% 16
-\BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Fitting process.}{section.4.1}% 17
-\BOOKMARK [2][-]{subsection.4.1.3}{4.1.3 Dimensionality reduced data obtaining.}{section.4.1}% 18
-\BOOKMARK [0][-]{chapter.5}{5 Metrics}{}% 19
-\BOOKMARK [0][-]{chapter.6}{6 Conclusion}{}% 20
-\BOOKMARK [0][-]{chapter.7}{7 EXTRA APPENDIX}{}% 21
-\BOOKMARK [0][-]{chapter*.8}{Bibliography}{}% 22
-\BOOKMARK [0][-]{chapter*.10}{Code}{}% 23
+\BOOKMARK [1][-]{section.4.1}{4.1 Application 1: Replicating t-SNE with a Neuralnet}{chapter.4}% 15
+\BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Dataset}{section.4.1}% 16
+\BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Algorithm: t-SNE and Neuralnet}{section.4.1}% 17
+\BOOKMARK [2][-]{subsection.4.1.3}{4.1.3 Metrics}{section.4.1}% 18
+\BOOKMARK [2][-]{subsection.4.1.4}{4.1.4 Conclusions}{section.4.1}% 19
+\BOOKMARK [2][-]{subsection.4.1.5}{4.1.5 Neuralnet construction.}{section.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.1.6}{4.1.6 Fitting process.}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.7}{4.1.7 Dimensionality reduced data obtaining.}{section.4.1}% 22
+\BOOKMARK [0][-]{chapter.5}{5 Metrics}{}% 23
+\BOOKMARK [0][-]{chapter.6}{6 Conclusion}{}% 24
+\BOOKMARK [0][-]{chapter.7}{7 EXTRA APPENDIX}{}% 25
+\BOOKMARK [0][-]{chapter*.8}{Bibliography}{}% 26
+\BOOKMARK [0][-]{chapter*.10}{Code}{}% 27

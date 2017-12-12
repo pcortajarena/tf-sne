@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  11 DEC 2017 17:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  12 DEC 2017 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -896,7 +896,7 @@ LaTeX Info: Redefining \nameref on input line 70.
 \openout3 = `template.out'.
 
 
-<figures/LOGO_ESCUELA.png, id=96, 708.246pt x 221.3871pt>
+<figures/LOGO_ESCUELA.png, id=112, 708.246pt x 221.3871pt>
 File: figures/LOGO_ESCUELA.png Graphic file (type png)
 
 <use figures/LOGO_ESCUELA.png>
@@ -934,7 +934,7 @@ Chapter 1.
 
 ] [2]
 Chapter 2.
-<figures/autoencoder.pdf, id=191, 332.24126pt x 220.825pt>
+<figures/autoencoder.pdf, id=211, 332.24126pt x 220.825pt>
 File: figures/autoencoder.pdf Graphic file (type pdf)
 
 <use figures/autoencoder.pdf>
@@ -955,7 +955,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
 
-<figures/neuralnet.pdf, id=253, 373.395pt x 202.7575pt>
+<figures/neuralnet.pdf, id=273, 373.395pt x 202.7575pt>
 File: figures/neuralnet.pdf Graphic file (type pdf)
 
 <use figures/neuralnet.pdf>
@@ -967,7 +967,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 321--324
  []
 
 [10 <./figures/neuralnet.pdf>]
-<figures/cv.pdf, id=261, 468.75125pt x 213.79875pt>
+<figures/cv.pdf, id=281, 468.75125pt x 213.79875pt>
 File: figures/cv.pdf Graphic file (type pdf)
  <use figures/cv.pdf>
 Package pdftex.def Info: figures/cv.pdf used on input line 327.
@@ -975,12 +975,12 @@ Package pdftex.def Info: figures/cv.pdf used on input line 327.
 
 [11 <./figures/cv.pdf>]
 Chapter 4.
-<figures/exampledigit.pdf, id=271, 538.78474pt x 479.88474pt>
+<figures/exampledigit.pdf, id=291, 538.78474pt x 479.88474pt>
 File: figures/exampledigit.pdf Graphic file (type pdf)
 
 <use figures/exampledigit.pdf>
-Package pdftex.def Info: figures/exampledigit.pdf used on input line 348.
-(pdftex.def)             Requested size: 312.9803pt x 278.76537pt.
+Package pdftex.def Info: figures/exampledigit.pdf used on input line 349.
+(pdftex.def)             Requested size: 284.52756pt x 253.4224pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -988,51 +988,55 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [12
 
 ] [13 <./figures/exampledigit.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 367--368
+
+ []
+
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 386.
- [14] [15]
+put line 370.
+[14] [15] [16] [17] [18]
 Chapter 5.
-[16
+[19
 
 ]
 Chapter 6.
-[17
+[20
 
 ]
 Chapter 7.
-[18
+[21
 
 ] (./template.bbl (./template.brf)
 \tf@brf=\write7
 \openout7 = `template.brf'.
 
- [19
+ [22
 
-]) [20
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 472.
- [21
+]) [23
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 472.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 517.
+ [24
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 517.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 472.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 472.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 517.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 517.
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: 1679C76B8BF184454CBA558855EE8C0C;1428.
+(rerunfilecheck)             Checksum: C03B943F8AEBCF12E43DD37913ECEC3D;1758.
 Package rerunfilecheck Info: File `template.brf' has not changed.
-(rerunfilecheck)             Checksum: F8BDCE3C86CB8D6147044900A9496FD7;459.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 472.
+(rerunfilecheck)             Checksum: 63560FDE93261E8993832A4F6A6E5F8E;466.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 517.
  ) 
 Here is how much of TeX's memory you used:
- 12079 strings out of 492995
- 176946 string characters out of 6132703
- 326297 words of memory out of 5000000
- 15262 multiletter control sequences out of 15000+600000
- 16743 words of font info for 98 fonts, out of 8000000 for 9000
+ 12104 strings out of 492995
+ 177295 string characters out of 6132703
+ 325527 words of memory out of 5000000
+ 15275 multiletter control sequences out of 15000+600000
+ 17072 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,12n,51p,1045b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,12n,51p,1041b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
@@ -1051,10 +1055,10 @@ live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template.pdf (28 pages, 490964 bytes).
+Output written on template.pdf (31 pages, 500144 bytes).
 PDF statistics:
- 431 PDF objects out of 1000 (max. 8388607)
- 364 compressed objects within 4 object streams
- 74 named destinations out of 1000 (max. 500000)
- 22226 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 467 PDF objects out of 1000 (max. 8388607)
+ 397 compressed objects within 4 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 22770 words of extra memory for PDF output out of 24883 (max. 10000000)
 

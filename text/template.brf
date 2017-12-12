@@ -9,4 +9,4 @@
 \backcite {pca}{{4}{2.1}{section.2.1}}
 \backcite {mds}{{5}{2.2}{section.2.2}}
 \backcite {tsne}{{6}{2.3}{section.2.3}}
-\backcite {scikit-learn}{{12}{4.1}{section.4.1}}
+\backcite {scikit-learn}{{12}{4.1.1}{subsection.4.1.1}}

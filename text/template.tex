@@ -189,7 +189,7 @@ To conclude, the document is divided into chapters which resume the main steps o
 
 The most classical dimensionality reduction techniques are know to be PCA \citep{pca} and MDS \citep{mds}. They preserve the true structure of the data even though they are simple to implement and efficiently computable. They rely on linear models to compute data mining on near lower dimensional spaces. A related linear implementation which is based on random projectations of the data is described in \citep{rproj, rproj2}. Some other well-known techniques are ISOMAP \citep{isomap} and t-SNE \citep{tsne}, but their implementations often require more memory and computational time, yet the complexity of the algorithms is higher. Nevertheless, this algorithms are capable of reducing the number of features in non-linear data, where linear models can not faithfully reprensent the data's structure. ISOMAP computes geodesic distances instead of taking into account only euclidean distances while t-SNE's approach calculates probabilities from euclidean distances.
 
-Neural networks have become an essencial tool in machine learning problems and it is certainly used in dimensionality reduction. The autoencoders \citep{auto2, auto} consist on a neural net with decreasing number of neurons per layer and then symmetrically more layers are added with the same corresponding increasing neurons per layer. If the output represents without distorsion the input to the net, the middle layer with the fewest number of neurons corresponds to the reduced description of the data. This is represented in figure \ref{autoencoder}.
+Neural networks have become an essencial tool in machine learning problems and it is certainly used in dimensionality reduction. The autoencoders \citep{auto2, auto} consist on a neuralnet with decreasing number of neurons per layer and then symmetrically more layers are added with the same corresponding increasing neurons per layer. If the output represents without distorsion the input to the net, the middle layer with the fewest number of neurons corresponds to the reduced description of the data. This is represented in figure \ref{autoencoder}.
 
 \begin{figure}[h]
 \centering
@@ -243,7 +243,7 @@ Regarding the previous expression, if our prediction stands well for the origina
 \section{TSNE: T-Stochastic Neighbour Embedding}
 \label{sec:tsne}
 
-T-Stochastic Neighbour Embedding \citep{tsne} is our non-linear example of dimensionality reduction. It relies on Stochastic Neighbour Embedding (SNE). The main reason why this algorithm is used is because it is capable of representing both the local and the global structure of the original data. As said, this section will be divided in two: the basis SNE and the T-SNE upgrades.
+T-Stochastic Neighbour Embedding \citep{tsne} is our non-linear example of dimensionality reduction. It relies on Stochastic Neighbour Embedding (SNE). The main reason why this algorithm is used is because it is capable of representing both the local and the global structure of the original data. As said, this section will be divided in two: the basis SNE and the t-SNE upgrades.
 
 \subsection{SNE}
 \label{ssec:sne}
@@ -262,17 +262,17 @@ $$ C = \sum\limits_{i} KL(P_{i}||Q_{i}) = \sum\limits_{i} \sum\limits_{j} p_{i|j
 
 The limitations of this algorithm are the non symmetric general expression of the Kullback-Leibler divergence, the difficulty to optimize the cost function, the fact that we need to choose diferent values of the variance depending on the point and the "crowding problem". T-SNE tries to solve this limitations as in the next section is described.
 
-\subsection{T-SNE}
+\subsection{t-SNE}
 \label{ssec:tsne}
 
-Although SNE is capable of showing good visualizations, T-SNE was proposed as a modified algorithm which tried to make it's behaviour more accurate and easy to compute.\\
+Although SNE is capable of showing good visualizations, t-SNE was proposed as a modified algorithm which tried to make it's behaviour more accurate and easy to compute.\\
 First of all, instead of minimizing the sum of the different KL divergences along all the datapoints, another way of computing the cost is presented: we are trying to minimize a single KL divergence between a joint probability P and the same in the low dimensional space, Q. With this symmetric aproach, we ommit the need to obtain the variance value for each datapoint and the cost function is much easier to compute and optimize, so does the gradient.
 
 $$ C = KL(P||Q) = \sum\limits_{i} \sum\limits_{j} p_{ij} log \frac{p_{ij}}{q_{ij}}$$
 
 $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} - y_{j}) $$
 
-Secondly, T-SNE handles with the problem known as "crowding problem" by introducing a heavy-tailed distribution, the Student-t distribution, rather than a Gaussian for the low-dimensional space. The "crowding problem" appears when we want to faithfully represent the mutually equidistant points when reducing from high-dimensional space to low-dimensional space. This task tends to be quite difficult because the area available in a lower space is less than in the higher one. In the end, the points tend to crush together in the center of the map, so the result is the impossibility of representing the true distances from the original dataset.\\
+Secondly, t-SNE handles with the problem known as "crowding problem" by introducing a heavy-tailed distribution, the Student-t distribution, rather than a Gaussian for the low-dimensional space. The "crowding problem" appears when we want to faithfully represent the mutually equidistant points when reducing from high-dimensional space to low-dimensional space. This task tends to be quite difficult because the area available in a lower space is less than in the higher one. In the end, the points tend to crush together in the center of the map, so the result is the impossibility of representing the true distances from the original dataset.\\
 The t-Student distribution is considered a heavy-tailed distribution because it allows to represent a moderate distance as a much larger distance in the map without any inconvenience.
 Therefore, the joint probabilities are now then computed as follows:
 
@@ -299,13 +299,13 @@ $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} 
 We hereby propose the development of a supervised learning tool which learns the embedding derived by an unsupervised learning method, which could be used in real machine learning applications.
 
 The two main supervised learning algorithms used in today's applications are especially Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we study their main characteristics and differences.\\
-First of all, decision trees are known to be faster and easier to train, and their results are very interpretable. On the other hand, neural nets are slower and less interpretable. Neural networks are prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neural nets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That increases computational complexity as the number of output dimensions increase.
+First of all, decision trees are known to be faster and easier to train, and their results are very interpretable. On the other hand, neuralnets are slower and less interpretable. Neural networks are prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neuralnets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That increases computational complexity as the number of output dimensions increase.
 
-Taking into account the characteristics and differences between neural nets and decision trees, the main supervised learning algorithm tested in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated non-linear models. The advantage of our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
+Taking into account the characteristics and differences between neuralnets and decision trees, the main supervised learning algorithm tested in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated non-linear models. The advantage of our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
 
 Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. As it was explained in the introduction (Chapter \ref{chap:intro}), this algorithms can not be expressed in terms of parameters, so this means once the algorithm is computed, if we want to add a new datapoint to the dataset and then obtain its reduced embedded vector, it would be necessary to compute everything again so that that the total ouput includes the new datapoint's output too. Thus, this means a lot of computational work.
 
-Going in depth into the problem, that means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neural net (supervised algorithm) which learns that embedding from \textbf{n} dimensions into two, replicating any of the previously mentioned dimensionality reduction algorithms (unsupervised non-parametric algorithm).\\ The neural network needs to be trained at least once, so we need to compute the dimensionality reduction algorithm once (step 1, figure \ref{figurenet}) to input the dataset into the neural net and set the output as the reduced values just computed. Having the neural net trained (step 2, figure \ref{figurenet}), as soon as we get a new datapoint, instead of recalculating the MDS or T-SNE algorithm, we can reuse the neural net's parameters to obtain the predictions (step 3, figure \ref{figurenet}) which will be the dimensionally reduced value from the new examples.
+Going in depth into the problem, that means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neuralnet (supervised algorithm) which learns that embedding from \textbf{n} dimensions into two, replicating any of the previously mentioned dimensionality reduction algorithms (unsupervised non-parametric algorithm).\\ The neural network needs to be trained at least once, so we need to compute the dimensionality reduction algorithm once (step 1, figure \ref{figurenet}) to input the dataset into the neuralnet and set the output as the reduced values just computed. Having the neuralnet trained (step 2, figure \ref{figurenet}), as soon as we get a new datapoint, instead of recalculating the MDS or t-SNE algorithm, we can reuse the neuralnet's parameters to obtain the predictions (step 3, figure \ref{figurenet}) which will be the dimensionally reduced value from the new examples.
 
 With this implementation we would be able to speed up processes, reduce memory and also computational times.\\
 
@@ -328,8 +328,6 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \caption{\label{figurefit}Cross validation using K-Folds.}
 \end{figure}
 
-
-
 %-----------------------------------------------------
 % Chapter: Applications
 %-----------------------------------------------------
@@ -337,22 +335,69 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \chapter{Applications}
 \label{chap:app}
 
-\section{Application 1:}
-\label{sec:sup}
+\section{Application 1: Replicating t-SNE with a Neuralnet}
+\label{sec:app1}
 
-The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neural net is capable of replicating the previous algorithm.
+The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neuralnet is capable of replicating the previous algorithm.
+
+\subsection{Dataset}
+\label{ssec:data1}
 
 The dataset \textit{"load-digits"} is the data used to develop this example and is extracted from the Scikit-Learn datasets \citep{scikit-learn}. It consists on 1797 instances of handwritten digits between 0 to 9 from diferent writers with 64 features each. This features display the values of grayscale intensity for each pixel in the image. This means our images are 8x8 pixel images which are represented by 64 total features containing intensities from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a dataset, each image is represented in a row with it's corresponding 64 values and including a last column with the label of the number represented in the image.
 \begin{figure}[h]
 \centering
-\includegraphics[width=11cm]{figures/exampledigit.pdf}
+\includegraphics[width=10cm]{figures/exampledigit.pdf}
 \caption{\label{figuredigit}Example dataset point representing a handwriten digit.}
 \end{figure}
 
-The next point to take into account is the 
+\subsection{Algorithm: t-SNE and Neuralnet}
+\label{ssec:dra}
+
+This section comprehends the next points to take into account: the computation of the dimensionality reduction algorithm and its implementation in the neuralnet model.
+
+As a basis to the problem, t-SNE is computed to all the datapoints. Previously, standardizating features in the original data by removing the mean and scaling to unit variance is computed for each of the 64 variables, which achieves better results afterwards. Due to the dataset composed by 1797 instances with 64 features each, a two dimensional space reduction is calculated, looking forward to visualizating the data.
+
+Once reduced data is obtained, both the original and the just calculated points are divided into two corresponding folds, one being a subsample for training the neuralnet and the other to test the model. Therefore, overfitting is avoided by using completely different data to train than to test if the neuralnet is capturing the general behaviour of the dimensionality reduction algorithm.
+
+To continue, the next to keep in mind is the neuralnet's construction. There are several types of neuralnets depending on how it's built, mainly if they are composed by a few layers (1-2 layers) or more layers, and the number of neurons per layer, obtaining not deep or deep and wide or narrow neuralnets correspondingly. Depending on the net computed, the results gathered will differ from one another, thus on section \ref{ssec:met1} the diferences between them are shown.
+
+Once the net is stablished, the standardized original data from the training subsample turns to be the net's input in the fitting process and the output will always be a two variable output, corresponding to the two values which represent the dimension reduction. At this point, the model also uses the training subsample from the reduced points in the t-SNE's computation as the output to obtain.\\
+The neuralnet tries to obtain the same output as the dimensionality reduction algorithm, that is why the metric used to minimize the error tends to be a distance metric. It tries to reduce the distance between the values from t-SNE and the values being learned by the model. In this case the distance metric which obtains better results corresponds to the mean of the distances between corresponding points, but other metrics can also be used such as mean loss (mean of the square of the difference between points).
+
+To conclude, as the net has been trained to obtain two output values depending on the 64 feature standardized values in the input, it is possible to predict the reduced data replicating what t-SNE would obtain but avoiding the need to compute the whole algorithm.\\
+
+\begin{algorithm}
+\caption{Neuralnet replicating process}
+\begin{algorithmic}[1]
+\Procedure{Replicating Procedure}{}
+\BState \emph{data obtaining}
+\State $\textit{\textbf{X}} \gets \text{standardized input matrix}$
+\State $\textit{\textbf{X\_tsne}} \gets \text{compute t-SNE from \textit{\textbf{X}}}$
+\State $\textit{\textbf{X\_train; }} \textit{\textbf{X\_test; }} \textit{\textbf{X\_tsne\_train; }} \textit{\textbf{X\_tsne\_test; }}  \gets \text{train and test data computation}$
+\BState \emph{neuralnet model construction}
+\BState \emph{fit neuralnet model}
+\State $\textit{\textbf{X\_train}} \gets \text{neuralnet's input}$
+\State $\textit{\textbf{X\_tsne\_train}} \gets \text{neuralnet's output}$
+\State $\textit{\textbf{distance error}} \gets \text{neuralnet's error metric}$
+\BState \emph{predict neuralnet model}
+\State $\textit{64 feature input (new example)} \to \text{neuralnet} \to \text{predict output = } \text{\underline{dimension reduction}}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Metrics}
+\label{ssec:met1}
+
+With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on it's construction. Depending on the type of neuralnet used, times and errors are calculated in the next tables.
+The out of sample error computed is again a distance error which calculates in the test subsample the difference between what the t-SNE computed and what the model is predicting.
+
+First model: we first construct a deep neuralnet with layers 
+
+\subsection{Conclusions}
+\label{ssec:conc1}
 
 \newpage
-We have developed a supervised algorithm, based in neural nets, which reproduces the ideas showed in the framework's introduction.
+We have developed a supervised algorithm, based in neuralnets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:
 
 \begin{itemize}
@@ -361,25 +406,25 @@ The inputs expected to run this algorithm are the next ones:
 \item Layers: the number of layers and neurons per layer, taking into account that the last layer has the same neurons as the number of components in the low dimensional space; e.g: layers = 2; neurons = 100, 10; it has three layers, with 100, 10 and the number of components neurons each.
 \item Dropouts: percentage of neurons from each layer used for training.
 \item Learning rate for the neural network training.
-\item Activation function for the neural net.
+\item Activation function for the neuralnet.
 \item Losses function used to minimize the cost.
-\item Number of epochs for each training, being epochs the number of times the whole training set has been passed through the neural net.
+\item Number of epochs for each training, being epochs the number of times the whole training set has been passed through the neuralnet.
 \item Batch size: number of examples used to compute the gradient of the cost function.
 \end{itemize}
 
-The future sections \ref{ssec:nnc}, \ref{ssec:fit} and \ref{ssec:trans} resume some more ideas about the supervised algorithm, describing the construction of the neural net, the fitting process and the dimensionality reduced data obtaining.
+The future sections \ref{ssec:nnc}, \ref{ssec:fit} and \ref{ssec:trans} resume some more ideas about the supervised algorithm, describing the construction of the neuralnet, the fitting process and the dimensionality reduced data obtaining.
 
 \subsection{Neuralnet construction.}
 \label{ssec:nnc}
 
-This function is in charge of constructing the neural network taking into account the inputs provided. A neuralnet is defined by the number of layers, number of neurons per layer, activation function, dropouts and loss function. To train the neural net we need to specify the number of epochs and batch size.
+This function is in charge of constructing the neural network taking into account the inputs provided. A neuralnet is defined by the number of layers, number of neurons per layer, activation function, dropouts and loss function. To train the neuralnet we need to specify the number of epochs and batch size.
 
 \subsection{Fitting process.}
 \label{ssec:fit}
 
 The fitting process seeks the parameters or values obtained from a training process given a specific dataset. Depending on whether it is a supervised or non-supervised algorithm, the output of this operations will be either some parameters or directly the remodeled values. For example, as PCA is a parametric transformation, fitting will determine the dimensionality reduction matrix which could afterwards be used to determine the modified data. On the other hand, MDS and TSNE are non-parametric dimensionality reduction algorithms, so the fitting process directly obtains the values from the lower dimension. This parameters and values in the fitting process are stored as an object's own variable until necessary.
 
-We look forward to construct a supervised learning algorithm, based on neural nets, and we want to obtain the parameters learning from the unsupervised embedding algorithm. The steps to take would be as follows: firstly comes the construction of the neural net, taking into account what was said in the previous section plus the input matrix's input. Second of all, we have to store the reduced data from the embedder algorithm. At last, we have the original data and the reduced computed data, so we decided to fit the neural net with both datasets and store the output parameters of the neuralnet.
+We look forward to construct a supervised learning algorithm, based on neuralnets, and we want to obtain the parameters learning from the unsupervised embedding algorithm. The steps to take would be as follows: firstly comes the construction of the neuralnet, taking into account what was said in the previous section plus the input matrix's input. Second of all, we have to store the reduced data from the embedder algorithm. At last, we have the original data and the reduced computed data, so we decided to fit the neuralnet with both datasets and store the output parameters of the neuralnet.
 \vspace{10pt}
 
 \begin{algorithm}
@@ -403,7 +448,7 @@ We have been able to turn a unsupervised learning algorithm into a supervised le
 \label{ssec:trans}
 
 We have achieved the task of replicating an unsupervised algorithm's behaviour by a supervised algorithm, characterized for being capable of predicting the output by computing operations between the input and some learned parameters.
-Even though the unsupervised algorithms have no parameters, a neural net does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
+Even though the unsupervised algorithms have no parameters, a neuralnet does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
 
 %-----------------------------------------------------
 % Chapter: Metrics
@@ -428,11 +473,11 @@ Even though the unsupervised algorithms have no parameters, a neural net does. W
 \chapter{EXTRA APPENDIX}
 \label{chap:append}
 
-We have developed a class named NNReplicator which replicates the behaviour of a neural net wrapping an embedder object, as it is represented in figure \ref{figurenet}. It is written as if it was a Scikit Learn class so that the objects created could fix into a Scikit Learn pipeline, being one of the main future applications.
+We have developed a class named NNReplicator which replicates the behaviour of a neuralnet wrapping an embedder object, as it is represented in figure \ref{figurenet}. It is written as if it was a Scikit Learn class so that the objects created could fix into a Scikit Learn pipeline, being one of the main future applications.
 
 Once the inputs are understood, the next point is to get to know what is being computed and what methods are included in the class. As we want to include it as a Scikit Learn class, some methods are required; those are the methods fit and transform, which make the class capable of instantiate tranformers, objects that vary the data input into some output.
 
-It is based on the Keras library, which makes easier the task of programming a neural net. A sequential model is used to stack one layer after the other. We use: add Dense to include a layer, add Activation to specify which activation function to use and add Dropout to include the porcentage of dropout indicated by the corresponding input.\\
+It is based on the Keras library, which makes easier the task of programming a neuralnet. A sequential model is used to stack one layer after the other. We use: add Dense to include a layer, add Activation to specify which activation function to use and add Dropout to include the porcentage of dropout indicated by the corresponding input.\\
 The best way of implementing the neural net is by designing a for-loop which extracts the inputs from the arrays and automatically computes denses and dropouts.\\
 The default optimizer is Adagrad, and takes as input the learning rate from the object's inicialization. The next step should be the compilation of the whole neural net, using the loss function inputed as the cost to minimize and the model should be completely done.\\
 Despite of having built the neural net correctly, we also need to make it compatible with Scikit Learn. That's why the last step consists on a Keras Wrapper, named Keras Regressor, remodeling the model into a sklearn neuralnet model.
