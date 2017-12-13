@@ -32,7 +32,7 @@ def percentage_error(err, X_div):
     maximo = X_div.max(axis=0)
     minimo = X_div.min(axis=0)
     rango = maximo - minimo
-    return err / rango
+    return err / rango * 100
 
 #neural net model
 def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'):
@@ -59,7 +59,7 @@ def app(X_unsupervised, dic, X, y):
     resultados = {key: [] for key in dic}
 
     X_train, X_test, X_unsuper_train, X_unsuper_test, y_train, y_test = train_test_split(
-        X, X_unsupervised, y, random_state=0)
+        X, X_unsupervised, y, random_state=5)
 
     min_error = 1000
 
@@ -116,28 +116,58 @@ if __name__ == '__main__':
     #iterate models
     models = {
         "model1": {
-            "layers": [32,16,8],
-            "dropout": [0,0,0]
+            "layers": [32,16,16,8],
+            "dropout": [0,0,0,0]
         },
         "model2":{
-            "layers": [32,16,8],
-            "dropout": [0,0,0]
+            "layers": [32,32],
+            "dropout": [0,0]
         },
         "model3":{
+            "layers": [32,16],
+            "dropout": [0,0]
+        },
+        "model4":{
             "layers": [128,64,64],
             "dropout": [0,0,0]
         },
-        "model4": {
+        "model5":{
+            "layers": [128,64,64,32],
+            "dropout": [0,0,0,0]
+        },
+        "model6":{
+            "layers": [128,128,128],
+            "dropout": [0,0,0]
+        },
+        "model7": {
             "layers": [128,64],
             "dropout": [0,0]
         },
-        "model5":{
+        "model8":{
             "layers": [1000],
             "dropout": [0]
         }
     }
     
-    results = app(X_unsup, models, X, y)
+    modelsdf = pd.DataFrame(models).T
+    
+    results, predictions, real_data, y_label = app(X_unsup, models, X, y)
+    
+    resultsdf = pd.DataFrame(results, index=['error', '%error_X', '%error_Y']).T
+    totalmetrics = pd.concat([modelsdf,resultsdf], axis=1)
+    totalmetrics.to_latex(buf='../text/figures/app1metrics.tex')
+    
+    #save plot figures
+    predictdf = pd.DataFrame(predictions, columns=['x_pred', 'y_pred']).assign(label = y_label)
+    realdf = pd.DataFrame(real_data, columns=['x_real', 'y_real']).assign(label = y_label)
+
+    fig, ax = plt.subplots(1, 1, figsize=(10,7))
+    predictdf.plot.scatter(x='x_pred', y='y_pred', c='label', cmap='Set1', ax=ax)
+    plt.savefig('../text/figures/app1plotpredictions.pdf', bbox_inches='tight')
+
+    fig, ax = plt.subplots(1, 1, figsize=(10,7))
+    realdf.plot.scatter(x='x_real', y='y_real', c='label', cmap='Set1', ax=ax)
+    plt.savefig('../text/figures/app1plotreal.pdf', bbox_inches='tight')
 
     #example of number representation
     fig, ax = plt.subplots(1,1, figsize=(9,8))
