@@ -338,7 +338,7 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \section{Application 1: Replicating t-SNE with a Neuralnet}
 \label{sec:app1}
 
-The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neuralnet is capable of replicating the previous algorithm.
+The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example, T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neuralnet is capable of replicating the previous algorithm.
 
 \subsection{Dataset}
 \label{ssec:data1}
@@ -359,12 +359,12 @@ As a basis to the problem, t-SNE is computed to all the datapoints. Previously, 
 
 Once reduced data is obtained, both the original and the just calculated points are divided into two corresponding folds, one being a subsample for training the neuralnet and the other to test the model. Therefore, overfitting is avoided by using completely different data to train than to test if the neuralnet is capturing the general behaviour of the dimensionality reduction algorithm.
 
-To continue, the next to keep in mind is the neuralnet's construction. There are several types of neuralnets depending on how it's built, mainly if they are composed by a few layers (1-2 layers) or more layers, and the number of neurons per layer, obtaining not deep or deep and wide or narrow neuralnets correspondingly. Depending on the net computed, the results gathered will differ from one another, thus on section \ref{ssec:met1} the diferences between them are shown.
+To continue, the next to keep in mind is the neuralnet's construction. There are several types of neuralnets depending on how it's built, mainly if they are composed by a few layers (1-2 layers) or more layers, and the number of neurons per layer, obtaining shallow or deep and wide or narrow neuralnets correspondingly. Depending on the net computed, the results gathered will differ from one another, thus on section \ref{ssec:met1} the diferences between them are shown.
 
-Once the net is stablished, the standardized original data from the training subsample turns to be the net's input in the fitting process and the output will always be a two variable output, corresponding to the two values which represent the dimension reduction. At this point, the model also uses the training subsample from the reduced points in the t-SNE's computation as the output to obtain.\\
-The neuralnet tries to obtain the same output as the dimensionality reduction algorithm, that is why the metric used to minimize the error tends to be a distance metric. It tries to reduce the distance between the values from t-SNE and the values being learned by the model. In this case the distance metric which obtains better results corresponds to the mean of the distances between corresponding points, but other metrics can also be used such as mean loss (mean of the square of the difference between points).
+Once the net is stablished, the standardized original data from the training subsample turns to be the net's input in the fitting process. The output will always be a two variable output, corresponding to the two values which represent the dimension reduction. At this point, the model also uses the training subsample from the reduced points originated in the t-SNE's computation as the output to obtain and to learn from.\\
+The neuralnet seeks to get the same output as the dimensionality reduction algorithm, that is why the metric used to minimize the error tends to be a distance metric. It tries to reduce the distance between the values from t-SNE and the values being learned by the model. In this case the distance metric which obtains better results corresponds to the mean of the distances between corresponding points, but other metrics can also be used such as mean loss (mean of the square of the difference between points).
 
-To conclude, as the net has been trained to obtain two output values depending on the 64 feature standardized values in the input, it is possible to predict the reduced data replicating what t-SNE would obtain but avoiding the need to compute the whole algorithm.\\
+To conclude, as the net has been trained to obtain two output values depending on the 64 feature standardized values in the input, it is possible to predict, taking into account the new input, the reduced data replicating what t-SNE would compute but avoiding the need to recalculate the whole algorithm.\\
 
 \begin{algorithm}
 \caption{Neuralnet replicating process}
@@ -388,14 +388,49 @@ To conclude, as the net has been trained to obtain two output values depending o
 \subsection{Metrics}
 \label{ssec:met1}
 
-With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on it's construction. Depending on the type of neuralnet used, times and errors are calculated in the next tables.
-The out of sample error computed is again a distance error which calculates in the test subsample the difference between what the t-SNE computed and what the model is predicting.
+With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on it's construction. Depending on the type of neuralnet used, times and errors are calculated in the following tables (tables \ref{metrics1} and \ref{times1}).
 
-First model: we first construct a deep neuralnet with layers 
+The most important point by now is that this measurements are done with examples from the test subsample which have not been used by the neuralnet to compute it's fitting process, thus they indicate the general behaviour of the model.
+
+Table \ref{metrics1} includes the model construction and the errors computed. The model construction depends on the layers and the number of neurons per layer and on the dropout applied for each layer. Those two values are declared with arrays as in the table is shown. As a resume, the type of the neuralnet built is summarized in deep or shallow and wide or narrow nets.\\
+The out of sample error computed is again a distance error which evaluates the difference between what the t-SNE computed and what the model is predicting. The error variable then corresponds to the mean of the Euclidean distances between the two algorithms. Percentages are also included to reckon whether the total error compared to the range of values acquired by the algorithms stand in a good proportion.
+
+\begin{table}[h]
+\vspace{20px}
+\centering
+\input{figures/app1metricserror}
+\caption{\label{metrics1}Comparison between model's errors obtained out of sample}
+\end{table}
+
+Neuralnet's background consists on matrix scalar multiplications of vectors with learnt parameters and activation functions, hyperbolic tangent in this problem, which are very efficient computationally operations.\\
+Table \ref{times1} shows the huge difference between the computational time (in seconds) of the dimensionality reduction algorithm and the neuralnet's development for the same number of points, refering to the whole dataset (1787 points in total).
+
+\begin{table}[h]
+\vspace{10px}
+\centering
+\input{figures/app1metricstime}
+\caption{\label{times1}Computational times}
+\end{table}
 
 \subsection{Conclusions}
 \label{ssec:conc1}
 
+Consequently and given the results in the previous tables, we can reassure that, without considerating the neuralnet's construction, all of them will certainly be quicker in obtaining the results. If we look for accuracy, a wide neuralnet is better at replicating the t-SNE algorithm. In particular, the model 6 proposed suits the best for the problem presented.\\
+The next two figures represent the results obtained. The first one matches the predictions from the neural network (in model 6) and the second one represents the same points from the t-SNE algorithm.
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{figures/app1plotpredictions.pdf}
+\caption{\label{figuredigit}Dimension reduced data from NeuralNet.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{figures/app1plotreal.pdf}
+\caption{\label{figuredigit}Dimension reduced data from t-SNE}
+\end{figure}
+
+% previous work, not important yet
 \newpage
 We have developed a supervised algorithm, based in neuralnets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:

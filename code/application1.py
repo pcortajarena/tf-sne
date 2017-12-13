@@ -2,8 +2,9 @@ import matplotlib
 matplotlib.use("Agg")
 import pandas as pd
 import numpy as np
+import time
 
-from seaborn import heatmap
+from seaborn import lmplot
 import matplotlib.pyplot as plt
 
 from scipy import sparse
@@ -57,6 +58,7 @@ def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'
 def app(X_unsupervised, dic, X, y):
 
     resultados = {key: [] for key in dic}
+    tiempos = {key: [] for key in dic}
 
     X_train, X_test, X_unsuper_train, X_unsuper_test, y_train, y_test = train_test_split(
         X, X_unsupervised, y, random_state=5)
@@ -77,16 +79,25 @@ def app(X_unsupervised, dic, X, y):
 
         super_pipe.fit(X_train, X_unsuper_train)
 
+        #compute times of predicting all the training set
+        start = time.time()
+        super_pipe.predict(X)
+        stop = time.time()
+        tiempos[model_name] = stop - start
+
+        #predictions of the test set
         predictions = super_pipe.predict(X_test)
 
         error = dist_error(X_unsuper_test[:,:2], predictions[:,:2])
 
+        #select minimun error to export only those predictions
         if min_error > error:
             min_error = error
             result_predic = predictions
             result_unsuper_test = X_unsuper_test
             result_y = y_test
 
+        #calculate percentage error
         perc = percentage_error(error, X_unsuper_test)
 
         res = [error]
@@ -95,7 +106,7 @@ def app(X_unsupervised, dic, X, y):
 
         resultados[model_name] += res
 
-    return resultados, result_predic, result_unsuper_test, result_y
+    return resultados, tiempos, result_predic, result_unsuper_test, result_y
 
 if __name__ == '__main__':
     
@@ -111,62 +122,81 @@ if __name__ == '__main__':
         tsne
     )
 
+    start = time.time()
     X_unsup = unsupervised_pipeline.fit_transform(X)
+    end = time.time()
+
+    time_tsne = end - start
 
     #iterate models
     models = {
         "model1": {
             "layers": [32,16,16,8],
-            "dropout": [0,0,0,0]
+            "dropout": [0,0,0,0],
+            "type": 'deep - narrow'
         },
         "model2":{
             "layers": [32,32],
-            "dropout": [0,0]
+            "dropout": [0,0],
+            "type": 'shallow - narrow'
         },
         "model3":{
             "layers": [32,16],
-            "dropout": [0,0]
+            "dropout": [0,0],
+            "type": 'shallow - narrow'
         },
         "model4":{
             "layers": [128,64,64],
-            "dropout": [0,0,0]
+            "dropout": [0,0,0],
+            "type": 'deep - wide'
         },
         "model5":{
             "layers": [128,64,64,32],
-            "dropout": [0,0,0,0]
+            "dropout": [0,0,0,0],
+            "type": 'deep - wide'
         },
         "model6":{
             "layers": [128,128,128],
-            "dropout": [0,0,0]
+            "dropout": [0,0,0],
+            "type": 'shallow - wide'
         },
         "model7": {
             "layers": [128,64],
-            "dropout": [0,0]
+            "dropout": [0,0],
+            "type": 'shallow - wide'
         },
         "model8":{
             "layers": [1000],
-            "dropout": [0]
+            "dropout": [0],
+            "type": 'shallow - wider'
         }
     }
     
     modelsdf = pd.DataFrame(models).T
     
-    results, predictions, real_data, y_label = app(X_unsup, models, X, y)
+    #obtain results
+    results, time, predictions, real_data, y_label = app(X_unsup, models, X, y)
     
+    #error metrics
     resultsdf = pd.DataFrame(results, index=['error', '%error_X', '%error_Y']).T
     totalmetrics = pd.concat([modelsdf,resultsdf], axis=1)
-    totalmetrics.to_latex(buf='../text/figures/app1metrics.tex')
+    totalmetrics.to_latex(buf='../text/figures/app1metricserror.tex')
     
+    #times
+    time_tsne = pd.DataFrame([time_tsne], columns=['times'], index=['tsne'])
+    timesdf = pd.DataFrame([time], index=['times']).T
+    totaltimes = pd.concat([time_tsne, timesdf])
+    totaltimes.to_latex(buf='../text/figures/app1metricstime.tex')
+
     #save plot figures
     predictdf = pd.DataFrame(predictions, columns=['x_pred', 'y_pred']).assign(label = y_label)
     realdf = pd.DataFrame(real_data, columns=['x_real', 'y_real']).assign(label = y_label)
 
-    fig, ax = plt.subplots(1, 1, figsize=(10,7))
-    predictdf.plot.scatter(x='x_pred', y='y_pred', c='label', cmap='Set1', ax=ax)
+    #fig, ax = plt.subplots(1, 1, figsize=(10,7))
+    lmplot(x='x_pred', y='y_pred', data=predictdf, hue='label', fit_reg=False, size=7)
     plt.savefig('../text/figures/app1plotpredictions.pdf', bbox_inches='tight')
 
-    fig, ax = plt.subplots(1, 1, figsize=(10,7))
-    realdf.plot.scatter(x='x_real', y='y_real', c='label', cmap='Set1', ax=ax)
+    lmplot(x='x_pred', y='y_pred', data=predictdf, hue='label', fit_reg=False, size=7)
     plt.savefig('../text/figures/app1plotreal.pdf', bbox_inches='tight')
 
     #example of number representation
