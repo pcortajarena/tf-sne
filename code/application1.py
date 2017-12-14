@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import time
 
-from seaborn import lmplot
+from seaborn import lmplot, heatmap
 import matplotlib.pyplot as plt
 
 from scipy import sparse
@@ -196,7 +196,7 @@ if __name__ == '__main__':
     lmplot(x='x_pred', y='y_pred', data=predictdf, hue='label', fit_reg=False, size=7)
     plt.savefig('../text/figures/app1plotpredictions.pdf', bbox_inches='tight')
 
-    lmplot(x='x_pred', y='y_pred', data=predictdf, hue='label', fit_reg=False, size=7)
+    lmplot(x='x_real', y='y_real', data=realdf, hue='label', fit_reg=False, size=7)
     plt.savefig('../text/figures/app1plotreal.pdf', bbox_inches='tight')
 
     #example of number representation
