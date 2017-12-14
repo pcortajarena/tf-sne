@@ -9,8 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.metrics import mean_squared_error
 
-#cual es la diferencia con StratifiedKFold
-#StratifiedKFold es para clasificacion, ya lo veremos
+# cual es la diferencia con StratifiedKFold
+# StratifiedKFold es para clasificacion, ya lo veremos
+
 
 def reg():
     model = Sequential()
@@ -23,9 +24,10 @@ def reg():
     model.compile(optimizer=ada, loss='mean_squared_error')
     return model
 
+
 def cv_function(mod, cv, X, y, metric_func):
-    
-    #variables
+
+    # variables
     metric_kfold = list()
     cv_predictions = np.zeros_like(y)
 
@@ -33,11 +35,11 @@ def cv_function(mod, cv, X, y, metric_func):
         print(fold)
         mod.fit(X[train_index], y[train_index])
 
-        #metrics
+        # metrics
         predictions = mod.predict(X[test_index])
         metric_kfold.append(metric_func(y[test_index], predictions))
         cv_predictions[test_index] = predictions
-    
+
     return metric_kfold, cv_predictions
 
 
@@ -46,13 +48,12 @@ if __name__ == '__main__':
     # dataset
     boston = load_boston()
 
-    #linear regresion pipeline
+    # linear regresion pipeline
     lr = KerasRegressor(reg, epochs=20, batch_size=100)
     model = make_pipeline(StandardScaler(), lr)
     X, y = boston['data'], boston['target']
 
-    #fold dataset
+    # fold dataset
     kf = KFold(n_splits=5, shuffle=True)
 
     mse_kfold, cv_preds = cv_function(model, kf, X, y, mean_squared_error)
-    
