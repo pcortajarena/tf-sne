@@ -12,17 +12,19 @@
 \BOOKMARK [0][-]{chapter.3}{3 Framework}{}% 12
 \BOOKMARK [1][-]{section.3.1}{3.1 Cross Validation}{chapter.3}% 13
 \BOOKMARK [0][-]{chapter.4}{4 Applications}{}% 14
-\BOOKMARK [1][-]{section.4.1}{4.1 Application 1: Replicating t-SNE with a Neuralnet}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.1}{4.1 Application 1: Replicating t-SNE with Neuralnet}{chapter.4}% 15
 \BOOKMARK [2][-]{subsection.4.1.1}{4.1.1 Dataset}{section.4.1}% 16
 \BOOKMARK [2][-]{subsection.4.1.2}{4.1.2 Algorithm: t-SNE and Neuralnet}{section.4.1}% 17
 \BOOKMARK [2][-]{subsection.4.1.3}{4.1.3 Metrics}{section.4.1}% 18
 \BOOKMARK [2][-]{subsection.4.1.4}{4.1.4 Conclusions}{section.4.1}% 19
 \BOOKMARK [1][-]{section.4.2}{4.2 Application 2: Nearest Neighbours calculation}{chapter.4}% 20
-\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 Neuralnet construction.}{section.4.2}% 21
-\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Fitting process.}{section.4.2}% 22
-\BOOKMARK [2][-]{subsection.4.2.3}{4.2.3 Dimensionality reduced data obtaining.}{section.4.2}% 23
-\BOOKMARK [0][-]{chapter.5}{5 Metrics}{}% 24
-\BOOKMARK [0][-]{chapter.6}{6 Conclusion}{}% 25
-\BOOKMARK [0][-]{chapter.7}{7 EXTRA APPENDIX}{}% 26
-\BOOKMARK [0][-]{chapter*.8}{Bibliography}{}% 27
-\BOOKMARK [0][-]{chapter*.10}{Code}{}% 28
+\BOOKMARK [2][-]{subsection.4.2.1}{4.2.1 Dataset}{section.4.2}% 21
+\BOOKMARK [2][-]{subsection.4.2.2}{4.2.2 Algorithm: Nearest Neighbours}{section.4.2}% 22
+\BOOKMARK [2][-]{subsection.4.2.3}{4.2.3 Neuralnet construction.}{section.4.2}% 23
+\BOOKMARK [2][-]{subsection.4.2.4}{4.2.4 Fitting process.}{section.4.2}% 24
+\BOOKMARK [2][-]{subsection.4.2.5}{4.2.5 Dimensionality reduced data obtaining.}{section.4.2}% 25
+\BOOKMARK [0][-]{chapter.5}{5 Metrics}{}% 26
+\BOOKMARK [0][-]{chapter.6}{6 Conclusion}{}% 27
+\BOOKMARK [0][-]{chapter.7}{7 EXTRA APPENDIX}{}% 28
+\BOOKMARK [0][-]{chapter*.8}{Bibliography}{}% 29
+\BOOKMARK [0][-]{chapter*.10}{Code}{}% 30

@@ -265,7 +265,7 @@ The limitations of this algorithm are the non symmetric general expression of th
 \subsection{t-SNE}
 \label{ssec:tsne}
 
-Although SNE is capable of showing good visualizations, t-SNE was proposed as a modified algorithm which tried to make it's behaviour more accurate and easy to compute.\\
+Although SNE is capable of showing good visualizations, t-SNE was proposed as a modified algorithm which tried to make its behaviour more accurate and easy to compute.\\
 First of all, instead of minimizing the sum of the different KL divergences along all the datapoints, another way of computing the cost is presented: we are trying to minimize a single KL divergence between a joint probability P and the same in the low dimensional space, Q. With this symmetric aproach, we ommit the need to obtain the variance value for each datapoint and the cost function is much easier to compute and optimize, so does the gradient.
 
 $$ C = KL(P||Q) = \sum\limits_{i} \sum\limits_{j} p_{ij} log \frac{p_{ij}}{q_{ij}}$$
@@ -335,7 +335,7 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \chapter{Applications}
 \label{chap:app}
 
-\section{Application 1: Replicating t-SNE with a Neuralnet}
+\section{Application 1: Replicating t-SNE with Neuralnet}
 \label{sec:app1}
 
 The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example, T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neuralnet is capable of replicating the previous algorithm.
@@ -343,7 +343,7 @@ The first implementation to be described is the model which replicates the non-p
 \subsection{Dataset}
 \label{ssec:data1}
 
-The dataset \textit{"load-digits"} is the data used to develop this example and is extracted from the Scikit-Learn datasets \citep{scikit-learn}. It consists on 1797 instances of handwritten digits between 0 to 9 from diferent writers with 64 features each. This features display the values of grayscale intensity for each pixel in the image. This means our images are 8x8 pixel images which are represented by 64 total features containing intensities from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a dataset, each image is represented in a row with it's corresponding 64 values and including a last column with the label of the number represented in the image.
+The dataset \textit{"load-digits"} is the data used to develop this example and is extracted from the Scikit-Learn datasets \citep{scikit-learn}. It consists on 1797 instances of handwritten digits between 0 to 9 from diferent writers with 64 features each. This features display the values of grayscale intensity for each pixel in the image. This means our images are 8x8 pixel images which are represented by 64 total features containing intensities from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a dataset, each image is represented in a row with its corresponding 64 values and including a last column with the label of the number represented in the image.
 \begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{figures/exampledigit.pdf}
@@ -388,9 +388,9 @@ To conclude, as the net has been trained to obtain two output values depending o
 \subsection{Metrics}
 \label{ssec:met1}
 
-With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on it's construction. Depending on the type of neuralnet used, times and errors are calculated in the following tables (tables \ref{metrics1} and \ref{times1}).
+With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on its construction. Depending on the type of neuralnet used, times and errors are calculated in the following tables (tables \ref{metrics1} and \ref{times1}).
 
-The most important point by now is that this measurements are done with examples from the test subsample which have not been used by the neuralnet to compute it's fitting process, thus they indicate the general behaviour of the model.
+The most important point by now is that this measurements are done with examples from the test subsample which have not been used by the neuralnet to compute its fitting process, thus they indicate the general behaviour of the model.
 
 Table \ref{metrics1} includes the model construction and the errors computed. The model construction depends on the layers and the number of neurons per layer and on the dropout applied for each layer. Those two values are declared with arrays as in the table is shown. As a resume, the type of the neuralnet built is summarized in deep or shallow and wide or narrow nets.\\
 The out of sample error computed is again a distance error which evaluates the difference between what the t-SNE computed and what the model is predicting. The error variable then corresponds to the mean of the Euclidean distances between the two algorithms. Percentages are also included to reckon whether the total error compared to the range of values acquired by the algorithms stand in a good proportion.
@@ -421,13 +421,13 @@ The next two figures represent the results obtained. The first one matches the p
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{figures/app1plotpredictions.pdf}
-\caption{\label{figuredigit}Dimension reduced data from NeuralNet.}
+\caption{\label{figureNN}Dimension reduced data from NeuralNet.}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{figures/app1plotreal.pdf}
-\caption{\label{figuredigit}Dimension reduced data from t-SNE}
+\caption{\label{figureTSNE}Dimension reduced data from t-SNE}
 \end{figure}
 
 \newpage
@@ -435,6 +435,30 @@ The next two figures represent the results obtained. The first one matches the p
 \section{Application 2: Nearest Neighbours calculation}
 \label{sec:app2}
 
+The second application consists on the computation of nearest neighbours in a low-dimensional space. This second implementation focuses on Multidimensional Space algorithm. The aim is to obtain the best aproximate nearest neighbours within a reduced map of datapoints compared to the original map, carrying out a reusable, quicker and low memory intensive algorithm.
+
+\subsection{Dataset}
+\label{ssec:data2}
+
+The dataset \textit{"forests.csv"} is used for this application and is extracted from UCI Machine Learning Repository \citep{ucidata}. As this dataset turns to have too many instances, a random subsample of 20.000 examples is storaged with 55 features each. This are all numeric variables describing the type of forest the concrete example is. The forest type output is represented by a number in range 1 to 7, shaping the last column of the dataset.\\
+The reason why this dataset is chosen for this concrete application relies on the need to compute a lot of examples in the training phase to obtain a reliable model and to be able to compare time and memory performance.
+
+\subsection{Algorithm: Nearest Neighbours}
+\label{ssec:nneigh}
+
+The main task contemplated in this application is nearest neighbours obtaining. The following research bears with reusability and time and memory reducing algorithms.
+
+Regarding the first point, because of MDS being non-parametric, it is uncapable of obtaining new reduced points without computing again all the operations inside. This means if we have already output the low-dimensional map of points from the dataset, it would not be posible to obtain a new point in this map unless the algorithm is recomputed. If we based our nearest neighbours search in a previous dimensionality reduction algorithm such as MDS, the only results available would be from the points just computed by MDS, forgetting about new example posibilities.
+
+Nearest neighbours models are known to be eficiently poor when a raw dataset is provided, both because the memory this data occupies tends to be big and thus the computational time required also increases.
+
+The next model is a new solution proposed to solve the problems just mentioned.\\
+The first point is that this algorithm involves two phases: one fitting process and the later usage by new points. This is why the original dataset has to be splitted into two folds, one for the training and the second one to test out of sample the model's behaviour.
+
+The training phase looks forward to obtaining all the parameters or transformations which will later be used to transform the data. In MDS, the fitting progress calculates straigh forward the dimensionality reduction without parameters, and storages it for the transforming phase. This is why we could not be able to obtain the tranformation of a new point without having fitted it previously with the whole dataset (which requires computational time), thus we would not be able to step into neighbour calculating in the low-dimensional space.\\
+Instead in this proposal and as seen in the first application (\ref{sec:app1}) in this paper, the training consists on faithfully learning the mapping of a dimensionality reduction algorithm from a high-dimensional space to a low-dimensional space with a neuralnet model in a fitting process. In this case, the model saves the neuralnet's parameters which replicate the MDS, instead of the exact transformations from MDS. Then, when a new out of sample point is included, there is no need to compute the whole MDS algorithm to be able to transform the data because we have obtained a neuralnet which does the same by operating with its parameters.
+
+To conclude, this leads to the point of calculating nearest neighbours aproximately with the test fold. To decrease time and memory usage, a dimensionality reduction algorithm is required. Moreover, we have replicated MDS with a neuralnet, which speeds up processes for new datapoints. This means we can pass through a dimensionality reduction algorithm really quick by predicting the low-dimensional equivalent points with the neural net and then compute the nearest neighbour algorithm.
 
 % previous work, not important yet
 \newpage

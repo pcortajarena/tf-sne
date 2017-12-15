@@ -30,7 +30,8 @@ class NNReplicator(TransformerMixin):
         for i, (layer, drop) in enumerate(zip(self.layers, self.dropout)):
 
             if i == 0:
-                model.add(Dense(layer, input_shape=(shape,), activation=self.act_func))
+                model.add(Dense(layer, input_shape=(
+                    shape,), activation=self.act_func))
             else:
                 model.add(Dense(layer, activation=self.act_func))
 
@@ -41,7 +42,8 @@ class NNReplicator(TransformerMixin):
 
         model.compile(optimizer=ada, loss=self.loss_func)
 
-        self.krObject = KerasRegressor(lambda: model, epochs=self.epochs, batch_size=self.batch_size)
+        self.krObject = KerasRegressor(
+            lambda: model, epochs=self.epochs, batch_size=self.batch_size)
 
     def fit(self, X, y=None):
 
@@ -53,10 +55,8 @@ class NNReplicator(TransformerMixin):
         self.krObject.fit(X, X_)
         return self
 
-
     def transform(self, X):
         return self.krObject.predict(X)
-
 
 
 class NNPipeline(Pipeline):
