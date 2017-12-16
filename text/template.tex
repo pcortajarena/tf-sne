@@ -435,22 +435,23 @@ The next two figures represent the results obtained. The first one matches the p
 \section{Application 2: Nearest Neighbours calculation}
 \label{sec:app2}
 
-The second application consists on the computation of nearest neighbours in a low-dimensional space. This second implementation focuses on Multidimensional Space algorithm. The aim is to obtain the best aproximate nearest neighbours within a reduced map of datapoints compared to the original map, carrying out a reusable, quicker and low memory intensive algorithm.
+The second application consists on the computation of nearest neighbours in a low-dimensional space. This second implementation focuses on the Multidimensional Scaling algorithm. The aim is to compute the nearest neighbours in the output coordinates from MDS. A loss in precision and recall is involved in the nearest neighbours computation since an error in computation is made when calculating the low dimensional equivalent points. Nevertheless, it allows for a faster, low memory intensive algorithm.
 
 \subsection{Dataset}
 \label{ssec:data2}
 
-The dataset \textit{"forests.csv"} is used for this application and is extracted from UCI Machine Learning Repository \citep{ucidata}. As this dataset turns to have too many instances, a random subsample of 20.000 examples is storaged with 55 features each. This are all numeric variables describing the type of forest the concrete example is. The forest type output is represented by a number in range 1 to 7, shaping the last column of the dataset.\\
-The reason why this dataset is chosen for this concrete application relies on the need to compute a lot of examples in the training phase to obtain a reliable model and to be able to compare time and memory performance.
+The dataset \textit{"forests.csv"} is used for this application and is extracted from UCI Machine Learning Repository \citep{ucidata}. For convenience, a random subsample of 20.000 examples is storaged with 55 features each. These are all numeric variables that describe several characteristics of the forest. The forest type output is represented by a number in range 1 to 7, shaping the last column of the dataset.\\
+The reason why this dataset is chosen for this concrete application relies on the need to compute a substantial amount of examples in the training phase to obtain a reliable model and to be able to asses time and memory performance improvements and also recall/precision degradation.
 
 \subsection{Algorithm: Nearest Neighbours}
 \label{ssec:nneigh}
 
-The main task contemplated in this application is nearest neighbours obtaining. The following research bears with reusability and time and memory reducing algorithms.
+The main task contemplated in this application is the computation of nearest neighbours. The following research bears with reusability and time and memory usage reduction algorithms.
 
-Regarding the first point, because of MDS being non-parametric, it is uncapable of obtaining new reduced points without computing again all the operations inside. This means if we have already output the low-dimensional map of points from the dataset, it would not be posible to obtain a new point in this map unless the algorithm is recomputed. If we based our nearest neighbours search in a previous dimensionality reduction algorithm such as MDS, the only results available would be from the points just computed by MDS, forgetting about new example posibilities.
+Regarding the first point, because of MDS being non-parametric, it is uncapable of obtaining new embedded points without computing again all the operations. This means if we have already output the low-dimensional map of points from the dataset, it would not be posible to obtain a new point in this map unless the algorithm is recomputed. If we based our nearest neighbours search in a previous dimensionality reduction algorithm such as MDS, the only results available would be from the points just computed by MDS.
 
-Nearest neighbours models are known to be eficiently poor when a raw dataset is provided, both because the memory this data occupies tends to be big and thus the computational time required also increases.
+Nearest neighbours models are known to be eficiently poor when a raw dataset is provided, both because their memory tends to be big and thus the computational time required also increases.\\
+Nearest neighbours brute force algorithm computes the euclidean distances between each point and the rest in the data and then sortens
 
 The next model is a new solution proposed to solve the problems just mentioned.\\
 The first point is that this algorithm involves two phases: one fitting process and the later usage by new points. This is why the original dataset has to be splitted into two folds, one for the training and the second one to test out of sample the model's behaviour.

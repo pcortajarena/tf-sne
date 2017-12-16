@@ -146,3 +146,7 @@ if __name__ == '__main__':
         delayed(modelsjob)(model_name, model_params)
         for model_name, model_params in models.items()
     )
+
+    resultsdf = pd.DataFrame(
+        results, columns=['%npreserved', 'nntime', 'realtime'], index=models)
+    resultsdf.to_latex(buf='../text/figures/app2neighbourstime.tex')
