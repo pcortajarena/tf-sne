@@ -1,6 +1,5 @@
 from sklearn.preprocessing import Imputer
 from sklearn.preprocessing import StandardScaler
-from classes import NNReplicator, NNPipeline
 from sklearn.neighbors import NearestNeighbors
 from sklearn.manifold import MDS
 from sklearn.pipeline import Pipeline
@@ -14,8 +13,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 import keras.backend as K
+import sys
 
-import time
+import timeit
 from joblib import Parallel, delayed
 
 # function to see neighbors preserved
@@ -37,16 +37,16 @@ def compare(X_testing, pipe1, pipe2, k1, k2):
     neighbors1 = pipe1.kneighbors(
         X_testing, n_neighbors=k1, return_distance=False)
 
-    time_nn = timeit.timeit(lambda: pipe1.kneighbors(
-        X_testing, n_neighbors=1000, return_distance=False), number=10)
-
     neighbors2 = pipe2.kneighbors(
         X_testing, n_neighbors=k2, return_distance=False)
 
-    time_unsup = timeit.timeit(lambda: pipe2.kneighbors(
-        X_testing, n_neighbors=1000, return_distance=False), number=10)
+    timenn = pipe1.get_query_time(
+        X_testing, n_neighbors=1000, return_distance=False)
 
-    return nn_preserved(neighbors2, neighbors1, k2, k1), time_nn, time_unsup
+    timereal = pipe2.get_query_time(
+        X_testing, n_neighbors=1000, return_distance=False)
+
+    return nn_preserved(neighbors2, neighbors1, k2, k1), timenn, timereal
 
 
 def modelsjob(name, params):
@@ -63,6 +63,7 @@ def modelsjob(name, params):
 
     # training
     pipeline1.fit(X_train)
+    mem_model = pipeline1.get_memory_usage(X_train)
 
     # pipeline 2 = TRUE
     pipeline2 = NNPipeline([
@@ -72,11 +73,12 @@ def modelsjob(name, params):
 
     # training
     pipeline2.fit(X_train)
+    mem_real = pipeline2.get_memory_usage(X_train)
 
     preserved, time_model, time_real = compare(
-        X_test, pipeline1, pipeline2, k1=100, k2=50)
+        X_test, pipeline1, pipeline2, k1=100, k2=100)
 
-    return np.mean(preserved), time_model, time_real
+    return np.mean(preserved), time_model, time_real, mem_model, mem_real
 
 # main
 if __name__ == '__main__':
@@ -94,10 +96,10 @@ if __name__ == '__main__':
     data = pd.read_csv('../datasets/forests.csv').iloc[:10000, :]
 
     X, y = data.iloc[:, :-1], data.iloc[:, -1]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
     # pipeline 1 = PRED
-    md = MDS(n_components=8, random_state=0, n_jobs=1, verbose=10)
+    md = MDS(n_components=18, random_state=0, n_jobs=1, verbose=10, n_init=1)
 
     models = {
         "model1": {
@@ -148,5 +150,7 @@ if __name__ == '__main__':
     )
 
     resultsdf = pd.DataFrame(
-        results, columns=['%npreserved', 'nntime', 'realtime'], index=models)
-    resultsdf.to_latex(buf='../text/figures/app2neighbourstime.tex')
+        results,
+        columns=['%npreserved', 'nntime', 'realtime', 'mem_model', 'mem_real'],
+        index=models)
+    resultsdf.to_latex(buf='../text/figures/app2aproxbrute10010018.tex')

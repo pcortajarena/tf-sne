@@ -9,10 +9,15 @@ from keras.wrappers.scikit_learn import KerasRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.neighbors import NearestNeighbors
 
+import sys
+import time
+
 
 class NNReplicator(TransformerMixin):
 
-    def __init__(self, embedder, layers, dropout, lr, act_func, loss_func, epochs, batch_size):
+    def __init__(self,
+                 embedder,
+                 layers, dropout, lr, act_func, loss_func, epochs, batch_size):
 
         self.embedder = embedder
         self.layers = layers
@@ -67,14 +72,29 @@ class NNPipeline(Pipeline):
 
         assert isinstance(self.steps[-1][1], NearestNeighbors)
 
-    def kneighbors(self, X, n_neighbors, return_distance):
-
-        # First transform input using all steps from pipeline except
-        # for the last one (NearestNeighbors)
+    def transform(self, X):
+        X_ = X.copy()
         for step in self.steps[:-1]:
-            X = step[1].transform(X)
+            X_ = step[1].transform(X_)
+        return X_
+
+    def kneighbors(self, X, n_neighbors, return_distance):
 
         # Finally, run kneighbors method using the last step (NN)
         return self.steps[-1][1].kneighbors(
-            X=X, n_neighbors=n_neighbors, return_distance=return_distance
+            X=self.transform(X), n_neighbors=n_neighbors,
+            return_distance=return_distance
         )
+
+    def get_memory_usage(self, X):
+
+        return sys.getsizeof(self.transform(X))
+
+    def get_query_time(self, X, n_neighbors, return_distance, number=100):
+
+        X_ = self.transform(X)
+        time_func = lambda: self.steps[-1][1].kneighbors(
+            X=X_, n_neighbors=n_neighbors,
+            return_distance=return_distance
+        )
+        return timeit.timeit(time_func, number=number) / number
