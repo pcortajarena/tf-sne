@@ -22,11 +22,11 @@
 \contentsline {subsection}{\numberline {4.2.1}Dataset}{18}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}Algorithm: Low dimensional nearest neighbors obtaining}{18}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Metrics}{20}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Neuralnet construction.}{21}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}Fitting process.}{22}{subsection.4.2.5}
-\contentsline {subsection}{\numberline {4.2.6}Dimensionality reduced data obtaining.}{22}{subsection.4.2.6}
-\contentsline {chapter}{\numberline {5}Metrics}{23}{chapter.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{24}{chapter.6}
-\contentsline {chapter}{\numberline {7}EXTRA APPENDIX}{25}{chapter.7}
-\contentsline {chapter}{Bibliography}{26}{chapter*.8}
-\contentsline {chapter}{Code}{29}{chapter*.10}
+\contentsline {subsection}{\numberline {4.2.4}Neuralnet construction.}{23}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Fitting process.}{24}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}Dimensionality reduced data obtaining.}{24}{subsection.4.2.6}
+\contentsline {chapter}{\numberline {5}Metrics}{25}{chapter.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{26}{chapter.6}
+\contentsline {chapter}{\numberline {7}EXTRA APPENDIX}{27}{chapter.7}
+\contentsline {chapter}{Bibliography}{28}{chapter*.8}
+\contentsline {chapter}{Code}{31}{chapter*.10}

@@ -178,7 +178,7 @@ The dimensionality reduction algorithms used to base the research are the ones l
 \item TSNE (T-Stochastic Neighbour Embedding)
 \end{itemize}
 
-To conclude, the document is divided into chapters which resume the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main development of the implementation. Afterwards, chapters \ref{chap:app} and \ref{chap:met} describe the main implementation's applications and the corresponding metrics computed to analyse the algorithm's behaviour. The last chapter (chapter \ref{chap:conc}) comprehends the conclusion and resumes the main ideas acquired.
+To conclude, the document is divided into chapters which resume the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main development of the implementation. Afterwards, chapter \ref{chap:app} describes the main implementation's applications and the corresponding metrics computed to analyse the algorithm's behaviour. The last chapter (chapter \ref{chap:conc}) comprehends the conclusion and resumes the main ideas acquired.
 
 %-----------------------------------------------------
 % Chapter: State of the Art
@@ -481,7 +481,7 @@ To conclude, when a new sample is requested to find the k-nearest neighbours, it
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
-
+\hfill
 
 \begin{algorithm}
 \caption{Low dimensional nearest neighbours calculation}
@@ -497,9 +497,40 @@ To conclude, when a new sample is requested to find the k-nearest neighbours, it
 \subsection{Metrics}
 \label{ssec:met2}
 
+With this second implementation, the main metrics to look at correspond to precision and computational measurements, such as time and memory usage. As the objective is to finally compute nearest neighbours, precision is described as the percentage of nearest neighbours preserved in comparison to bruce force algorithm. In the case of time and memory, the measurements are strictly related to the algorithm's performance, thus we calculate how much time they require to compute the neighbours and the memory the data needs to do so.
+
+The following tables relate the model used to compute the neural net with the previous metrics, depending on the dimensions of the low-dimensional space chosen to lower the data's features.
+
+\begin{table}[p]
+\centering
+\input{figures/app2aproxbrute1001004.tex}
+\caption{\label{metrics21}Nearest neighbours calculation in four dimensions}
+\end{table}
+
+\begin{table}[p]
+\centering
+\input{figures/app2aproxbrute1001008.tex}
+\caption{\label{metrics22}Nearest neighbours calculation in eight dimensions}
+\end{table}
+
+\begin{table}[p]
+\centering
+\input{figures/app2aproxbrute10010018.tex}
+\caption{\label{metrics23}Nearest neighbours calculation in eighteen dimensions}
+\end{table}
+
+The approximate model designed can also be compared to other approximate nearest neighbours algorithms such as KD-Tree \citep{kdtree}. KD-Tree is a binary tree that represents a division of the space using splitting planes which are orthogonal to the axis. Each node has a corresponding region called cell and the root's cell has to include all the points from the dataset. For each region we have a hyperplane which divides the points into one side or the other, until there are no points left, which means the partition is over and the tree is constructed. This type of tree achieves a computational complexity of $O(nlogn)$ and works correctly for low-dimensional datasets. When the dimensions get higher, the behaviour tends to get worse. Table \ref{metrics24} corresponds to the first dataset of the application.
+
+\begin{table}[h]
+\centering
+\input{figures/app2kdtree100brute100100.tex}
+\caption{\label{metrics24}KD-Tree computing nearest neighbours}
+\end{table}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% previous work, not important yet
 \newpage
+
 We have developed a supervised algorithm, based in neuralnets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:
 

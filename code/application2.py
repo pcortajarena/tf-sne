@@ -14,6 +14,9 @@ import pandas as pd
 import tensorflow as tf
 import keras.backend as K
 import sys
+import pickle
+import os
+import tempfile
 
 import timeit
 from joblib import Parallel, delayed
@@ -47,6 +50,14 @@ def compare(X_testing, pipe1, pipe2, k1, k2):
         X_testing, n_neighbors=1000, return_distance=False)
 
     return nn_preserved(neighbors2, neighbors1, k2, k1), timenn, timereal
+
+
+def get_memory_object(obj):
+    fname = tempfile.mktemp()
+    pickle.dump(obj, open(fname, 'wb'))
+    size = os.path.getsize(fname)
+    os.remove(fname)
+    return size
 
 
 def modelsjob(name, params):
@@ -93,13 +104,13 @@ if __name__ == '__main__':
     # K.set_session(session)
 
     # dataset
-    data = pd.read_csv('../datasets/forests.csv').iloc[:10000, :]
+    data = pd.read_csv('../datasets/blog.csv')
 
     X, y = data.iloc[:, :-1], data.iloc[:, -1]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
     # pipeline 1 = PRED
-    md = MDS(n_components=8, random_state=0, n_jobs=1,
+    md = MDS(n_components=100, random_state=0, n_jobs=1,
              verbose=10, n_init=1)
 
     models = {
@@ -152,6 +163,6 @@ if __name__ == '__main__':
 
     resultsdf = pd.DataFrame(
         results,
-        columns=['%npreserved', 'nntime', 'realtime', 'mem_model', 'mem_real'],
+        columns=['npreserved', 'nntime', 'realtime', 'mem_model', 'mem_real'],
         index=models)
-    resultsdf.to_latex(buf='../figures/app2aproxbrute1001008nm.tex')
+    resultsdf.to_latex(buf='../figures/app2aproxbrute100100blog.tex')
