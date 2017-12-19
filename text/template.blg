@@ -4,52 +4,56 @@ The top-level auxiliary file: template.aux
 The style file: plain.bst
 Database file #1: mybib.bib
 Warning--empty journal in rproj
+Warning--empty journal in brute
+Warning--empty year in brute
 Warning--empty journal in auto2
 Warning--empty year in auto2
 Warning--empty year in pca
+Warning--empty journal in kdtree
+Warning--empty year in kdtree
 Warning--empty journal in gdescent
 Warning--empty journal in auto
 Warning--empty journal in rproj2
 Warning--empty journal in mds
-You've used 12 entries,
+You've used 14 entries,
             2118 wiz_defined-function locations,
-            550 strings with 5585 characters,
-and the built_in function-call counts, 3347 in all, are:
-= -- 297
-> -- 211
+            556 strings with 5760 characters,
+and the built_in function-call counts, 3781 in all, are:
+= -- 334
+> -- 231
 < -- 0
-+ -- 88
-- -- 72
-* -- 214
-:= -- 619
-add.period$ -- 34
-call.type$ -- 12
-change.case$ -- 72
++ -- 96
+- -- 78
+* -- 240
+:= -- 697
+add.period$ -- 38
+call.type$ -- 14
+change.case$ -- 81
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 118
-empty$ -- 221
-format.name$ -- 72
-if$ -- 643
+cite$ -- 26
+duplicate$ -- 138
+empty$ -- 255
+format.name$ -- 78
+if$ -- 726
 int.to.chr$ -- 0
-int.to.str$ -- 12
-missing$ -- 11
-newline$ -- 61
-num.names$ -- 24
-pop$ -- 91
+int.to.str$ -- 14
+missing$ -- 13
+newline$ -- 69
+num.names$ -- 28
+pop$ -- 108
 preamble$ -- 1
-purify$ -- 60
+purify$ -- 67
 quote$ -- 0
-skip$ -- 85
+skip$ -- 98
 stack$ -- 0
-substring$ -- 95
+substring$ -- 105
 swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 48
-warning$ -- 8
-while$ -- 26
-width$ -- 14
-write$ -- 112
-(There were 8 warnings)
+type$ -- 56
+warning$ -- 12
+while$ -- 30
+width$ -- 16
+write$ -- 126
+(There were 12 warnings)

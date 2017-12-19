@@ -421,13 +421,13 @@ The next two figures represent the results obtained. The first one matches the p
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{figures/app1plotpredictions.pdf}
-\caption{\label{figureNN}Dimension reduced data from NeuralNet.}
+\caption{\label{figureNN}Low dimensional space from NeuralNet.}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{figures/app1plotreal.pdf}
-\caption{\label{figureTSNE}Dimension reduced data from t-SNE}
+\caption{\label{figureTSNE}Low dimensional space from from t-SNE}
 \end{figure}
 
 \newpage
@@ -443,14 +443,14 @@ The second application consists on the computation of nearest neighbours in a lo
 The dataset \textit{"forests.csv"} is used for this application and is extracted from UCI Machine Learning Repository \citep{ucidata}. For convenience, a random subsample of 20.000 examples is storaged with 55 features each. These are all numeric variables that describe several characteristics of the forest. The forest type output is represented by a number in range 1 to 7, shaping the last column of the dataset.\\
 The reason why this dataset is chosen for this concrete application relies on the need to compute a substantial amount of examples in the training phase to obtain a reliable model and to be able to asses time and memory performance improvements and also recall/precision degradation.
 
-\subsection{Algorithm: Nearest Neighbours}
+\subsection{Algorithm: Low dimensional nearest neighbors obtaining}
 \label{ssec:nneigh}
 
 The main task contemplated in this application is the computation of nearest neighbours. The following research bears with reusability and time and memory usage reduction algorithms.
 
 Regarding the first point, because of MDS being non-parametric, it is uncapable of obtaining new embedded points without computing again all the operations. This means if we have already output the low-dimensional map of points from the dataset, it would not be posible to obtain a new point in this map unless the algorithm is recomputed. If we based our nearest neighbours search in a previous dimensionality reduction algorithm such as MDS, the only results available would be from the points just computed by MDS.
 
-Nearest neighbours models are known to be eficiently poor when a raw dataset is provided, both because their memory tends to be big and thus the computational time required also increases.\\
+Nearest neighbours brute force models \citep{brute} are known to be eficiently poor when a raw dataset is provided, both because their memory tends to be big and thus the computational time required also increases.\\
 Nearest neighbours brute force algorithm computes the euclidean distances between each point and the rest of the data and then sortens them according to their distances, from lowest to highest, for each of the examples in the dataset. This means the computational complexity corresponds to $O(n^{2})$. Since the euclidean distances is computed as:
 $$ dist(p,q) = \sqrt{(q_{1}-p_{1})^{2}+(q_{2}-p_{2})^{2}+ ... + (q_{n}-p_{n})^{2}} = \sqrt{\sum_{i=1}^{n} (q_{i}-p_{i})^{2}}$$
 The brute force algorithm's complexity in terms of dimensions computed, d, is $O(n^{2}*d)$.\\
@@ -467,9 +467,38 @@ Accordingly, the approximate nearest neighbours model designed will have its com
 \item Memory complexity: $O(n*k)$
 \end{itemize}
 
-To conclude, when a new sample is requested to find the k-nearest neighbours, it is firstly transformed by the neural net from \textit{d} dimensions to \textit{k}, corresponding to the low-dimensional space, by predicting with the embedding learnt from MDS. Afterwards, the nearest neighbours are computed comparing the new example with the rest of the low  dimensional samples, achieving a faster and low memory intensive algorithm.
+To conclude, when a new sample is requested to find the k-nearest neighbours, it is firstly transformed by the neural net from \textit{d} dimensions to \textit{k}, corresponding to the low-dimensional space, by predicting with the embedding learnt from MDS. Afterwards, the nearest neighbours are computed comparing the new example with the rest of the low  dimensional samples, achieving a faster and low memory intensive algorithm.\\
 
-% previous work, not important yet
+\begin{algorithm}
+\caption{Low dimensional nearest neighbours calculation}
+\begin{algorithmic}[1]
+\Procedure{Fitting process}{}
+\State $\textit{\textbf{X}} \gets \text{imputed and standardized dataset}$
+\State $\textit{\textbf{X\_mds}} \gets \text{compute MDS from \textit{\textbf{X}}}$
+\BState \emph{neuralnet model construction}
+\BState \emph{fit neural net model}
+\BState \emph{save reduced matrix from training neural net}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\caption{Low dimensional nearest neighbours calculation}
+\begin{algorithmic}[1]
+\Procedure{NN calculation for new sample}{}
+\State $\textit{\textbf{x}} \gets \text{new sample}$
+\State $\textit{\textbf{x\_reduced}} \gets \text{predicted output from neural net with x (reduction)}$
+\BState \emph{nearest neighbours calculation with brute force algorithm in the low dimensional space}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Metrics}
+\label{ssec:met2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% previous work, not important yet
 \newpage
 We have developed a supervised algorithm, based in neuralnets, which reproduces the ideas showed in the framework's introduction.
 The inputs expected to run this algorithm are the next ones:
@@ -501,20 +530,6 @@ The fitting process seeks the parameters or values obtained from a training proc
 We look forward to construct a supervised learning algorithm, based on neuralnets, and we want to obtain the parameters learning from the unsupervised embedding algorithm. The steps to take would be as follows: firstly comes the construction of the neuralnet, taking into account what was said in the previous section plus the input matrix's input. Second of all, we have to store the reduced data from the embedder algorithm. At last, we have the original data and the reduced computed data, so we decided to fit the neuralnet with both datasets and store the output parameters of the neuralnet.
 \vspace{10pt}
 
-\begin{algorithm}
-\caption{Fitting process}
-\begin{algorithmic}[1]
-\Procedure{Fitting Procedure}{}
-\State $\textit{\textbf{X}} \gets \text{input matrix}$
-\State $ \textit{n\_comp} \gets \text{components in low dimension} $
-\BState $\textit{neuralnet} \gets \text{contructed with } \textit{inputs } \text{+ } \textit{\textbf{X}}$
-\BState \emph{embedding}
-\State $ \textit{\textbf{X\_}} = \text{embedding of } \textbf{\textit{X}}\in R^{mxn} \to R^{mxn\_comp}$
-\BState \emph{fit neuralnet}
-\State $ out = \text{supervised algorithm, } \textbf{\textit{X}} \to \textbf{\textit{X\_}} $
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
 
 We have been able to turn a unsupervised learning algorithm into a supervised learning algorithm, by replicating the unsupervised algorithm's behaviour.
 

@@ -8,8 +8,8 @@
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Cross validation using K-Folds.}}{11}{figure.3.2}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Example dataset point representing a handwriten digit.}}{13}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Dimension reduced data from NeuralNet.}}{17}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Dimension reduced data from t-SNE}}{17}{figure.4.3}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Low dimensional space from NeuralNet.}}{17}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Low dimensional space from from t-SNE}}{17}{figure.4.3}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

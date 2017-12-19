@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  18 DEC 2017 11:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.30)  19 DEC 2017 13:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -896,7 +896,7 @@ LaTeX Info: Redefining \nameref on input line 70.
 \openout3 = `template.out'.
 
 
-<figures/LOGO_ESCUELA.png, id=124, 708.246pt x 221.3871pt>
+<figures/LOGO_ESCUELA.png, id=128, 708.246pt x 221.3871pt>
 File: figures/LOGO_ESCUELA.png Graphic file (type png)
 
 <use figures/LOGO_ESCUELA.png>
@@ -934,7 +934,7 @@ Chapter 1.
 
 ] [2]
 Chapter 2.
-<figures/autoencoder.pdf, id=234, 332.24126pt x 220.825pt>
+<figures/autoencoder.pdf, id=239, 332.24126pt x 220.825pt>
 File: figures/autoencoder.pdf Graphic file (type pdf)
 
 <use figures/autoencoder.pdf>
@@ -955,7 +955,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 310--311
 
  []
 
-<figures/neuralnet.pdf, id=296, 373.395pt x 202.7575pt>
+<figures/neuralnet.pdf, id=301, 373.395pt x 202.7575pt>
 File: figures/neuralnet.pdf Graphic file (type pdf)
 
 <use figures/neuralnet.pdf>
@@ -967,7 +967,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 321--324
  []
 
 [10 <./figures/neuralnet.pdf>]
-<figures/cv.pdf, id=304, 468.75125pt x 213.79875pt>
+<figures/cv.pdf, id=310, 468.75125pt x 213.79875pt>
 File: figures/cv.pdf Graphic file (type pdf)
  <use figures/cv.pdf>
 Package pdftex.def Info: figures/cv.pdf used on input line 327.
@@ -975,7 +975,7 @@ Package pdftex.def Info: figures/cv.pdf used on input line 327.
 
 [11 <./figures/cv.pdf>]
 Chapter 4.
-<figures/exampledigit.pdf, id=315, 538.78474pt x 479.88474pt>
+<figures/exampledigit.pdf, id=320, 538.78474pt x 479.88474pt>
 File: figures/exampledigit.pdf Graphic file (type pdf)
 
 <use figures/exampledigit.pdf>
@@ -1000,7 +1000,7 @@ Overfull \hbox (1.85579pt too wide) in paragraph at lines 1--402
  []
 
 [15] (./figures/app1metricstime.tex)
-<figures/app1plotpredictions.pdf, id=358, 542.36073pt x 499.00803pt>
+<figures/app1plotpredictions.pdf, id=363, 542.36073pt x 499.00803pt>
 File: figures/app1plotpredictions.pdf Graphic file (type pdf)
 
 <use figures/app1plotpredictions.pdf>
@@ -1008,7 +1008,7 @@ Package pdftex.def Info: figures/app1plotpredictions.pdf used on input line 423
 .
 (pdftex.def)             Requested size: 341.43306pt x 314.14828pt.
 
-<figures/app1plotreal.pdf, id=359, 542.36073pt x 499.00803pt>
+<figures/app1plotreal.pdf, id=364, 542.36073pt x 499.00803pt>
 File: figures/app1plotreal.pdf Graphic file (type pdf)
 
 <use figures/app1plotreal.pdf>
@@ -1018,49 +1018,54 @@ Package pdftex.def Info: figures/app1plotreal.pdf used on input line 429.
 
 pdfTeX warning: /Library/TeX/texbin/pdflatex (file ./figures/app1plotreal.pdf):
  PDF inclusion: multiple pdfs with page group included in a single page
->] [18] [19] [20] [21] [22] [23]
+>] [18] [19]
+Underfull \hbox (badness 10000) in paragraph at lines 470--471
+
+ []
+
+[20] [21] [22]
 Chapter 5.
-[24
+[23
 
 ]
 Chapter 6.
-[25
+[24
 
 ]
 Chapter 7.
-[26
+[25
 
 ] (./template.bbl (./template.brf)
 \tf@brf=\write7
 \openout7 = `template.brf'.
 
- [27
+ [26
 
-]) [28
+] [27
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 591.
+]) [28]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 606.
  [29
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 591.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 606.
  (./template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 591.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 591.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 606.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 606.
 Package rerunfilecheck Info: File `template.out' has not changed.
-(rerunfilecheck)             Checksum: D380A7775E6D5778CA6F367C0621FE65;2008.
+(rerunfilecheck)             Checksum: 7B6CCFAE668D23053FAD56399C47D52C;2100.
 Package rerunfilecheck Info: File `template.brf' has not changed.
-(rerunfilecheck)             Checksum: 40189DE828D4155B4F61118FB5D1A337;517.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 591.
+(rerunfilecheck)             Checksum: 56DF154F1B8F705BB6E2337CB4DAB1AC;566.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 606.
  ) 
 Here is how much of TeX's memory you used:
- 12154 strings out of 492995
- 178113 string characters out of 6132703
- 326971 words of memory out of 5000000
- 15300 multiletter control sequences out of 15000+600000
+ 12172 strings out of 492995
+ 178326 string characters out of 6132703
+ 327073 words of memory out of 5000000
+ 15314 multiletter control sequences out of 15000+600000
  17231 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,12n,51p,1041b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,12n,51p,1041b,489s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
@@ -1079,10 +1084,10 @@ live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/
 2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template.pdf (36 pages, 552838 bytes).
+Output written on template.pdf (36 pages, 554440 bytes).
 PDF statistics:
- 594 PDF objects out of 1000 (max. 8388607)
- 456 compressed objects within 5 object streams
- 95 named destinations out of 1000 (max. 500000)
- 22804 words of extra memory for PDF output out of 24883 (max. 10000000)
+ 605 PDF objects out of 1000 (max. 8388607)
+ 467 compressed objects within 5 object streams
+ 99 named destinations out of 1000 (max. 500000)
+ 22812 words of extra memory for PDF output out of 24883 (max. 10000000)
 

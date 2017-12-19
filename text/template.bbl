@@ -6,6 +6,10 @@ Ella Bingham and Heikki Mannila.
   and text data.
 \newblock 2015.
 
+\bibitem{brute}
+Siena College.
+\newblock Brute-force algorithms.
+
 \bibitem{smacof}
 Jan de~Leeuw and Patrick Mair.
 \newblock Multidimensional scaling using majorization: \uppercase{SMACOF}.
@@ -25,6 +29,11 @@ Tobias Holl.
 \bibitem{ucidata}
 M.~Lichman.
 \newblock {UCI} machine learning repository, 2013.
+
+\bibitem{kdtree}
+Songrit Maneewongvatana and David~M. Mount.
+\newblock On the efficiency of nearest neighbor searching with data clustered
+  in lower dimensions.
 
 \bibitem{scikit-learn}
 F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel,

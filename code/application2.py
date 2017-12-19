@@ -99,7 +99,8 @@ if __name__ == '__main__':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
     # pipeline 1 = PRED
-    md = MDS(n_components=18, random_state=0, n_jobs=1, verbose=10, n_init=1)
+    md = MDS(n_components=8, random_state=0, n_jobs=1,
+             verbose=10, n_init=1)
 
     models = {
         "model1": {
@@ -153,4 +154,4 @@ if __name__ == '__main__':
         results,
         columns=['%npreserved', 'nntime', 'realtime', 'mem_model', 'mem_real'],
         index=models)
-    resultsdf.to_latex(buf='../text/figures/app2aproxbrute10010018.tex')
+    resultsdf.to_latex(buf='../figures/app2aproxbrute1001008nm.tex')

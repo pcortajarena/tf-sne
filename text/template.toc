@@ -20,12 +20,13 @@
 \contentsline {subsection}{\numberline {4.1.4}Conclusions}{16}{subsection.4.1.4}
 \contentsline {section}{\numberline {4.2}Application 2: Nearest Neighbours calculation}{18}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Dataset}{18}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Algorithm: Nearest Neighbours}{18}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Neuralnet construction.}{21}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Fitting process.}{22}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}Dimensionality reduced data obtaining.}{23}{subsection.4.2.5}
-\contentsline {chapter}{\numberline {5}Metrics}{24}{chapter.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{25}{chapter.6}
-\contentsline {chapter}{\numberline {7}EXTRA APPENDIX}{26}{chapter.7}
-\contentsline {chapter}{Bibliography}{27}{chapter*.8}
+\contentsline {subsection}{\numberline {4.2.2}Algorithm: Low dimensional nearest neighbors obtaining}{18}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Metrics}{20}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Neuralnet construction.}{21}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Fitting process.}{22}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}Dimensionality reduced data obtaining.}{22}{subsection.4.2.6}
+\contentsline {chapter}{\numberline {5}Metrics}{23}{chapter.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{24}{chapter.6}
+\contentsline {chapter}{\numberline {7}EXTRA APPENDIX}{25}{chapter.7}
+\contentsline {chapter}{Bibliography}{26}{chapter*.8}
 \contentsline {chapter}{Code}{29}{chapter*.10}
