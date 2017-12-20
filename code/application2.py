@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 import keras.backend as K
+import matplotlib.pyplot as plt
 import sys
 import pickle
 import os
@@ -69,12 +70,12 @@ def modelsjob(name, params):
     pipeline1 = NNPipeline([
         ('imp', Imputer()),
         ('std', StandardScaler()),
-        ('nnrep', nnreplicator),
-        ('knn', NearestNeighbors(algorithm='brute'))])
+        # ('nnrep', nnreplicator),
+        ('knn', NearestNeighbors(algorithm='kd_tree', leaf_size=100))])
 
     # training
     pipeline1.fit(X_train)
-    mem_model = pipeline1.get_memory_usage(X_train)
+    mem_model = get_memory_object(pipeline1)
 
     # pipeline 2 = TRUE
     pipeline2 = NNPipeline([
@@ -90,6 +91,18 @@ def modelsjob(name, params):
         X_test, pipeline1, pipeline2, k1=100, k2=100)
 
     return np.mean(preserved), time_model, time_real, mem_model, mem_real
+
+
+def comp_brute(x):
+    return np.square(x)
+
+
+def comp_kdtree(x):
+    return x*np.log(x)
+
+
+def comp_model(x):
+    return np.square(x)/3
 
 # main
 if __name__ == '__main__':
@@ -109,7 +122,6 @@ if __name__ == '__main__':
     X, y = data.iloc[:, :-1], data.iloc[:, -1]
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
-    # pipeline 1 = PRED
     md = MDS(n_components=100, random_state=0, n_jobs=1,
              verbose=10, n_init=1)
 
@@ -156,13 +168,36 @@ if __name__ == '__main__':
         }
     }
 
-    results = Parallel(n_jobs=-1, verbose=10)(
+    results = Parallel(n_jobs=1, verbose=10)(
         delayed(modelsjob)(model_name, model_params)
         for model_name, model_params in models.items()
     )
 
     resultsdf = pd.DataFrame(
         results,
-        columns=['npreserved', 'nntime', 'realtime', 'mem_model', 'mem_real'],
+        columns=['npreserved', 't_model', 't_brute', 'mem_model', 'mem_brute'],
         index=models)
-    resultsdf.to_latex(buf='../figures/app2aproxbrute100100blog.tex')
+    resultsdf.to_latex(buf='../figures/app2kdtreebrute100100blog.tex')
+
+    # complexities calculation
+
+    indices1 = np.linspace(1, 20, 40)
+
+    out1 = comp_brute(indices1)
+    out2 = comp_kdtree(indices1)
+    out3 = comp_model(indices1)
+
+    fig, ax = plt.subplots(1, 1, figsize=(9, 8))
+    ax.set_ylabel('time')
+    ax.set_xlabel('number of samples')
+    ax.set_yticklabels({})
+    ax.set_xticklabels({})
+    plt.tick_params(axis='x', which='both', bottom='off',
+                    left='off', labelbottom='off')
+    plt.tick_params(axis='y', which='both', bottom='off',
+                    left='off', labelbottom='off')
+    plt.plot(indices1, out1, label="brute-force")
+    plt.plot(indices1, out2, label="kd-tree")
+    plt.plot(indices1, out3, label="model")
+    plt.legend()
+    plt.savefig('../text/figures/complexities.pdf', bbox_inches='tight')

@@ -412,19 +412,19 @@ Table \ref{times1} shows the huge difference between the computational time (in 
 \caption{\label{times1}Computational times}
 \end{table}
 
-\subsection{Conclusions}
+\subsection{Conclusion}
 \label{ssec:conc1}
 
 Consequently and given the results in the previous tables, we can reassure that, without considerating the neuralnet's construction, all of them will certainly be quicker in obtaining the results. If we look for accuracy, a wide neuralnet is better at replicating the t-SNE algorithm. In particular, the model 6 proposed suits the best for the problem presented.\\
 The next two figures represent the results obtained. The first one matches the predictions from the neural network (in model 6) and the second one represents the same points from the t-SNE algorithm.
 
-\begin{figure}
+\begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{figures/app1plotpredictions.pdf}
 \caption{\label{figureNN}Low dimensional space from NeuralNet.}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{figures/app1plotreal.pdf}
 \caption{\label{figureTSNE}Low dimensional space from from t-SNE}
@@ -463,8 +463,8 @@ The training phase aims to obtain all the parameters or transformations which wi
 Instead, in this proposal, and as seen in the first application (\ref{sec:app1}), the training consists on faithfully learning the mapping of a dimensionality reduction algorithm from a high-dimensional space to a low-dimensional space by training a neuralnet to do so. In this case, the model saves the neuralnet's parameters which replicate the MDS, instead of the exact transformations from it. Then, when a new out of sample point is included, there is no need to compute the whole MDS algorithm to be able to transform the data because we have a neuralnet that can approximate the embedding operation.\\
 Accordingly, the approximate nearest neighbours model designed will have its computational time and memory complexity reduced by the relation between the original (\textit{d}) and the low-dimensional space's dimensions (\textit{k}).
 \begin{itemize}
-\item Computational time complexity: $O(n^{2}*k)$
-\item Memory complexity: $O(n*k)$
+\item Computational time complexity: $O(N^{2}*K)$
+\item Memory complexity: $O(N*K)$
 \end{itemize}
 
 To conclude, when a new sample is requested to find the k-nearest neighbours, it is firstly transformed by the neural net from \textit{d} dimensions to \textit{k}, corresponding to the low-dimensional space, by predicting with the embedding learnt from MDS. Afterwards, the nearest neighbours are computed comparing the new example with the rest of the low  dimensional samples, achieving a faster and low memory intensive algorithm.\\
@@ -519,13 +519,54 @@ The following tables relate the model used to compute the neural net with the pr
 \caption{\label{metrics23}Nearest neighbours calculation in eighteen dimensions}
 \end{table}
 
-The approximate model designed can also be compared to other approximate nearest neighbours algorithms such as KD-Tree \citep{kdtree}. KD-Tree is a binary tree that represents a division of the space using splitting planes which are orthogonal to the axis. Each node has a corresponding region called cell and the root's cell has to include all the points from the dataset. For each region we have a hyperplane which divides the points into one side or the other, until there are no points left, which means the partition is over and the tree is constructed. This type of tree achieves a computational complexity of $O(nlogn)$ and works correctly for low-dimensional datasets. When the dimensions get higher, the behaviour tends to get worse. Table \ref{metrics24} corresponds to the first dataset of the application.
+The approximate model designed can also be compared to other approximate nearest neighbours algorithms such as KD-Tree \citep{kdtree}. KD-Tree is a binary tree that represents a division of the space using splitting planes which are orthogonal to the axis. Each node has a corresponding region called cell and the root's cell has to include all the points from the dataset. For each region we have a hyperplane which divides the points into one side or the other, until there are no points left, which means the partition is over and the tree is constructed. This type of tree achieves a computational complexity of $O(NlogN)$ and works correctly for low-dimensional datasets. When the dimensions get higher, the behaviour tends to get worse. Table \ref{metrics24} corresponds to the first dataset of the application.
 
 \begin{table}[h]
 \centering
 \input{figures/app2kdtree100brute100100.tex}
 \caption{\label{metrics24}KD-Tree computing nearest neighbours}
 \end{table}
+
+Although the total of neighbours are preserved, both the computational time and memory the model consume are high, two times compared to brute force algorithm. This means that if a bigger dimensional dataset or more intances are provided, the algorithm tends to be non-scalable, thus the capacity of the algorithm in terms of computational time and memory turns the model into a complex one.\\
+To prove this, the next to tables compare the approximate model and the kd-tree approximate nearest neighbours computation with a new dataset that has 4000 instances and 281 features per sample.
+
+\begin{table}[h]
+\centering
+\input{figures/app2aproxbrute100100blog.tex}
+\caption{\label{metrics25}Nearest neighbours calculation in 100 dimensions from new dataset}
+\end{table}
+
+\begin{table}[h]
+\centering
+\input{figures/app2kdtreebrute100100blog.tex}
+\caption{\label{metrics24}KD-Tree computing nearest neighbours from new dataset}
+\end{table}
+
+The computational time KD-Tree requires is twelve times the computational time from the approximate model in the best of the cases. The memory KD-Tree needs to compute its operations is nearly also twelve times in comparison to the model designed in this dataset.
+
+\subsection{Conclusion}
+\label{ssec:conc2}
+
+Computing nearest neighbours in nowadays applications has become an important topic. The need to report them quickly demands new algorithms like the model previously designed. It consists on lowering the sample's dimensions with a neural net which has learnt how to do it by replicating a MDS, and then, nearest neighbours are computed in the low-dimensional space.\\
+As seen in the results studied before, there is a relation between precision obtained and time and memory usage.\\
+Although KD-Tree also uses the idea of lowering the data's features, regarding precision, time and memory usage this gets higher when a complex dataset is provided.\\
+With this model we obtain less precision by computing rapidly and with less memory usage.
+
+The computational complexities for the three algorithms studied are the next ones (taking into account dimensions computed):
+\begin{itemize}
+\item Brute force algorithm: $ O(N^{2}*D)$ 
+\item KD-Tree algorithm: $ O(NlogN*D)$ 
+\item Approximate nearest neighbours algorithm: $ O(N^{2}*D^{*}) = O(N^{2}*\frac{D}{3})$ 
+\end{itemize}
+
+The following figure describes this computational complexities for a given number of dimensions:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=12cm]{figures/complexities.pdf}
+\caption{\label{figureNN}Algorithms' complexities.}
+\end{figure}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% previous work, not important yet
@@ -570,12 +611,6 @@ We have been able to turn a unsupervised learning algorithm into a supervised le
 We have achieved the task of replicating an unsupervised algorithm's behaviour by a supervised algorithm, characterized for being capable of predicting the output by computing operations between the input and some learned parameters.
 Even though the unsupervised algorithms have no parameters, a neuralnet does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
 
-%-----------------------------------------------------
-% Chapter: Metrics
-%-----------------------------------------------------
-
-\chapter{Metrics}
-\label{chap:met}
 
 
 %-----------------------------------------------------
@@ -606,7 +641,6 @@ Despite of having built the neural net correctly, we also need to make it compat
 % Chapter: Bibliography
 %-----------------------------------------------------
 
-\chapter*{Bibliography}
 \label{chap:bib}
 \addcontentsline{toc}{chapter}{Bibliography}
 \bibliography{mybib}
