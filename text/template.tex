@@ -26,11 +26,12 @@
 \usepackage[english]{babel}
 \selectlanguage{English}
 \usepackage[utf8]{inputenc}
-\usepackage{listings}
+%\usepackage{listings}
+%\lstset{language=Python}
 \usepackage{amsmath}
 \usepackage{microtype}
 \usepackage{enumitem}
-%\usepackage{minted}
+\usepackage{minted}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{epstopdf}
@@ -60,9 +61,9 @@
 % HYPER REF
 \usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=black,citecolor=black,linkcolor=black,bookmarksnumbered,plainpages=false]{hyperref}
 % For print version, use this instead:
-%\usepackage[pdfusetitle,bookmarksnumbered,plainpages=false]{hyperref}
-%\usepackage{backref}
-%\renewcommand{\backrefpagesname}{Cited on}
+\usepackage[pdfusetitle,bookmarksnumbered,plainpages=false]{hyperref}
+\usepackage{backref}
+\renewcommand{\backrefpagesname}{Cited on}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -539,7 +540,7 @@ To prove this, the next to tables compare the approximate model and the kd-tree 
 \begin{table}[h]
 \centering
 \input{figures/app2kdtreebrute100100blog.tex}
-\caption{\label{metrics24}KD-Tree computing nearest neighbours from new dataset}
+\caption{\label{metrics26}KD-Tree computing nearest neighbours from new dataset}
 \end{table}
 
 The computational time KD-Tree requires is twelve times the computational time from the approximate model in the best of the cases. The memory KD-Tree needs to compute its operations is nearly also twelve times in comparison to the model designed in this dataset.
@@ -564,7 +565,7 @@ The following figure describes this computational complexities for a given numbe
 \begin{figure}[h]
 \centering
 \includegraphics[width=12cm]{figures/complexities.pdf}
-\caption{\label{figureNN}Algorithms' complexities.}
+\caption{\label{figurecomplexities}Algorithms' complexities.}
 \end{figure}
 
 
@@ -662,9 +663,10 @@ Despite of having built the neural net correctly, we also need to make it compat
 \label{chap:code}
 \addcontentsline{toc}{chapter}{Code}
 
-%\begin{tiny}
-%\inputminted[baselinestretch=0.5, breaklines]{python}{code.py}
-%\end{tiny}
+\section{Application 1: code}
+\label{sec:app1code}
+
+\inputminted[baselinestretch=0.5, breaklines]{python}{../code/application1.py}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END DOCUMENT

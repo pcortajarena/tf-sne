@@ -30,3 +30,4 @@
 \contentsline {chapter}{\numberline {6}EXTRA APPENDIX}{28}{chapter.6}
 \contentsline {chapter}{Bibliography}{28}{chapter.6}
 \contentsline {chapter}{Code}{31}{chapter*.9}
+\contentsline {section}{\numberline {6.1}Application 1: code}{31}{section.6.1}
