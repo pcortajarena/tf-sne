@@ -1,10 +1,10 @@
-    import matplotlib
+import matplotlib
 matplotlib.use("Agg")
 import pandas as pd
 import numpy as np
 import time
 
-from seaborn import lmplot, heatmap
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 from scipy import sparse
@@ -12,7 +12,7 @@ from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 
 from sklearn.preprocessing import StandardScaler
-from sklearn.manifold import TSNE
+from sklearn.manifold import TSNE, MDS
 from sklearn.pipeline import make_pipeline
 
 from keras.wrappers.scikit_learn import KerasRegressor
@@ -43,7 +43,8 @@ def percentage_error(err, X_div):
 # neural net model
 
 
-def reg(shape, loss_func, layers, dropout, output_shape, lr, act_function='tanh'):
+def reg(shape, loss_func, layers, dropout,
+        output_shape, lr, act_function='tanh'):
 
     model = Sequential()
     for i, (layer, drop) in enumerate(zip(layers, dropout)):
@@ -71,7 +72,7 @@ def app(X_unsupervised, dic, X, y):
     tiempos = {key: [] for key in dic}
 
     X_train, X_test, X_unsuper_train, X_unsuper_test, y_train, y_test = train_test_split(
-        X, X_unsupervised, y, random_state=5)
+        X, X_unsupervised, y, random_state=0)
 
     min_error = 1000
 
@@ -125,18 +126,20 @@ if __name__ == '__main__':
     X, y = dataset['data'], dataset['target']
 
     tsne = TSNE(n_components=2, verbose=10)
+    md = MDS(n_components=2, random_state=5, n_jobs=1,
+             verbose=10, n_init=1)
 
     # pipelines
     unsupervised_pipeline = make_pipeline(
         StandardScaler(),
-        tsne
+        md
     )
 
     start = time.time()
     X_unsup = unsupervised_pipeline.fit_transform(X)
     end = time.time()
 
-    time_tsne = end - start
+    time_unsup = end - start
 
     # iterate models
     models = {
@@ -191,13 +194,13 @@ if __name__ == '__main__':
     resultsdf = pd.DataFrame(
         results, index=['error', '%error_X', '%error_Y']).T
     totalmetrics = pd.concat([modelsdf, resultsdf], axis=1)
-    totalmetrics.to_latex(buf='../text/figures/app1metricserror.tex')
+    # totalmetrics.to_latex(buf='../text/figures/app1metricserror.tex')
 
     # times
-    time_tsne = pd.DataFrame([time_tsne], columns=['times'], index=['tsne'])
+    time_unsup = pd.DataFrame([time_unsup], columns=['times'], index=['unsup'])
     timesdf = pd.DataFrame([time], index=['times']).T
-    totaltimes = pd.concat([time_tsne, timesdf])
-    totaltimes.to_latex(buf='../text/figures/app1metricstime.tex')
+    totaltimes = pd.concat([time_unsup, timesdf])
+    # totaltimes.to_latex(buf='../text/figures/app1metricstime.tex')
 
     # save plot figures
     predictdf = pd.DataFrame(predictions, columns=[
@@ -205,17 +208,21 @@ if __name__ == '__main__':
     realdf = pd.DataFrame(real_data, columns=[
                           'x_real', 'y_real']).assign(label=y_label)
 
-    #fig, ax = plt.subplots(1, 1, figsize=(10,7))
-    lmplot(x='x_pred', y='y_pred', data=predictdf,
-           hue='label', fit_reg=False, size=7)
-    plt.savefig('../text/figures/app1plotpredictions.pdf', bbox_inches='tight')
+    fig, ax = plt.subplots(1, 1, figsize=(10, 7))
+    sns.lmplot(x='x_pred', y='y_pred', data=predictdf,
+               hue='label', fit_reg=False, size=7)
+    plt.xlim(-20, 20)
+    plt.ylim(-20, 20)
+    plt.savefig('../figures/app1plotpredictionsmds.pdf', bbox_inches='tight')
 
-    lmplot(x='x_real', y='y_real', data=realdf,
-           hue='label', fit_reg=False, size=7)
-    plt.savefig('../text/figures/app1plotreal.pdf', bbox_inches='tight')
+    sns.lmplot(x='x_real', y='y_real', data=realdf,
+               hue='label', fit_reg=False, size=7)
+    plt.xlim(-20, 20)
+    plt.ylim(-20, 20)
+    plt.savefig('../figures/app1plotrealmds.pdf', bbox_inches='tight')
 
-    # example of number representation
-    fig, ax = plt.subplots(1, 1, figsize=(9, 8))
-    heatmap(X[550].reshape(8, 8), cmap='gray', annot=True, ax=ax, cbar=False)
-    plt.axis('off')
-    plt.savefig('../text/figures/exampledigit.pdf', bbox_inches='tight')
+    # # example of number representation
+    # fig, ax = plt.subplots(1, 1, figsize=(9, 8))
+    # heatmap(X[550].reshape(8, 8), cmap='gray', annot=True, ax=ax, cbar=False)
+    # plt.axis('off')
+    # plt.savefig('../text/figures/exampledigit.pdf', bbox_inches='tight')
