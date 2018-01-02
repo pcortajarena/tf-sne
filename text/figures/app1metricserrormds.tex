@@ -1,0 +1,14 @@
+\begin{tabular}{llllrrr}
+\toprule
+{} &       dropout &             layers &              type &     error &  \%error\_X &  \%error\_Y \\
+\midrule
+model1 &  [0, 0, 0, 0] &    [32, 16, 16, 8] &     deep - narrow &  1.539260 &  3.164186 &  2.495089 \\
+model2 &        [0, 0] &           [32, 32] &  shallow - narrow &  1.434994 &  2.949851 &  2.326077 \\
+model3 &        [0, 0] &           [32, 16] &  shallow - narrow &  1.401265 &  2.880517 &  2.271405 \\
+model4 &     [0, 0, 0] &      [128, 64, 64] &       deep - wide &  1.328322 &  2.730571 &  2.153166 \\
+model5 &  [0, 0, 0, 0] &  [128, 64, 64, 32] &       deep - wide &  1.238499 &  2.545926 &  2.007566 \\
+model6 &     [0, 0, 0] &    [128, 128, 128] &    shallow - wide &  1.227050 &  2.522390 &  1.989007 \\
+model7 &        [0, 0] &          [128, 64] &    shallow - wide &  1.257435 &  2.584852 &  2.038261 \\
+model8 &           [0] &             [1000] &   shallow - wider &  1.557930 &  3.202565 &  2.525353 \\
+\bottomrule
+\end{tabular}

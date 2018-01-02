@@ -194,13 +194,13 @@ if __name__ == '__main__':
     resultsdf = pd.DataFrame(
         results, index=['error', '%error_X', '%error_Y']).T
     totalmetrics = pd.concat([modelsdf, resultsdf], axis=1)
-    # totalmetrics.to_latex(buf='../text/figures/app1metricserror.tex')
+    totalmetrics.to_latex(buf='../figures/app1metricserrormds.tex')
 
     # times
     time_unsup = pd.DataFrame([time_unsup], columns=['times'], index=['unsup'])
     timesdf = pd.DataFrame([time], index=['times']).T
     totaltimes = pd.concat([time_unsup, timesdf])
-    # totaltimes.to_latex(buf='../text/figures/app1metricstime.tex')
+    totaltimes.to_latex(buf='../figures/app1metricstimemds.tex')
 
     # save plot figures
     predictdf = pd.DataFrame(predictions, columns=[
@@ -221,7 +221,7 @@ if __name__ == '__main__':
     plt.ylim(-20, 20)
     plt.savefig('../figures/app1plotrealmds.pdf', bbox_inches='tight')
 
-    # # example of number representation
+    # example of number representation
     # fig, ax = plt.subplots(1, 1, figsize=(9, 8))
     # heatmap(X[550].reshape(8, 8), cmap='gray', annot=True, ax=ax, cbar=False)
     # plt.axis('off')
