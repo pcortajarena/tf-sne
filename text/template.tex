@@ -124,18 +124,27 @@ Madrid. January, 2018.
 \chapter*{Abstract}
 \setcounter{page}{3}
 
-The aim of this project is  
+Since dimensionality reduction has turned to be an important task in machine learning problems, the aim of this project is the development of a supervised machine learning embedding algorithm that seeks to replicate other algorithms' transformations such as MDS and t-SNE which are non-parametric and non-reusable. Moreover, since we are using a neural net to do so, ours can be re-used, reproduced and taken advantage of in a more efficient and convenient way. This algorithm can also be implemented for nearest neighbours search in a lower dimensional space obtained from the model.
+
+The usage of real data-sets and neural nets are the main tools used for this study. The results obtained show the trade-off between precision, computational time and memory usage. The loss of precision of the model developed is negligible compared to the improvements in time a memory.
+
+Keywords: \textit{Machine learning, unsupervised-learning, embedding, neural nets, dimensionality reduction, nearest neighbours.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % RESUMEN
 \chapter*{Resumen}
-\setcounter{page}{4}
 
-El objetivo de este trabajo
+Los algoritmos de reducción de dimensiones suponen un paso imprescindible en problemas de aprendizaje automático. Por ello, el objetivo de este proyecto es el desarrollo de un modelo supervisado de reducción de dimensiones que sea capaz de replicar las transformaciones que realizan otros algoritmos no paramétricos y no reutilizables como MDS o t-SNE. Además, al utilizar redes neuronales para llevarlo a cabo, conseguimos que nuestro modelo sea reutilizable, reproducible y sacar partido de ello de una forma eficiente. Asimismo, este modelo podría usarse para la obtención eficiente de vecinos cercanos en un espacio de menor dimensión obtenido a partir del mismo.
+
+Las principales herramientas usadas para la investigación son bases de datos reales y redes neuronales. Los resultados obtenidos muestran una relación directa entre precisión y uso de tiempo y memoria. La pérdida de precisión es imperceptible en comparación con la mejora en tiempo computacional y uso de memoria.
+
+Palabras clave: \textit{Aprendizaje automático, aprendizaje no supervisado, redes neuronales, redución de dimensiones, vecinos cercanos.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
 \chapter*{Acknowledgements}
+
+Special thanks to my director, Carlos Roberto del Blanco Adán, for his professional guidance, enthusiastic encouragement and priceless help. Thanks to my family for their unconditional support and to my tutor Iñigo Cortajarena Sauca for introducing me to the world of machine learning, for his constructive recommendations and for his valuable technical help on this project.
 
 \renewcommand{\baselinestretch}{\linespacing}
 \small\normalsize
@@ -673,8 +682,14 @@ Using these classes one would be able to build an application such as the follow
 % Chapter: Conclusion
 %-----------------------------------------------------
 
-\chapter{Conclusion}
+\chapter{Conclusions and Future Work}
 \label{chap:conc}
+
+Neural nets are known to be capable of replicating almost everything and it has been proven that also dimensionality reduction models' transformations from algorithms such as MDS and t-SNE can be reproduced by them. Furthermore, these models guarantee a re-usable tool that can be applied alone to computationally speed up processes and lessen memory usage, as a way of visualizing data or as a basis to other applications like nearest neighbours search. As they faithfully represent both dimensionality reduction algorithms, the model could be used as a basis for whatever machine learning problem which requires previous dimensionality reduction.
+
+For the two applications developed, we can reassure that the best neural net model is a wide net, although for replicating other dimensionality reduction algorithms would be important to know which one fits the best.
+
+
 
 %-----------------------------------------------------
 % Chapter: Bibliography
