@@ -32,6 +32,7 @@
 \usepackage{microtype}
 \usepackage{enumitem}
 \usepackage{minted}
+\usepackage{mdframed}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{epstopdf}
@@ -64,6 +65,7 @@
 \usepackage[pdfusetitle,bookmarksnumbered,plainpages=false]{hyperref}
 \usepackage{backref}
 \renewcommand{\backrefpagesname}{Cited on}
+\definecolor{light-gray}{gray}{0.98}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,15 +105,17 @@
 
 \Large\textbf{Tutor: Iñigo Cortajarena Sauca}
 
+\Large\textbf{Dep: GTI: Grupo de Tratamiento de Imágenes}
+
 \end{center}
 \vfill
 \begin{flushleft}
 \large
 % QUALIFICATION
-Trabajo Fin de Grado \\
-ETSIT UPM 	\\
+Trabajo Fin de Grado.
+ETSIT UPM.
 % DATE OF SUBMISSION
-Madrid. January, 2018
+Madrid. January, 2018.
 \end{flushleft}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -122,6 +126,12 @@ Madrid. January, 2018
 
 The aim of this project is  
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% RESUMEN
+\chapter*{Resumen}
+\setcounter{page}{4}
+
+El objetivo de este trabajo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ACKNOWLEDGEMENTS
@@ -158,20 +168,21 @@ The aim of this project is
 \chapter{Introduction}
 \label{chap:intro}
 
-Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even with a reduced number of features used to describe that same dataset. This means  dimensionality reduction algorithms compute new features based on the original ones. Although the number of new features computed are less than the number of original ones, the reduction's objective is to still represent the same information without significant distortion. Thus, time and memory in huge implementations are saved.
+Working with large datasets and high-dimensional data in nowadays' problems has encouraged the use of dimensionality reduction algorithms which try to preserve as much information as possible even with a reduced number of features used to describe that same dataset. This is, dimensionality reduction algorithms compute new features based on the original ones. Although the number of new features computed are less than the number of original ones, the reduction's objective is to still represent the same information without significant distortion. Thus, time and memory may be saved when facing large implementations.
 
-Taking into account that this turns into a difficult task, numerous approaches have been proposed.\\
-Although the different approaches try to achieve more or less the same aim, they differ from one another and we can not reassure which would suite for a specific problem or even if the behaviour of the algorithm throws the results we expected or needed.
+Taking into account that this turns into a difficult task, numerous approaches have been proposed.
+Although the different approaches try to achieve more or less the same aim, they differ from one another and we can not reassure which one would suite a specific problem or even if the behaviour of the algorithm throws the results we expected or needed.
 
-The first point to take into account is the existence of parametric and non-parametric algorithms, depending on whether the dimensionality reduction can be expressed in terms of parameters or not, which can be conclusive when deciding what algorithm to use.\\
-Secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.
+The first point to take into account is the existence of parametric and non-parametric algorithms, depending on whether the dimensionality reduction can be expressed in terms of parameters or not, which can be conclusive when deciding what algorithm to use. Secondly, in both of them we can find different models proposed depending on what to optimize, yet not everything is going to be preserved as well as in the original dataset, so we need to prioritize some aspects.
 
-So the decision of which of them to implement depends on the previous study of our data, the performance requirements and the later purpose and usage of the reduced data.
+The decision of which of them to implement depends on the previous study of our data, the performance requirements and the later purpose and usage of the embedded data.
 
-The non-parametric algorithms have an important disadvantage: as it is said, they don't have parameters which represent the dimensionality reduction; thus, when a new datapoint is provided we need to compute the whole algorithm again to obtain the datapoint's representation in the lower space, instead of computing only the new data.
+Non-parametric algorithms have an important disadvantage: as previously said, they don't have parameters which represent the dimensionality reduction transformation; thus, when a new sample is provided we need to compute the whole algorithm again to obtain the datapoint's coordinates in the lower dimensional space, instead of computing the transformation on this sample alone. This is computationally expensive and somewhat inconvenient for real world applications.
 
-We hereby propose the study and research of an implementation which replicates the behaviour of a non-parametric dimensionality reduction algorithm. The main objective is to solve the non-parametric's main disadvantage and make the new algorithm capable of being repeatedly used with new datapoint examples, omiting the need to compute the whole dimensionality reduction algorithm every time.\\
-The dimensionality reduction algorithms used to base the research are the ones listed below:
+We hereby propose the study and research an implementation of a machine learning model which can replicate the behaviour of a non-parametric dimensionality reduction algorithm. The main objective is to resolve the latter's main disadvantage and make it capable of being repeatedly used with new examples, omiting the need to compute the whole non parametric transformation every time, saving time and computational resources.
+
+The embedding algorithms used as a baseline for this research are the ones listed below:
+
 \renewcommand{\labelitemi}{\textendash}
 \begin{itemize}
 \item PCA (Principal Component Analysis)
@@ -179,7 +190,7 @@ The dimensionality reduction algorithms used to base the research are the ones l
 \item TSNE (T-Stochastic Neighbour Embedding)
 \end{itemize}
 
-To conclude, the document is divided into chapters which resume the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main development of the implementation. Afterwards, chapter \ref{chap:app} describes the main implementation's applications and the corresponding metrics computed to analyse the algorithm's behaviour. The last chapter (chapter \ref{chap:conc}) comprehends the conclusion and resumes the main ideas acquired.
+To conclude, the document is divided into chapters which summarize the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main steps of the implementation. Afterwards, chapter \ref{chap:app} describes the main implementation's applications and the corresponding metrics computed to analyze the algorithm's behaviour. The last chapter (chapter \ref{chap:conc}) comprehends the conclusion and summarizes the main ideas discussed in this paper.
 
 %-----------------------------------------------------
 % Chapter: State of the Art
@@ -188,9 +199,9 @@ To conclude, the document is divided into chapters which resume the main steps o
 \chapter{State-of-The-Art}
 \label{chap:stt}
 
-The most classical dimensionality reduction techniques are know to be PCA \citep{pca} and MDS \citep{mds}. They preserve the true structure of the data even though they are simple to implement and efficiently computable. They rely on linear models to compute data mining on near lower dimensional spaces. A related linear implementation which is based on random projectations of the data is described in \citep{rproj, rproj2}. Some other well-known techniques are ISOMAP \citep{isomap} and t-SNE \citep{tsne}, but their implementations often require more memory and computational time, yet the complexity of the algorithms is higher. Nevertheless, this algorithms are capable of reducing the number of features in non-linear data, where linear models can not faithfully reprensent the data's structure. ISOMAP computes geodesic distances instead of taking into account only euclidean distances while t-SNE's approach calculates probabilities from euclidean distances.
+Two of the most classical dimensionality reduction techniques are know to be PCA \citep{pca} and MDS \citep{mds}. They try to preserve the true structure of the data even though they are simple to implement and computationally efficient. They rely on linear models to compute an embedding of the original space into a lower dimensional one. A related linear implementation which is based on random projections of the data is described in \citep{rproj, rproj2}. Some other well-known techniques are ISOMAP \citep{isomap} and t-SNE \citep{tsne}, but their implementations often require more memory and computational load, yet the complexity of the algorithms is higher. Nevertheless, these algorithms are capable of reducing the number of features in a non-linear manner, whereas linear models can not faithfully represent the data's structure since the output space's coordinates must always be linear combinations of the original features. ISOMAP computes geodesic distances instead of euclidean dissimilarities while t-SNE's approach is to compute probabilities from an euclidean metric.
 
-Neural networks have become an essencial tool in machine learning problems and it is certainly used in dimensionality reduction. The autoencoders \citep{auto2, auto} consist on a neuralnet with decreasing number of neurons per layer and then symmetrically more layers are added with the same corresponding increasing neurons per layer. If the output represents without distorsion the input to the net, the middle layer with the fewest number of neurons corresponds to the reduced description of the data. This is represented in figure \ref{autoencoder}.
+Neural networks have become an essential tool in machine learning problems and can certainly be used for dimensionality reduction. Autoencoders \citep{auto2, auto} consist on a neural net with a  decreasing number of neurons per layer and a symmetrical structure whose output's size is the same as the input's. If the output represents the input without any distortion, then middle layer with the fewest number of neurons corresponds to the embedded description of the data. This is represented in figure \ref{autoencoder}.
 
 \begin{figure}[h]
 \centering
@@ -198,19 +209,23 @@ Neural networks have become an essencial tool in machine learning problems and i
 \caption{\label{autoencoder}Autoencoder neural network.}
 \end{figure}
 
-The next sections (sections \ref{sec:pca}, \ref{sec:mds} and \ref{sec:tsne}) resume the main ideas of the algorithms in which the research is based. 
+The following sections (sections \ref{sec:pca}, \ref{sec:mds} and \ref{sec:tsne}) summarize the main ideas of the algorithms on which the research is based. 
 
 \section{PCA: Principal Component Analysis}
 \label{sec:pca}
 
-Principal Component Analysis \citep{pca} algorithm is based on reducing the number of features by processing the correlations between the features of the datapoints. The aim is to eliminate this correlations by transforming the matrix \textbf{X} $\in$ $\Re^{mxn}$ (with m being the number of data points and n de number of features) into an orthogonal basis. By omiting the correlation between columns of the matrix \textbf{X} we are capable of doing away with redundancies.\\
-The model starts by computing de covariance matrix, which results in a $\Re^{nxn}$ symmetric matrix. We obtain it by using the next expression:
+Principal Component Analysis \citep{pca} is based on reducing the number of features by processing the correlations amongst them. The aim is to eliminate these correlations by representing the matrix \textbf{X} $\in$ $\Re^{mxn}$ (with m being the number of data points and n de number of features) in a lower dimensional orthogonal basis. By omitting the correlation between columns of the matrix \textbf{X} we are capable of doing away with redundancies.
+
+The model starts by computing de covariance matrix, which results in a $\Re^{nxn}$ symmetric matrix by using the next expression:
 \begin{center}
 cov(\textbf{X}) = $\dfrac{1}{m-1}$ $\textbf{X}^{T}$\textbf{X}
 \end{center}
-Because the aim of the PCA is to eliminate the correlations, the covariance matrix of the result \textbf{Y} should be a diagonal matrix with just the variances of the columns.\\
-PCA is famous because of a great advantage: we can find a linear transformation (\textbf{Y = XP}), which makes this a parametric model, easy to reuse and quite computationally simple.\\
-For symmetric matrices (\textbf{X}) we can find eigenvalue decomposition with a diagonal matrix (\textbf{Y}), matching exactly with our linear problem with \textbf{X} and \textbf{Y}.
+Since the aim of the PCA is to eliminate the correlations, the covariance matrix of the resulting \textbf{Y} should be a diagonal matrix with just the variances of the columns.
+
+PCA is often used because of a great advantage: with it, a linear transformation (\textbf{Y = XP}) can be inferred. As the resulting transformation is basically a change-of-basis (matrix multiplication), it turns to be easy to reuse and computationally simple.
+
+For any symmetric matrix we can find an eigenvalue decomposition to a diagonal matrix, matching exactly our problem (with \textbf{X} and \textbf{Y} and their covariances).
+
 \begin{center}
 \textbf{Y = XP}
 $$ cov(\textbf{Y}) = \frac{1}{m-1} \textbf{Y}^{T} \textbf{Y} = \frac{1}{m-1} \textbf{(XP)}^{T} \textbf{XP} = \textbf{P}^{T} cov(\textbf{X})\textbf{P} $$
@@ -218,69 +233,78 @@ $$\textbf{D} = \textbf{V}^{T} \textbf{AV}$$
 $$ \textbf{A} = cov(\textbf{X}); \textbf{P} = \textbf{V}^{T}; \textbf{D} = cov(\textbf{Y})$$
 \end{center}
 
-With the previous expressions we get to the point that, by computing the eigenvectors of the covariance matrix \textbf{X}, we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The eigenvalues matrix obtained (cov(\textbf{Y})) are sorted decreasingly and are the orthogonal basis values. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the corresponding eigenvectors, we obtain our reduced dimensionally points, as a basis transformation of our datapoints from the original dataset, by the new basis coordinates.
+With the previous expressions we get to the point that, by computing the eigenvectors of the covariance matrix \textbf{X}, we can get a linear transformation from space \textbf{X} to space \textbf{Y}. The matrix of eigenvalues obtained (cov(\textbf{Y})) are sorted decreasingly and the vectors of the orthogonal basis. Choosing the \textbf{N} first values of this matrix, being \textbf{N} the desired output dimension, and computing the corresponding change-of-basis, we obtain the coordinates of the samples in the output space.
 
 \section{MDS: Multidimensional Scaling}
 \label{sec:mds}
 
-Multidimensional Scaling \citep{mds} in dimensionality reduction tries to create a map which displays the relative distances between the data points. This focuses on getting a lower dimensional map, keeping as much distance information as possible. In case of visualizing data, this dimensional map needs to be a one, two or, at most, three dimensional space.\\
-MDS calculates a metric or non-metric solution depending on the data provided, which has to be a \textit{proximity} matrix. This \textit{proximity} matrix quantifies how close the datapoints are. On the one hand for metric solutions, this \textit{proximity} matrix has to be a true distance matrix, while on the other, both dissimilarities or correlations are alternatives to the input for the problem's matrix.
+Multidimensional Scaling \citep{mds} is a dimensionality reduction technique that tries to create a map which preserves the relative distances between the data points. This lower dimensional embedding aims to keep as much distance information as possible. In order to visualize data, this dimensional map needs to be a one, two or, at most, three dimensional space.
 
-MDS algorithm is based on some ideas explained in the previous section. The \textit{proximity} matrix is always  symmetric and somehow describes the relations between the features, so basically we can treat our problem as a variation of the PCA algorithm.\\
-Metric MDS performs the same steps as in PCA, with the modification of being a distance matrix the one computed in this problem.\\
-In non metric MDS, we assume a less strict relation and we compute the observed distances as a function of the real distance plus some meassure error. The usable information in this case is going to be the rank order of the previous matrix, which could be the input for the model.\\
-The main difference between PCA and MDS is the fact that, because of the need to compute a pairwise distance or proximity matrix, there is no linear transformation that suits both the distance computations plus the matrix operations, so MDS turns to be non-parametric.
+MDS computes a metric or non-metric solution depending on the input matrix provided, which has to be a \textit{proximity} matrix. This \textit{proximity} matrix quantifies how close the samples are in the original space. On the one hand for metric solutions, this \textit{proximity} matrix has to be a true distance matrix, while on the other, both dissimilarities or correlations are alternatives to the input for the problem's matrix.
+
+MDS algorithm is based on some ideas discussed in the previous section. The \textit{proximity} matrix is always  symmetric and somehow describes the relations between the features. This means that we can basically treat our problem as a variation of the PCA algorithm.
+
+Metric MDS performs the same steps as in PCA, being a distance matrix the input to the algorithm.
+
+In non metric MDS, we assume a less strict relation and we compute the observed distances as a function of the real distance plus some measure error. The usable information in this case is going to be the rank order of the previous matrix, which could be the input for the model.
+
+The main difference between PCA and MDS is the fact that, because of the need to compute a pairwise distance or proximity matrix, there is no linear transformation that suits both the distance computations plus the matrix operations (PCA / change-of-basis), so MDS turns to be non-parametric.
 
 \subsection{Stress metric}
 \label{ssec:str}
 
-As in every data problem, we need a metric which shows how well the performance given a particular dataset is. In Multidimensional Scaling we compute the \textit{stress} measure that compares the predicted distances with the original ones. Note that obviously this depends on the number of dimensions we want to keep, yet if we lower the number of dimensions, the stress will get higher, because we are representing the same distances relations in a lower dimensional space.
+In every machine learning problem, we need a metric or loss which quantifies how well the algorithm is fitting our data. In Multidimensional Scaling we compute the \textit{stress} metric that compares the distances in the output space with the original ones. Note that this obviously depends on the number of dimensions we want to keep; if we lower the number of dimensions, the stress will be higher since we are trying to represent the same distance relations in a smaller number of dimensions.
+
 \begin{center}
 \( \textit{stress} = \sqrt{\frac{\sum(d_{ij}-d'_{ij})^{2}}{\sum d_{ij}^{2}} } \)
 \end{center}
-$d_{ij}$ represents the original distance and $d'_{ij}$ is the predicted distance based on the MDS model. This last value is either a predicted true distance or a function which represents the non-metric transformation of the data.\\
-Regarding the previous expression, if our prediction stands well for the original data, the stress value should lower, relating zero stress to the perfect performance of the MDS  algorithm. 
+
+$d_{ij}$ represents the original distance and $d'_{ij}$ is the distance in the output space (based on the MDS model). This last value is either a predicted true distance or a function which represents the non-metric transformation of the data.
+
+Regarding the previous expression, if our prediction stands well for the original data, the stress value should be lower, relating zero stress to the perfect performance of the MDS  algorithm.
 
 \section{TSNE: T-Stochastic Neighbour Embedding}
 \label{sec:tsne}
 
-T-Stochastic Neighbour Embedding \citep{tsne} is our non-linear example of dimensionality reduction. It relies on Stochastic Neighbour Embedding (SNE). The main reason why this algorithm is used is because it is capable of representing both the local and the global structure of the original data. As said, this section will be divided in two: the basis SNE and the t-SNE upgrades.
+T-Stochastic Neighbour Embedding \citep{tsne} is an example of a non-linear dimensionality reduction algorithm. It relies on Stochastic Neighbour Embedding (SNE). The main reason why this method is used is because it is capable of representing both the local and the global structure of the original data. This section will be divided in two: the basis SNE and the t-SNE upgrades.
 
 \subsection{SNE}
 \label{ssec:sne}
 
-SNE approaches the dimensionality reduction by converting the Euclidean distances into conditional probabilities as a way of expressing similarities between points. That means we measure the similarity of two points $x_{i}$, $x_{j}$ as the probability $p_{i|j}$ of considering the second one as a neighbour of the first. The probability in the original and in the low dimensional space is computated as seen:
+SNE approaches the dimensionality reduction by converting the Euclidean distances into conditional probabilities as a way of expressing similarities between points. This means that we measure the similarity of two points $x_{i}$, $x_{j}$ as the probability $p_{i|j}$ of finding the second one as a neighbour of the first. The probability in the original and in the low dimensional space is computed as seen:
 
 $$ p_{i|j} = \frac{exp(-||x_{i}-x_{j}||^{2}/2\sigma_{i}^{2})}{\sum _{k\neq i} exp (-||x_{i}-x_{k}||^{2}/2\sigma_{i}^{2})}$$
 
 $$ q_{i|j} = \frac{exp(-||y_{i}-y_{j}||^{2})}{\sum _{k\neq i} exp (-||y_{i}-y_{k}||^{2})} $$
 
-This expressions represent gaussian distributions centered in each datapoint $x_{i}$, where $\sigma_{i}$ is the example's variance. The conditional probability represents whether the point $x_{j}$ is considered a datapoint's neighbour or not. According to the value of $\sigma_{i}$ the probabilities change, so it is chosen depending on the density of the data. In a dense region, a smaller value of $\sigma_{i}$ is more appropiate than in a sparse region. Having decided which value to use for each of the datapoints, we obtain a probability distribution, $P_{i}$, that is computed as explained in the next paragraph.
+These expressions represent probabilities under gaussian distributions centered in each datapoint $x_{i}$, where $\sigma_{i}$ is the sample's variance. The conditional probability represents how likely it is for the point $x_{j}$ to be considered a sample's neighbour. According to the value of $\sigma_{i}$ the probabilities change, so it is chosen depending on the density of the data. In a dense region, a smaller value of $\sigma_{i}$ is more appropriate than in a sparse region. Having decided which value to use for each of the samples, we obtain a probability distribution, $P_{i}$, that is computed as explained in the next paragraph.
 
-As the point of this metric is to compute similarities as probabilities, we can calculate the mismatch between $p_{i|j}$ and $q_{i|j}$ with all the datapoints and consequently obtain the algorithm's behaviour by analysing how many neighbours have been mantained in the low dimensional map. In terms of conditional probabilities, Kullback-Leibler divergence perfectly suits this need. Summing up all the previous ideas we get to the point of minimizing the cost function described as:
+As the point of this metric is to compute similarities as probabilities, we can calculate the mismatch between $p_{i|j}$ and $q_{i|j}$ for all the samples and consequently obtain the algorithm's behaviour by analysing how many neighbours have been kept in the low dimensional map. In terms of conditional probabilities, Kullback-Leibler divergence perfectly suits this need. Summing up all the previous ideas we get to the point of minimizing the cost function described as:
 
 $$ C = \sum\limits_{i} KL(P_{i}||Q_{i}) = \sum\limits_{i} \sum\limits_{j} p_{i|j} log \frac{p_{i|j}}{q_{i|j}}$$
 
-The limitations of this algorithm are the non symmetric general expression of the Kullback-Leibler divergence, the difficulty to optimize the cost function, the fact that we need to choose diferent values of the variance depending on the point and the "crowding problem". T-SNE tries to solve this limitations as in the next section is described.
+The limitations of this algorithm are the non symmetric general expression of the Kullback-Leibler divergence, the difficulty to optimize the cost function, the fact that we need to choose different values of the variance depending on the point and the "crowding problem". T-SNE tries to solve these limitations.
 
 \subsection{t-SNE}
 \label{ssec:tsne}
 
-Although SNE is capable of showing good visualizations, t-SNE was proposed as a modified algorithm which tried to make its behaviour more accurate and easy to compute.\\
-First of all, instead of minimizing the sum of the different KL divergences along all the datapoints, another way of computing the cost is presented: we are trying to minimize a single KL divergence between a joint probability P and the same in the low dimensional space, Q. With this symmetric aproach, we ommit the need to obtain the variance value for each datapoint and the cost function is much easier to compute and optimize, so does the gradient.
+Although SNE is capable of showing good visualizations and is widely accepted, t-SNE was proposed as a modification to this algorithm which tried to make it more accurate and lower its computational cost.
+
+Instead of minimizing the sum of the different KL divergences along all the samples, another way of computing the cost is proposed: we are trying to minimize a single KL divergence between a joint probability P and the equivalent one in the low dimensional space, Q. With this symmetric approach, we omit the need to obtain the variances for each sample and the cost function is much easier to compute and optimize, and so is its gradient.
 
 $$ C = KL(P||Q) = \sum\limits_{i} \sum\limits_{j} p_{ij} log \frac{p_{ij}}{q_{ij}}$$
 
 $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} - y_{j}) $$
 
-Secondly, t-SNE handles with the problem known as "crowding problem" by introducing a heavy-tailed distribution, the Student-t distribution, rather than a Gaussian for the low-dimensional space. The "crowding problem" appears when we want to faithfully represent the mutually equidistant points when reducing from high-dimensional space to low-dimensional space. This task tends to be quite difficult because the area available in a lower space is less than in the higher one. In the end, the points tend to crush together in the center of the map, so the result is the impossibility of representing the true distances from the original dataset.\\
-The t-Student distribution is considered a heavy-tailed distribution because it allows to represent a moderate distance as a much larger distance in the map without any inconvenience.
-Therefore, the joint probabilities are now then computed as follows:
+Moreover, t-SNE handles the problem known as "crowding problem" extremely well by introducing a heavy-tailed distribution, the Student-t distribution, rather than a Gaussian for the low-dimensional space. The "crowding problem" appears when we want to faithfully represent mutually equidistant points while going from a high-dimensional space to low-dimensional one. This task tends to be quite difficult because the area / volume available in a lower dimensional space is considerably smaller than in the high dimensional one. In the end, the points tend to clash in the center of the map, and it becomes hard to represent and preserve the true distances from the original space.
+
+The t-Student distribution is a heavy-tailed distribution and it allows for a more faithful representation of distances. The joint probabilities are now then computed as follows:
 
 $$ q_{ij} = \frac{(1+ ||y_{i}-y_{j}||^2)^{-1}} {\sum\limits_{k\neq l} (1+ ||y_{k}-y_{l}||^2)^{-1} }$$
 
-The reason why this particular distribution was chosen is because it is related to the Gaussian distribution, as the t-Student is an infinite mixture of Gaussians.\\
-To conclude, the gradient of the Kullback-Leibler divergence taking into account this changes in the Q low-dimensional space stands for the next expression:
+The reason why this particular distribution was chosen is because it is closely connected to the Gaussian distribution, as the t-Student is an infinite mixture of Gaussians.
+
+To conclude, the gradient of the Kullback-Leibler divergence taking into account these changes in the Q low-dimensional space stands for the next expression:
 
 $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} - y_{j}) (1+ ||y_{i}-y_{j}||^2)^{-1}$$
 
@@ -297,20 +321,23 @@ $$ \frac{\partial C}{\partial y_{i}} = 4 \sum\limits_j (p_{ij} - q_{ij}) (y_{i} 
 \chapter{Framework}
 \label{chap:frame}
 
-We hereby propose the development of a supervised learning tool which learns the embedding derived by an unsupervised learning method, which could be used in real machine learning applications.
+We hereby propose the implementation of a supervised learning tool which learns the embedding derived by an unsupervised learning method, which could be used in real machine learning applications.
 
-The two main supervised learning algorithms used in today's applications are especially Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we study their main characteristics and differences.\\
-First of all, decision trees are known to be faster and easier to train, and their results are very interpretable. On the other hand, neuralnets are slower and less interpretable. Neural networks are prone to overfitting if the size of the given dataset is not large enough or if the parameters learnt are not the best in the algorithm's performance, while decision trees are less prone to overfit if pruned (eliminating the tree's branches which do not contribute  correctly to the classification). What really makes the difference from one another is the fact that neuralnets are capable of having two output values or the number of values required as outputs whether the decision trees only show one output per performance. If we wanted to extract more than one value we would be required to have one diferent tree for each output. That increases computational complexity as the number of output dimensions increase.
+Two main supervised learning algorithms used in today's applications are Neural Networks and Decision Trees. To know which of them or even if both could suit our problem we studied their main characteristics and differences.
 
-Taking into account the characteristics and differences between neuralnets and decision trees, the main supervised learning algorithm tested in our development are neural networks, yet it is a powerful and efficient tool which can learn from easy functions up to complicated non-linear models. The advantage of our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse the parameters learned in the fitting process.
+First of all, decision trees are believed to be faster and easier to train, and their results can be very interpretable. On the other hand, neural nets are slower to train (not so with GPUs) and less interpretable (usually considered black-boxy). Neural networks are prone to over-fitting if the size of the given data-set is not large enough or if the parameters used for regularization aren't the best for a particular use case, while decision trees are less prone to over-fitting if correctly pruned / regularized (eliminating some of the tree's branches and restricting tree depth can help to mitigate these issues). What really makes the difference from one another is the fact that neural nets are capable of having two or more output variables (when considering general regression) while the regression trees can only handle one output. Whenever decision trees need to be used for multi-output regression, multiple trees are needed, which increases computational complexity and performance assessment, since each of the trees / tree models may have different hyper-parameters.
 
-Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. As it was explained in the introduction (Chapter \ref{chap:intro}), this algorithms can not be expressed in terms of parameters, so this means once the algorithm is computed, if we want to add a new datapoint to the dataset and then obtain its reduced embedded vector, it would be necessary to compute everything again so that that the total ouput includes the new datapoint's output too. Thus, this means a lot of computational work.
+Taking these differences into account, the supervised learning algorithm chosen for this research is neural networks, since it is a flexible and powerful tool that can learn smooth mathematical functions but also complex non-linear and possibly noisy relationships. The advantage of our framework relies on the fact that, as it's said, due to being a supervised algorithm, it is possible to reuse it after the training process since the parameters and weights of the net can be stored.
 
-Going in depth into the problem, that means if we have a set of \textbf{m} datapoints with \textbf{n} features each, and we want to represent those points in a two-dimensional space, we look forward to using a neuralnet (supervised algorithm) which learns that embedding from \textbf{n} dimensions into two, replicating any of the previously mentioned dimensionality reduction algorithms (unsupervised non-parametric algorithm).\\ The neural network needs to be trained at least once, so we need to compute the dimensionality reduction algorithm once (step 1, figure \ref{figurenet}) to input the dataset into the neuralnet and set the output as the reduced values just computed. Having the neuralnet trained (step 2, figure \ref{figurenet}), as soon as we get a new datapoint, instead of recalculating the MDS or t-SNE algorithm, we can reuse the neuralnet's parameters to obtain the predictions (step 3, figure \ref{figurenet}) which will be the dimensionally reduced value from the new examples.
+Multidimensional Scaling and T-Stochastic Neighbour Embedding are both non-parametric dimensionality reduction algorithms. As it was discussed in the introduction (Chapter \ref{chap:intro}), these algorithms are not parametric and  non-reusable; once the embedding is computed, if we wanted to add a new sample to the set and obtain its embedded vector, we would need to compute everything again in order to include the new sample, which may lead to different results and implies a huge amount of computation. This is impractical and not suitable for real life applications.
 
-With this implementation we would be able to speed up processes, reduce memory and also computational times.\\
+Having said that, we have a set of \textbf{m} samples with \textbf{n} features each, and we want to represent those points in a lower-dimensional space, for which we are willing to use a neural net (supervised algorithm) which can learn that embedding, replicating any of the previously mentioned dimensionality reduction algorithms (unsupervised, non-parametric and gradient descent based).
 
-\begin{figure}[h]
+The neural network needs to be trained at least once, so we need to first compute the dimensionality reduction algorithm (step 1, figure \ref{figurenet}) to feed the results into the neural net with its output being the reduced vectors computed by the latter. Having the neural net trained and its weights stored (step 2, figure \ref{figurenet}), as we get a new sample, instead of recalculating the MDS or the t-SNE from scratch, we can reuse the neural net's parameters to obtain a prediction (step 3, figure \ref{figurenet}) which is the lower dimension vector of this sample.
+
+With this implementation we are able to speed up the process, reduce memory usage (since we only need to store the neural net's weights) and also reduce computational time considerably.
+
+\begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{figures/neuralnet.pdf}
 \caption{\label{figurenet}Dimensionality reduction algorithm learned by a Neural Network}
@@ -319,13 +346,15 @@ With this implementation we would be able to speed up processes, reduce memory a
 \section{Cross Validation}
 \label{sec:cv}
 
-Cross validation is a technique to evaluate the predictive models to get to know if the model is capturing the general behaviour of the data to suit new examples, and moreover estimate how accurate the model is performing.\\
-The easiest way to know whether a model is underfitting or overfitting is dividing the dataset into train datapoints and test datapoints, choosing for example 80\% to train the model and 20\% to test the behaviour with datapoints which have not been used to adjust the model. Although this is a good first approach, we might be fitting our model to the test points without noticing. This means we might be choosing the model's parameters to fit the test set, and still don't capture the general behaviour of the problem.\\
-A more accurate approach would be cross validation. It consists on dividing the data into a number of folds usually depending on the dataset. Choosing between three to five folds would be the best decision. The algorithm is then trained the same number of times as folds, choosing in each iteration one of the folds to test and the rest of them to train. As we have trained and tested the model with disjoint values, we are not fitting our model to certain values. We use a losses metric to cuantify this result and to conclude we calculate a mean of all of them to obtain a unique value to represent the total behaviour. A schema is shown below to represent what cross validation is doing.\\
+Cross validation is a technique used to evaluate predictive models and its aim is to estimate if the model is capturing the general or underlying structure of the data and can suit new unseen examples, and also estimate how accurate the model is only taking into account these unseen samples (in-sample performance is useless since the training set can be easily over-fitted with a complex enough model).
 
-\begin{figure}[h]
+The easiest way to know whether a model is under-fitting or over-fitting is dividing the dataset into training set and test set, choosing for example 80\% to train the model and 20\% to test its behaviour in samples that have not been seen yet. Although this is a good first approach, we might be fitting our model to the test samples by trial and error without noticing it; this is, we might be choosing the model's parameters to fit the test set, and still not capturing the overall underlying function of the data-set.
+
+A more robust approach would be to use cross validation, which consists in dividing the data into a number of disjoint folds; some usual choices are  three, five  and ten folds, where this choice depends only on the size of the dataset (smaller datasets usually require larger number of folds). The algorithm is then trained repeatedly, choosing every time one of the folds to test and the rest of them to train. As we have trained and tested the model with disjoint samples, we are not fitting our model to certain subsets of the dataset. We use an error metric to the model's performance in all test / validation folds and compute the mean and variance of this error metric along all folds. The mean represents the expected performance in a future live test (always considering that the underlying problem or dynamics don't change, an issue that may happen in real live situations) and the standard deviation of the error throughout all folds is a measure of model variance. High deviations may imply that the model is over-fitted (overly complex) and that we may need to regularize it more. The best cross validation performance usually comes from a correct balance between bias and variance for our model, which comes from a correct choice of hyper-parameters. The following schema represents the cross validation procedure.
+
+\begin{figure}[p]
 \centering
-\includegraphics[width=12cm]{figures/cv.pdf}
+\includegraphics[width=15cm]{figures/cv.pdf}
 \caption{\label{figurefit}Cross validation using K-Folds.}
 \end{figure}
 
@@ -336,52 +365,56 @@ A more accurate approach would be cross validation. It consists on dividing the 
 \chapter{Applications}
 \label{chap:app}
 
-\section{Application 1: Replicating t-SNE with Neuralnet}
+\section{Application 1: Replicating t-SNE/MDS with neural net}
 \label{sec:app1}
 
-The first implementation to be described is the model which replicates the non-parametric dimensionality reduction algorithm. In this concrete example, T-Stochastic Neighbour Embedding is used as the problem to carry out. The main objective is to assess whether the supervised neuralnet is capable of replicating the previous algorithm.
+The first implementation to be discussed is the base model to replicate a general non-parametric dimensionality reduction algorithm. For this particular use case, T-Stochastic Neighbour Embedding and MDS are used as the algorithms to carry out transformations with. The main objective is to assess whether the supervised neural net is capable of replicating the previous algorithms.
 
 \subsection{Dataset}
 \label{ssec:data1}
 
-The dataset \textit{"load-digits"} is the data used to develop this example and is extracted from the Scikit-Learn datasets \citep{scikit-learn}. It consists on 1797 instances of handwritten digits between 0 to 9 from diferent writers with 64 features each. This features display the values of grayscale intensity for each pixel in the image. This means our images are 8x8 pixel images which are represented by 64 total features containing intensities from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a dataset, each image is represented in a row with its corresponding 64 values and including a last column with the label of the number represented in the image.
+The dataset \textit{"load-digits"} is the data used to test this example and is obtained from the Scikit-Learn datasets \citep{scikit-learn}. It consists of 1797 instances of handwritten digits from 0 to 9 from different writers with 64 features each. This features represent the values of gray-scale intensity for each pixel in the image. Our images are 8x8 pixel images represented by  a total of 64 features with a color resolution (brightness in case of grey-scale) ranging from 0 (completely black) to 16 (pure white) as show in figure \ref{figuredigit}. To translate this into a training set, each image is flattened as a row with its corresponding 64 pixel features; a last column with the label of the number represented in the image is concatenated to the table.
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{figures/exampledigit.pdf}
-\caption{\label{figuredigit}Example dataset point representing a handwriten digit.}
+\caption{\label{figuredigit}Example dataset point representing a handwritten digit.}
 \end{figure}
 
-\subsection{Algorithm: t-SNE and Neuralnet}
+\subsection{Algorithm: t-SNE/MDS and neural net}
 \label{ssec:dra}
 
-This section comprehends the next points to take into account: the computation of the dimensionality reduction algorithm and its implementation in the neuralnet model.
+This section discusses the computation of the space reduction algorithm and the supervised replicator implementation using a neural net model.
 
-As a basis to the problem, t-SNE is computed to all the datapoints. Previously, standardizating features in the original data by removing the mean and scaling to unit variance is computed for each of the 64 variables, which achieves better results afterwards. Due to the dataset composed by 1797 instances with 64 features each, a two dimensional space reduction is calculated, looking forward to visualizating the data.
+As a starting point for the problem, the embedding model is computed for all the data points beforehand. Standardization is carried out for all features in the original data by removing the mean and scaling to unit variance. This is done for each of the 64 variables, since the neural net is sensible to scales. We don't do the scaling inside cross validation since our only aim is to check whether the neural net can learn the space mapping or not, so this is completely different to usual machine learning problems; our output here is the sample vectors / embeddings derived from the unsupervised model. Due to the data set containing 1797 instances with 64 features each, a two dimensional space output is chosen, in order to be able to visualize the results.
 
-Once reduced data is obtained, both the original and the just calculated points are divided into two corresponding folds, one being a subsample for training the neuralnet and the other to test the model. Therefore, overfitting is avoided by using completely different data to train than to test if the neuralnet is capturing the general behaviour of the dimensionality reduction algorithm.
+Once the embeddings are obtained, both the original and the compressed samples are divided into two corresponding folds, one for training the neural net and the other one to test whether the model can correctly locate unseen points where the unsupervised model had placed them. Therefore, by doing this, we are actually able to check if the neural net is capturing the general behaviour of the dimensional reduction algorithm and can replicate it further on.
 
-To continue, the next to keep in mind is the neuralnet's construction. There are several types of neuralnets depending on how it's built, mainly if they are composed by a few layers (1-2 layers) or more layers, and the number of neurons per layer, obtaining shallow or deep and wide or narrow neuralnets correspondingly. Depending on the net computed, the results gathered will differ from one another, thus on section \ref{ssec:met1} the diferences between them are shown.
+To continue, the next to consider is the neural net's structure. There are several kinds of neural nets depending on their topology. The main structure parameters for a neural net with no convolution or pooling (simple perceptron-like structure) are the number of layers and the number of neurons per layer. Depending on these a neural network can be shallow or deep (number of hidden layers) and wide or narrow (neurons per layer). Depending on the kind of structure used, the results obtained will differ from one another. In section \ref{ssec:met1} the differences between them are shown.
 
-Once the net is stablished, the standardized original data from the training subsample turns to be the net's input in the fitting process. The output will always be a two variable output, corresponding to the two values which represent the dimension reduction. At this point, the model also uses the training subsample from the reduced points originated in the t-SNE's computation as the output to obtain and to learn from.\\
-The neuralnet seeks to get the same output as the dimensionality reduction algorithm, that is why the metric used to minimize the error tends to be a distance metric. It tries to reduce the distance between the values from t-SNE and the values being learned by the model. In this case the distance metric which obtains better results corresponds to the mean of the distances between corresponding points, but other metrics can also be used such as mean loss (mean of the square of the difference between points).
+Once the net is built, the standardized original data from the training subset will constitute the net's input in the training process. The output is, in our case, a two variable output, and corresponds to the coordinates of all embeddings. 
 
-To conclude, as the net has been trained to obtain two output values depending on the 64 feature standardized values in the input, it is possible to predict, taking into account the new input, the reduced data replicating what t-SNE would compute but avoiding the need to recalculate the whole algorithm.\\
+The neural net aims to get the same output as the dimensionality reduction algorithm, that is why the loss function used for the neural net's gradient descent is a custom euclidean distance error metric (although this is not the only possible loss function). This way, the neural net tries to minimize the distance between the true position obtained directly from t-SNE or MDS and the position being predicted by the model. In this case the distance metric that throws the best overall results corresponds to the mean of the euclidean distances between true and predicted locations. Other metrics were also tested, such as mean loss (mean of the square of the difference between points) but results were not as good. The following equation describes the loss function used (where $n$ represents samples and $j$ dimensions):
+
+$$ e = \frac{\sum^{n}{\sqrt{\sum^j{{(\hat{y}}}_{j} - y_{j})^{2}}}}{n} $$
+
+To conclude, as the net has been trained to obtain two output values depending on the 64 feature standardized values in the input, it is possible to predict, taking into account the new input, the embedded data replicating what the non-parametric embedding model would compute, but avoiding the need to recalculate the whole algorithm.
 
 \begin{algorithm}
-\caption{Neuralnet replicating process}
+\caption{neural net replicating process}
 \begin{algorithmic}[1]
 \Procedure{Replicating Procedure}{}
 \BState \emph{data obtaining}
 \State $\textit{\textbf{X}} \gets \text{standardized input matrix}$
-\State $\textit{\textbf{X\_tsne}} \gets \text{compute t-SNE from \textit{\textbf{X}}}$
-\State $\textit{\textbf{X\_train; }} \textit{\textbf{X\_test; }} \textit{\textbf{X\_tsne\_train; }} \textit{\textbf{X\_tsne\_test; }}  \gets \text{train and test data computation}$
-\BState \emph{neuralnet model construction}
-\BState \emph{fit neuralnet model}
-\State $\textit{\textbf{X\_train}} \gets \text{neuralnet's input}$
-\State $\textit{\textbf{X\_tsne\_train}} \gets \text{neuralnet's output}$
-\State $\textit{\textbf{distance error}} \gets \text{neuralnet's error metric}$
-\BState \emph{predict neuralnet model}
-\State $\textit{64 feature input (new example)} \to \text{neuralnet} \to \text{predict output = } \text{\underline{dimension reduction}}$
+\State $\textit{\textbf{X\_emb}} \gets \text{compute t-SNE/MDS from \textit{\textbf{X}}}$
+\State $\textit{\textbf{X\_train; }} \textit{\textbf{X\_test; }} \textit{\textbf{X\_emb\_train; }} \textit{\textbf{X\_emb\_test; }}  \gets \text{train and test data computation}$
+\BState \emph{neural net model construction}
+\BState \emph{fit neural net model}
+\State $\textit{\textbf{X\_train}} \gets \text{neural net's input}$
+\State $\textit{\textbf{X\_emb\_train}} \gets \text{neural net's output}$
+\State $\textit{\textbf{distance error}} \gets \text{neural net's error metric}$
+\BState \emph{predict neural net model}
+\State $\textit{64 feature input (new example)} \to \text{neural net} \to \text{predict output = } \text{\underline{dimension reduction}}$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -389,86 +422,133 @@ To conclude, as the net has been trained to obtain two output values depending o
 \subsection{Metrics}
 \label{ssec:met1}
 
-With this first implementation we look forward to obtain reduced data in less computational time using the most accurate neuralnet model depending on its construction. Depending on the type of neuralnet used, times and errors are calculated in the following tables (tables \ref{metrics1} and \ref{times1}).
+The aim of this first implementation is not only to be able to reuse the embedding function but also to make if extremely CPU efficient to compute the location (reduced vector) of new samples and also provide a memory efficient way of doing this (we only need to store the neural net weights). 
 
-The most important point by now is that this measurements are done with examples from the test subsample which have not been used by the neuralnet to compute its fitting process, thus they indicate the general behaviour of the model.
+To do this, several neural net structures were tested. Since the transformation or mapping function derived by the unsupervised method seems to be pretty smooth (complex but with low noise levels), low regularization (no $L2$) with no dropout threw the best results. For all neural net structures, transformation times and errors were computed in the following tables (tables \ref{metrics1}, \ref{metrics2}, \ref{times1} and \ref{times2}).
 
-Table \ref{metrics1} includes the model construction and the errors computed. The model construction depends on the layers and the number of neurons per layer and on the dropout applied for each layer. Those two values are declared with arrays as in the table is shown. As a resume, the type of the neuralnet built is summarized in deep or shallow and wide or narrow nets.\\
-The out of sample error computed is again a distance error which evaluates the difference between what the t-SNE computed and what the model is predicting. The error variable then corresponds to the mean of the Euclidean distances between the two algorithms. Percentages are also included to reckon whether the total error compared to the range of values acquired by the algorithms stand in a good proportion.
+Recall that these measurements are performed over samples from the test set which are unseen for the model (non present during training), and thus they indicate the general behaviour of the model.
+
+Tables \ref{metrics1} and \ref{metrics2} include the models' structures and the errors obtained for both of the embedding algorithms. As stated before, the model's structure depends on the total number of hidden layers, the number of neurons per layer and on the dropout applied to each layer (in the end no dropout was used as discussed before). The neural net structure is inherent in the length of the array in the table, where the length represents the number of layers. To summarize, the types of neural nets tested are divided into deep or shallow and wide or narrow nets.
+
+The out of sample error computed is again an euclidean distance error and matches the loss function exactly. As stated before, it evaluates the difference between the position computed by t-SNE or MDS and what the model is predicting. The error value corresponds to the mean of these Euclidean distances. Percentages are also included to reckon whether the total error compared to the range of values acquired by the algorithms stand for a decent figure.
 
 \begin{table}[h]
 \vspace{20px}
 \centering
 \input{figures/app1metricserror}
-\caption{\label{metrics1}Comparison between model's errors obtained out of sample}
+\caption{\label{metrics1}Comparison between model's errors obtained out of sample (t-SNE)}
 \end{table}
 
-Neuralnet's background consists on matrix scalar multiplications of vectors with learnt parameters and activation functions, hyperbolic tangent in this problem, which are very efficient computationally operations.\\
-Table \ref{times1} shows the huge difference between the computational time (in seconds) of the dimensionality reduction algorithm and the neuralnet's development for the same number of points, refering to the whole dataset (1787 points in total).
+\begin{table}[h]
+\vspace{20px}
+\centering
+\input{figures/app1metricserrormds}
+\caption{\label{metrics2}Comparison between model's errors obtained out of sample (MDS)}
+\end{table}
+
+Taking an in depth look at computation times and considering that neural nets' whole transformation consists in matrix scalar multiplications and parametric activation functions that can be also vectorized (hyperbolic tangent in our case), this allows for an extremely efficient computation of inferred coordinates (low CPU usage, high speed).
+
+Tables \ref{times1} and \ref{times2} show the huge difference between the computational time (in seconds) of the dimensional reduction algorithm and the neural net's development for the same number of points, referring to the whole data set (1787 points in total).
 
 \begin{table}[h]
 \vspace{10px}
 \centering
 \input{figures/app1metricstime}
-\caption{\label{times1}Computational times}
+\caption{\label{times1}Computational times (t-SNE)}
+\end{table}
+
+\begin{table}[h]
+\vspace{10px}
+\centering
+\input{figures/app1metricstimemds}
+\caption{\label{times2}Computational times (MDS)}
 \end{table}
 
 \subsection{Conclusion}
 \label{ssec:conc1}
 
-Consequently and given the results in the previous tables, we can reassure that, without considerating the neuralnet's construction, all of them will certainly be quicker in obtaining the results. If we look for accuracy, a wide neuralnet is better at replicating the t-SNE algorithm. In particular, the model 6 proposed suits the best for the problem presented.\\
-The next two figures represent the results obtained. The first one matches the predictions from the neural network (in model 6) and the second one represents the same points from the t-SNE algorithm.
+After all and given the results shown in the previous tables, we can assure that, even ignoring the neural nets' diverse structures, all of them are certainly quicker in obtaining the embeddings. If we look for accuracy, a wide neural net is better at replicating both the t-SNE and MDS algorithms. In particular, the model 6 suits the best all problems presented.
+
+The next four figures show the results obtained. The first and third ones represent the predictions from the neural networks of the location of all samples in the out-of-sample test for the best of the models in both problems (model 6), and the second and fourth ones represent the same points from the embedding algorithms (t-SNE and MDS). As it can be clearly seen, the neural net is able to faithfully replicate the position of new points and performs extremely well in terms of preserving the local structure of the dataset.
 
 \begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{figures/app1plotpredictions.pdf}
-\caption{\label{figureNN}Low dimensional space from NeuralNet.}
+\caption{\label{figureNN}Low dimensional space from neural net trained for t-SNE.}
 \end{figure}
 
 \begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{figures/app1plotreal.pdf}
-\caption{\label{figureTSNE}Low dimensional space from from t-SNE}
+\caption{\label{figureTSNE}Low dimensional space from t-SNE}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=12cm]{figures/app1plotpredictionsmds.pdf}
+\caption{\label{figureNN}Low dimensional space from neural net trained for MDS.}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=12cm]{figures/app1plotrealmds.pdf}
+\caption{\label{figureTSNE}Low dimensional space from MDS}
 \end{figure}
 
 \newpage
 
-\section{Application 2: Nearest Neighbours calculation}
+\subsection{Code}
+\label{ssec:code1}
+
+By running the following python 3 code these results can be easily reproduced. For better performance, a server with multiple cores (and possibly a GPU) may be used, since all tests have been parallelized using python 3's \textbf{joblib} package.
+
+\vspace{10px}
+
+\inputminted[baselinestretch=1, fontsize=\scriptsize, breaklines]{python}{application1.py}
+
+\section{Application 2: Approximate Nearest Neighbor search}
 \label{sec:app2}
 
-The second application consists on the computation of nearest neighbours in a low-dimensional space. This second implementation focuses on the Multidimensional Scaling algorithm. The aim is to compute the nearest neighbours in the output coordinates from MDS. A loss in precision and recall is involved in the nearest neighbours computation since an error in computation is made when calculating the low dimensional equivalent points. Nevertheless, it allows for a faster, low memory intensive algorithm.
+The second application consists in the computation of nearest neighbours in a low-dimensional space. This second implementation focuses on the Multidimensional Scaling algorithm, since this particular method's objective is to preserve distances and, consequently, local structure (in terms of neighbors) of the data. The aim is to compute the nearest neighbours in the output space and check how accurate this computation is compared to a brute force approach. Since this computation is performed in a lower dimensional space, it provides a real application with significant improvements in speed and memory usage, since we are only storing a reduced number of columns and performing euclidean distance computations using these dimensions.
 
 \subsection{Dataset}
 \label{ssec:data2}
 
-The dataset \textit{"forests.csv"} is used for this application and is extracted from UCI Machine Learning Repository \citep{ucidata}. For convenience, a random subsample of 20.000 examples is storaged with 55 features each. These are all numeric variables that describe several characteristics of the forest. The forest type output is represented by a number in range 1 to 7, shaping the last column of the dataset.\\
-The reason why this dataset is chosen for this concrete application relies on the need to compute a substantial amount of examples in the training phase to obtain a reliable model and to be able to asses time and memory performance improvements and also recall/precision degradation.
+The dataset \textit{"forests.csv"} is used for this application and is obtained from the UCI Machine Learning Repository \citep{ucidata}. For convenience, a random subsample of 20.000 examples is selected with 55 features each. All features are numeric variables that describe several characteristics and measurements of each forest. The forest class is represented by a number in a range of 1 to 7, shaping the last column of the dataset.
 
-\subsection{Algorithm: Low dimensional nearest neighbors obtaining}
+The reason why this dataset is chosen for this particular application relies on the need to compute a substantial amount of examples in the training phase to obtain a reliable model and to be able to asses time and memory performance improvements and also recall/precision degradation.
+
+\subsection{Algorithm: Approximate nearest neighbors using MDS embeddings}
 \label{ssec:nneigh}
 
-The main task contemplated in this application is the computation of nearest neighbours. The following research bears with reusability and time and memory usage reduction algorithms.
+As it has just been stated, the main task contemplated in this application is the computation of nearest neighbours. The following tests bear with re-usability and time / memory usage reduction.
 
-Regarding the first point, because of MDS being non-parametric, it is uncapable of obtaining new embedded points without computing again all the operations. This means if we have already output the low-dimensional map of points from the dataset, it would not be posible to obtain a new point in this map unless the algorithm is recomputed. If we based our nearest neighbours search in a previous dimensionality reduction algorithm such as MDS, the only results available would be from the points just computed by MDS.
+Regarding the first point, because of MDS being non-parametric, there is no way to obtain the embeddings for new samples. This means if we have already obtained the low-dimensional map of points from the dataset, it would be impossible to obtain the coordinates of a new sample unless the algorithm is recomputed again from scratch. If we based our nearest neighbours search in the output space from the MDS algorithm it's true that we would gain the benefits of making computations in a 
 
-Nearest neighbours brute force models \citep{brute} are known to be eficiently poor when a raw dataset is provided, both because their memory tends to be big and thus the computational time required also increases.\\
-Nearest neighbours brute force algorithm computes the euclidean distances between each point and the rest of the data and then sortens them according to their distances, from lowest to highest, for each of the examples in the dataset. This means the computational complexity corresponds to $O(n^{2})$. Since the euclidean distances is computed as:
-$$ dist(p,q) = \sqrt{(q_{1}-p_{1})^{2}+(q_{2}-p_{2})^{2}+ ... + (q_{n}-p_{n})^{2}} = \sqrt{\sum_{i=1}^{n} (q_{i}-p_{i})^{2}}$$
-The brute force algorithm's complexity in terms of dimensions computed, d, is $O(n^{2}*d)$.\\
-As for the memory and taking into account the previous ideas of how to compute neighbours, this model requires the original matrix to be stored which means the memory complexity also depends on the number of points and their dimensions and is resumed in a $O(n*d)$ model.
+Nearest neighbours brute force approach \citep{brute} is known to have poor scalability and both low CPU / memory efficiency since it requires to compute euclidean distances between each point and all of the rest and then sort them according to their distances, from lowest to highest. This means that its computational complexity order corresponds to the expression $O(n^{2})$, where $n$ is the number of samples of the query.
 
-The next model is a new solution proposed to solve the problems just mentioned.\\
-The algorithm involves two phases: one fitting process and its later usage for new points. This is why the original dataset is splitted into two folds, one for the training and the second one to test out of sample performance.
+Since euclidean distances are computed as:
 
-The training phase aims to obtain all the parameters or transformations which will be later used to transform the data. During the fitting process, the MDS computes the embeddings (vectors of all samples in the embedding space) directly by using gradient descent on its loss function (stress). This is why we would not be able to obtain the tranformation of a new sample without having to fit the whole dataset again (which requires computational time), thus we would not be able to step into the process of computing nearest neighbours in the low-dimensional space.\\
-Instead, in this proposal, and as seen in the first application (\ref{sec:app1}), the training consists on faithfully learning the mapping of a dimensionality reduction algorithm from a high-dimensional space to a low-dimensional space by training a neuralnet to do so. In this case, the model saves the neuralnet's parameters which replicate the MDS, instead of the exact transformations from it. Then, when a new out of sample point is included, there is no need to compute the whole MDS algorithm to be able to transform the data because we have a neuralnet that can approximate the embedding operation.\\
-Accordingly, the approximate nearest neighbours model designed will have its computational time and memory complexity reduced by the relation between the original (\textit{d}) and the low-dimensional space's dimensions (\textit{k}).
+$$ dist(p,q) = \sqrt{(q_{1}-p_{1})^{2}+(q_{2}-p_{2})^{2}+ ... + (q_{n}-p_{n})^{2}} = \sqrt{\sum_{j=1}^{d} (q_{j}-p_{j})^{2}}$$
+
+Therefore, if we increase the number of samples $n$, the amount of pairwise distance computations needed increases as $n^{2}$. The brute force algorithm's complexity in terms of number of dimensions and sample is consequently $O(n^{2}*d)$.
+
+As for memory usage (complexity) and taking into account the previous ideas of how neighbours are computed, this model requires the original matrix to be stored which means the memory complexity also depends on the number of points and their dimensions, which corresponds to the following expression: $O(n*d)$. Our experimental approach tries to deal with these inconveniences by learning an unsupervised algorithm's map.
+
+The algorithm involves two phases: one fitting process and afterwards its usage (transformation) for new points. This is why the original dataset is split into two subsets, one for training and the second one to test out-of-sample performance.
+
+The training phase aims to obtain all parameters or transformations which will be later used to transform the data. During the fitting process, the MDS computes the embeddings (vectors of all samples in the embedding space) directly by using gradient descent on its loss function (stress). This is why we would not be able to obtain the transformation of a new sample without having to fit the whole dataset again (which requires computational time), thus we would not be able to step into the process of computing nearest neighbours in the low-dimensional space unless we are querying already known samples.
+
+Instead, in this proposal, and relative to the first application (\ref{sec:app1}), the training consists in learning the mapping of a dimensionality reduction algorithm from a high-dimensional space to a low-dimensional space by training a neural net to do so. In this case, the model just saves the neural net's parameters which replicate the MDS, instead of the exact transformations from it, and stores in memory only the embeddings (lower memory and size) of the training set. Then, when a new out of sample sample is queried, there is no need to compute the whole MDS algorithm to be able to transform the data because we have a neural net that can approximate the embedding operation.
+
+Accordingly, the approximate nearest neighbours model designed will have its computational time and memory complexity reduced by the ratio between the original (\textit{d}) and the low-dimensional space's dimensions (\textit{k}). We shall also take into account that the higher the level of compression, the more the recall / precision will be degraded.
+
 \begin{itemize}
 \item Computational time complexity: $O(N^{2}*K)$
 \item Memory complexity: $O(N*K)$
 \end{itemize}
 
-To conclude, when a new sample is requested to find the k-nearest neighbours, it is firstly transformed by the neural net from \textit{d} dimensions to \textit{k}, corresponding to the low-dimensional space, by predicting with the embedding learnt from MDS. Afterwards, the nearest neighbours are computed comparing the new example with the rest of the low  dimensional samples, achieving a faster and low memory intensive algorithm.\\
+To conclude with, the overall procedure can be summarized in the following manner: when a new sample is queried (in order to find its k-nearest neighbours), it is firstly transformed by the neural net from \textit{d} dimensions to \textit{k}, corresponding to the low-dimensional space, by predicting with the parameters learned from MDS. This parameters are learned in cross-validation to ensure that test set samples are unseen. Finally, the K nearest neighbours are computed comparing in the low  dimensional space. The objective is to check whether these whole procedure is faster than a brute force approach. Memory usage is lower and this is a fact, since we only need to store a matrix with a reduced shape.
 
 \begin{algorithm}
 \caption{Low dimensional nearest neighbours calculation}
@@ -476,7 +556,7 @@ To conclude, when a new sample is requested to find the k-nearest neighbours, it
 \Procedure{Fitting process}{}
 \State $\textit{\textbf{X}} \gets \text{imputed and standardized dataset}$
 \State $\textit{\textbf{X\_mds}} \gets \text{compute MDS from \textit{\textbf{X}}}$
-\BState \emph{neuralnet model construction}
+\BState \emph{neural net model construction}
 \BState \emph{fit neural net model}
 \BState \emph{save reduced matrix from training neural net}
 \EndProcedure
@@ -498,9 +578,9 @@ To conclude, when a new sample is requested to find the k-nearest neighbours, it
 \subsection{Metrics}
 \label{ssec:met2}
 
-With this second implementation, the main metrics to look at correspond to precision and computational measurements, such as time and memory usage. As the objective is to finally compute nearest neighbours, precision is described as the percentage of nearest neighbours preserved in comparison to bruce force algorithm. In the case of time and memory, the measurements are strictly related to the algorithm's performance, thus we calculate how much time they require to compute the neighbours and the memory the data needs to do so.
+With this second implementation, the main metrics to look at correspond to precision and computational measurements, such as time and memory usage. As the objective is to compute nearest neighbours, precision is described as the percentage of nearest neighbours preserved in comparison to a brute force approach in the original space. In the case of time and memory, the measurements are strictly related to the algorithm's performance, thus we can compute how much time they require to find these neighbours and the memory needed.
 
-The following tables relate the model used to compute the neural net with the previous metrics, depending on the dimensions of the low-dimensional space chosen to lower the data's features.
+The following tables relate the model used to compute the neural net with the previous metrics, depending on the dimensions of the low-dimensional space chosen to lower the number of features.
 
 \begin{table}[p]
 \centering
@@ -520,7 +600,7 @@ The following tables relate the model used to compute the neural net with the pr
 \caption{\label{metrics23}Nearest neighbours calculation in eighteen dimensions}
 \end{table}
 
-The approximate model designed can also be compared to other approximate nearest neighbours algorithms such as KD-Tree \citep{kdtree}. KD-Tree is a binary tree that represents a division of the space using splitting planes which are orthogonal to the axis. Each node has a corresponding region called cell and the root's cell has to include all the points from the dataset. For each region we have a hyperplane which divides the points into one side or the other, until there are no points left, which means the partition is over and the tree is constructed. This type of tree achieves a computational complexity of $O(NlogN)$ and works correctly for low-dimensional datasets. When the dimensions get higher, the behaviour tends to get worse. Table \ref{metrics24} corresponds to the first dataset of the application.
+The approximate algorithm hereby proposed can also be compared to other approximate nearest neighbours algorithms such as KD-Tree \citep{kdtree}. KD-Tree is a binary tree that creates divisions of the space using splitting planes which are orthogonal to the axis. Each node has a corresponding region called cell and the root's cell has to include all the samples in the dataset. For each region we have a hyper-plane that divides the subspace in two regions. This is recursively repeated until there are no points left or a minimum of samples per leaf is reached. This model works well for datasets with a moderate / small number of dimensions but has no memory improvements. Its computational complexity is  $O(NlogN)$. However, when the number of dimensions increase, the behaviour tends to get worse. For small datasets, query times may be even worse than brute force, but its scalability is significantly better. Table \ref{metrics24} corresponds to the first dataset of the application.
 
 \begin{table}[h]
 \centering
@@ -528,8 +608,7 @@ The approximate model designed can also be compared to other approximate nearest
 \caption{\label{metrics24}KD-Tree computing nearest neighbours}
 \end{table}
 
-Although the total of neighbours are preserved, both the computational time and memory the model consume are high, two times compared to brute force algorithm. This means that if a bigger dimensional dataset or more intances are provided, the algorithm tends to be non-scalable, thus the capacity of the algorithm in terms of computational time and memory turns the model into a complex one.\\
-To prove this, the next to tables compare the approximate model and the kd-tree approximate nearest neighbours computation with a new dataset that has 4000 instances and 281 features per sample.
+Although the total amount of neighbours are preserved by KD-tree, both the computational time and memory used by the model are high, two times compared to brute force algorithm. The next two tables compare the approximate model and the kd-tree approximate nearest neighbours computation with a new dataset that has 4000 instances and 281 features per sample.
 
 \begin{table}[h]
 \centering
@@ -543,24 +622,26 @@ To prove this, the next to tables compare the approximate model and the kd-tree 
 \caption{\label{metrics26}KD-Tree computing nearest neighbours from new dataset}
 \end{table}
 
-The computational time KD-Tree requires is twelve times the computational time from the approximate model in the best of the cases. The memory KD-Tree needs to compute its operations is nearly also twelve times in comparison to the model designed in this dataset.
+The computational time KD-Tree requires is twelve times the computational time from the approximate model in the best of the cases. The memory KD-Tree needs to compute its operations is nearly also twelve times more than for the model designed in this experiment.
 
 \subsection{Conclusion}
 \label{ssec:conc2}
 
-Computing nearest neighbours in nowadays applications has become an important topic. The need to report them quickly demands new algorithms like the model previously designed. It consists on lowering the sample's dimensions with a neural net which has learnt how to do it by replicating a MDS, and then, nearest neighbours are computed in the low-dimensional space.\\
-As seen in the results studied before, there is a relation between precision obtained and time and memory usage.\\
-Although KD-Tree also uses the idea of lowering the data's features, regarding precision, time and memory usage this gets higher when a complex dataset is provided.\\
-With this model we obtain less precision by computing rapidly and with less memory usage.
+Computing nearest neighbours in nowadays applications has become an important issue. The need to report them live (for instance for advertisement recommendation) demands new state-of-the-art algorithms like the model previously proposed. It consists in lowering the sample's dimensions with a neural net which has learned how to replicate a MDS, and then, nearest neighbours are computed in the low-dimensional space.
+
+As seen in the results studied before, there is a clear relation between precision obtained and time and memory usage. We can sacrifice a bit of recall and get huge improvements in memory usage, which can reduce application costs considerably.
+
+Although KD-Tree also uses the idea of creating a non linear kernel, regarding precision, time and memory usage this gets higher when a complex dataset is provided, and it has no benefits regarding memory usage. 
 
 The computational complexities for the three algorithms studied are the next ones (taking into account dimensions computed):
+
 \begin{itemize}
-\item Brute force algorithm: $ O(N^{2}*D)$ 
-\item KD-Tree algorithm: $ O(NlogN*D)$ 
+\item Brute force algorithm: $ O(N^{2} * D)$ 
+\item KD-Tree algorithm: $ O(NlogN * D)$ 
 \item Approximate nearest neighbours algorithm: $ O(N^{2}*D^{*}) = O(N^{2}*\frac{D}{3})$ 
 \end{itemize}
 
-The following figure describes this computational complexities for a given number of dimensions:
+The following figure illustrates computational complexities for an increasing number of dimensions:
 
 \begin{figure}[h]
 \centering
@@ -568,51 +649,25 @@ The following figure describes this computational complexities for a given numbe
 \caption{\label{figurecomplexities}Algorithms' complexities.}
 \end{figure}
 
+\subsection{Code}
+\label{ssec:code2}
+
+\vspace{10px}
+
+\inputminted[baselinestretch=1, fontsize=\scriptsize, breaklines]{python}{application2.py}
+
+\section{Python Classes}
+\label{sec:classes}
+
+The following python classes are compatible with the \textit{Scikit-Learn} API and can be used along with \textit{Keras} and \textit{Tensorflow} to replicate any unsupervised algorithm. These classes were also tested for other algorithms such as PCA, Isomap, Locally Linear Embeddings and others, and gave extremely good results in all cases. It allows for a flexible and scalable definition of the neural net structure and can be easily integrated in machine learning pipelines (such as the ones in the Scikit Learn API) and deployed in a real application.
+
+Using these classes one would be able to build an application such as the following: using Tf-IDF representations of random texts we could train a t-SNE and create a 2D visualization of these texts where close texts would have a clear semantic similarity. We could even cluster these texts in this low dimensional space and discover the semantic properties of all zones in it. Then by using a replicator class, we can train a neural net to learn the t-SNE embeddings and be able to visualize the semantic properties of any given text pasted by the user in the application.
+
+\vspace{10px}
+
+\inputminted[baselinestretch=1, fontsize=\scriptsize, breaklines]{python}{classes.py}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% previous work, not important yet
-\newpage
-
-We have developed a supervised algorithm, based in neuralnets, which reproduces the ideas showed in the framework's introduction.
-The inputs expected to run this algorithm are the next ones:
-
-\begin{itemize}
-\item Number of components for the low-dimensional space
-\item Dimensionality reduction object, such as PCA, MDS or TSNE in our examples.
-\item Layers: the number of layers and neurons per layer, taking into account that the last layer has the same neurons as the number of components in the low dimensional space; e.g: layers = 2; neurons = 100, 10; it has three layers, with 100, 10 and the number of components neurons each.
-\item Dropouts: percentage of neurons from each layer used for training.
-\item Learning rate for the neural network training.
-\item Activation function for the neuralnet.
-\item Losses function used to minimize the cost.
-\item Number of epochs for each training, being epochs the number of times the whole training set has been passed through the neuralnet.
-\item Batch size: number of examples used to compute the gradient of the cost function.
-\end{itemize}
-
-The future sections \ref{ssec:nnc}, \ref{ssec:fit} and \ref{ssec:trans} resume some more ideas about the supervised algorithm, describing the construction of the neuralnet, the fitting process and the dimensionality reduced data obtaining.
-
-\subsection{Neuralnet construction.}
-\label{ssec:nnc}
-
-This function is in charge of constructing the neural network taking into account the inputs provided. A neuralnet is defined by the number of layers, number of neurons per layer, activation function, dropouts and loss function. To train the neuralnet we need to specify the number of epochs and batch size.
-
-\subsection{Fitting process.}
-\label{ssec:fit}
-
-The fitting process seeks the parameters or values obtained from a training process given a specific dataset. Depending on whether it is a supervised or non-supervised algorithm, the output of this operations will be either some parameters or directly the remodeled values. For example, as PCA is a parametric transformation, fitting will determine the dimensionality reduction matrix which could afterwards be used to determine the modified data. On the other hand, MDS and TSNE are non-parametric dimensionality reduction algorithms, so the fitting process directly obtains the values from the lower dimension. This parameters and values in the fitting process are stored as an object's own variable until necessary.
-
-We look forward to construct a supervised learning algorithm, based on neuralnets, and we want to obtain the parameters learning from the unsupervised embedding algorithm. The steps to take would be as follows: firstly comes the construction of the neuralnet, taking into account what was said in the previous section plus the input matrix's input. Second of all, we have to store the reduced data from the embedder algorithm. At last, we have the original data and the reduced computed data, so we decided to fit the neuralnet with both datasets and store the output parameters of the neuralnet.
-\vspace{10pt}
-
-
-We have been able to turn a unsupervised learning algorithm into a supervised learning algorithm, by replicating the unsupervised algorithm's behaviour.
-
-\subsection{Dimensionality reduced data obtaining.}
-\label{ssec:trans}
-
-We have achieved the task of replicating an unsupervised algorithm's behaviour by a supervised algorithm, characterized for being capable of predicting the output by computing operations between the input and some learned parameters.
-Even though the unsupervised algorithms have no parameters, a neuralnet does. We have obtained, using those parameters, prediction outputs from the new datapoints, which copy the dimensionality reduction without the need to compute the whole algorithm.
-
-
 
 %-----------------------------------------------------
 % Chapter: Conclusion
@@ -620,23 +675,6 @@ Even though the unsupervised algorithms have no parameters, a neuralnet does. We
 
 \chapter{Conclusion}
 \label{chap:conc}
-
-
-%-----------------------------------------------------
-% Chapter: Extra
-%-----------------------------------------------------
-
-\chapter{EXTRA APPENDIX}
-\label{chap:append}
-
-We have developed a class named NNReplicator which replicates the behaviour of a neuralnet wrapping an embedder object, as it is represented in figure \ref{figurenet}. It is written as if it was a Scikit Learn class so that the objects created could fix into a Scikit Learn pipeline, being one of the main future applications.
-
-Once the inputs are understood, the next point is to get to know what is being computed and what methods are included in the class. As we want to include it as a Scikit Learn class, some methods are required; those are the methods fit and transform, which make the class capable of instantiate tranformers, objects that vary the data input into some output.
-
-It is based on the Keras library, which makes easier the task of programming a neuralnet. A sequential model is used to stack one layer after the other. We use: add Dense to include a layer, add Activation to specify which activation function to use and add Dropout to include the porcentage of dropout indicated by the corresponding input.\\
-The best way of implementing the neural net is by designing a for-loop which extracts the inputs from the arrays and automatically computes denses and dropouts.\\
-The default optimizer is Adagrad, and takes as input the learning rate from the object's inicialization. The next step should be the compilation of the whole neural net, using the loss function inputed as the cost to minimize and the model should be completely done.\\
-Despite of having built the neural net correctly, we also need to make it compatible with Scikit Learn. That's why the last step consists on a Keras Wrapper, named Keras Regressor, remodeling the model into a sklearn neuralnet model.
 
 %-----------------------------------------------------
 % Chapter: Bibliography
@@ -655,18 +693,6 @@ Despite of having built the neural net correctly, we also need to make it compat
 % \bibliography{bib}
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%-----------------------------------------------------
-% Appendix: Code
-%-----------------------------------------------------
-
-\chapter*{Code}
-\label{chap:code}
-\addcontentsline{toc}{chapter}{Code}
-
-\section{Application 1: code}
-\label{sec:app1code}
-
-\inputminted[baselinestretch=0.5, breaklines]{python}{../code/application1.py}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % END DOCUMENT

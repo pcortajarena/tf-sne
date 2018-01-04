@@ -4,12 +4,13 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Autoencoder neural network.}}{4}{figure.2.1}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Dimensionality reduction algorithm learned by a Neural Network}}{10}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Cross validation using K-Folds.}}{11}{figure.3.2}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Dimensionality reduction algorithm learned by a Neural Network}}{13}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Cross validation using K-Folds.}}{13}{figure.3.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Example dataset point representing a handwriten digit.}}{13}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Low dimensional space from NeuralNet.}}{17}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Low dimensional space from from t-SNE}}{17}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Algorithms' complexities.}}{24}{figure.4.4}
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Example dataset point representing a handwritten digit.}}{15}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Low dimensional space from neural net trained for t-SNE.}}{21}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Low dimensional space from t-SNE}}{21}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Low dimensional space from neural net trained for MDS.}}{22}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Low dimensional space from MDS}}{22}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Algorithms' complexities.}}{30}{figure.4.6}
 \addvspace {10\p@ }

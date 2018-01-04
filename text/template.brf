@@ -9,7 +9,7 @@
 \backcite {pca}{{4}{2.1}{section.2.1}}
 \backcite {mds}{{5}{2.2}{section.2.2}}
 \backcite {tsne}{{6}{2.3}{section.2.3}}
-\backcite {scikit-learn}{{12}{4.1.1}{subsection.4.1.1}}
-\backcite {ucidata}{{18}{4.2.1}{subsection.4.2.1}}
-\backcite {brute}{{18}{4.2.2}{subsection.4.2.2}}
-\backcite {kdtree}{{22}{4.2.3}{table.4.5}}
+\backcite {scikit-learn}{{14}{4.1.1}{subsection.4.1.1}}
+\backcite {ucidata}{{23}{4.2.1}{subsection.4.2.1}}
+\backcite {brute}{{24}{4.2.2}{subsection.4.2.2}}
+\backcite {kdtree}{{26}{4.2.3}{table.4.7}}
