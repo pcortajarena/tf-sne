@@ -205,7 +205,7 @@ The embedding algorithms used as a baseline for this research are the ones liste
 
 These algorithms have been selected for different reasons. Firstly, PCA is known to be the basic linear model on which MDS relies, it is widely used (mainly to eliminate correlation issues and as a general compression algorithm) and accepted for real applications for its relative simplicity and interpretability. MDS is capable of preserving distances, both euclidean and geodesic, which means that it could be applied in applications that depend on this, such as nearest neighbours search or clustering. Lastly, t-SNE is a state-of-the-art algorithm when looking at preserving both local and global structure of the data, and is often used for visualizations or even as a feature engineering trick.
 
-To conclude, the document is divided into chapters which summarize the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main steps of the implementation and describes the main implementation's applications and the corresponding metrics computed to analyze the algorithm's behaviour. The next chapter (chapter \ref{chap:conc}) comprehends the conclusion and summarizes the main ideas discussed in this paper. Finally, chapter \ref{chap:code} includes the code implemented to carry out the research.
+To conclude, the document is divided into chapters which summarize the main steps of this research. Chapter number \ref{chap:stt} describes the State-of-The-Art. It is followed by chapter \ref{chap:frame}, which details the main steps of the implementation and describes the main implementation's applications and the corresponding metrics computed to analyze the algorithm's behaviour. The next chapter (chapter \ref{chap:conc}) comprehends the conclusion and summarizes the main ideas discussed in this paper. Finally, chapter \ref{chap:appendix} includes the code implemented to carry out the research.
 
 %-----------------------------------------------------
 % Chapter: State of the Art
@@ -679,16 +679,20 @@ The following figure illustrates computational complexities for an increasing nu
 \chapter{Conclusions and Future Work}
 \label{chap:conc}
 
-Neural nets are capable of replicating and modeling almost any problem and we hereby proved that also dimensionality reduction models' transformations from algorithms such as MDS and t-SNE can be reproduced by them. Furthermore, these models guarantee a re-usable tool that can be applied alone to computationally speed up processes and lessen memory usage, as a way of visualizing data or as a basis to other applications like nearest neighbours search. As they faithfully represent both dimensionality reduction algorithms, the model could be used as a basis for whatever machine learning problem which requires previous dimensionality reduction.
+Dimensionality reduction algorithms are commonly used for a wide number of applications, such as data compression, feature decorrelation, model improvement, visualization and many more. Classic compression algorithms such as PCA are often used as part of machine learning pipelines (for supervised problems) and have some advantages (linearity, interpretability and simplicity) but they have rigid assumptions and a considerable bias when looking at the structure of the data. 
 
-For the two applications developed, we can reassure that the best neural net model is a wide net, although for replicating other dimensionality reduction algorithms would be important to know which one fits the best.
+We took an in depth look at some of the new state-of-the art algorithms that aim to derive space transformations (sometimes called manifold methods) and can better preserve the local and global structure of the data. These are incredibly powerful both for visualization and as general compression techniques. However, a big number of these algorithms are based on one-off optimizations (mainly gradient descent over fancy cost functions) on a sample set and can therefore be run only once. This means that, although being more powerful, they are not reusable and sometimes end up being useless for real applications, as it is impractical to constantly re-run these algorithms when new samples need to be analyzed.
+
+We propose a novel technique that makes use of wide non-regularized neural nets with multi-output and a custom euclidean distance loss that can learn pretty much any of these manifold (dimensionality reduction) methods. This framework allows us to re-use and deploy any embedding algorithms with great speed, accuracy, efficiency and low memory usage (we just need to store the net's parameters). We also showed two real applications including an approximate nearest neighbors algorithm using MDS and a replicating neural net. 
+
+These reduction algorithms have many more applications though. They can be even used as a feature engineering technique for model stacking. Kagglers have often suggested that adding manifold coordinates as new features to a sample set can suddenly make a model stack improve. This technique, however, was useless for real ensembles since the manifold features could not be included during live prediction. In the future, we look forward to explore more applications of this framework such as the latter and improve the flexibility of the classes defined with more options and a more generic API.
 
 %-----------------------------------------------------
 % Chapter: Code
 %-----------------------------------------------------
 
-\chapter{Code}
-\label{chap:code}
+\chapter{Appendix}
+\label{chap:appendix}
 \nocite{*}
 
 \section{Code: Application 1}
